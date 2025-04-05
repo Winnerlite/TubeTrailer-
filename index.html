@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-     <meta name="9176ea800ca8696e9dc5bce86db6aa26d0ed7931" content="9176ea800ca8696e9dc5bce86db6aa26d0ed7931" />
-     
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Movie & Trailer App</title>
@@ -12,6 +9,8 @@
         :root {
             --primary: #8a2be2;
             --primary-dark: #6a1b9a;
+            --anime: #e91e63;
+            --anime-dark: #c2185b;
             --bg: #0f0f12;
             --card-bg: #1e1e24;
             --text: #f0f0f0;
@@ -31,12 +30,11 @@
             color: var(--text);
             min-height: 100vh;
             overflow-x: hidden;
-            padding-bottom: 60px; /* Space for bottom nav */
+            padding-bottom: 60px;
         }
 
-        /* 🔥 Fixed Premium Search Bar */
         .search-container {
-            height: 50px;  
+            height: 50px;
             position: fixed;
             top: 0;
             left: 0;
@@ -80,13 +78,11 @@
             background: var(--primary-dark);
         }
 
-        /* 🔥 Prevent Content from Hiding Behind Fixed Bar */
         .content {
             margin-top: 60px;
             padding-bottom: 20px;
         }
 
-        /* 🔄 Premium Loading Animation */
         .loading {
             position: fixed;
             top: 50%;
@@ -115,13 +111,11 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Results Container */
         .results-container {
             padding: 15px;
             margin-bottom: 70px;
         }
 
-        /* Cards */
         .card {
             background: var(--card-bg);
             border-radius: 10px;
@@ -162,7 +156,6 @@
             color: var(--text-secondary);
         }
 
-        /* Video Player */
         .video-player-container {
             position: fixed;
             top: 0;
@@ -181,7 +174,7 @@
             width: 95%;
             max-width: 900px;
             height: 0;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            padding-bottom: 56.25%;
             position: relative;
         }
 
@@ -212,7 +205,6 @@
             z-index: 2001;
         }
 
-        /* Pagination */
         .pagination-container {
             position: fixed;
             bottom: 70px;
@@ -234,12 +226,23 @@
         .pagination button {
             padding: 8px 15px;
             font-size: 14px;
-            background: var(--primary);
             color: white;
             border: none;
             border-radius: 20px;
             cursor: pointer;
             transition: all 0.3s;
+        }
+
+        .pagination button.trailer-pagination {
+            background: var(--primary);
+        }
+
+        .pagination button.movies-pagination {
+            background: var(--primary);
+        }
+
+        .pagination button.anime-pagination {
+            background: var(--anime);
         }
 
         .pagination button:disabled {
@@ -248,11 +251,15 @@
             opacity: 0.7;
         }
 
-        .pagination button:hover:not(:disabled) {
+        .pagination button.trailer-pagination:hover:not(:disabled),
+        .pagination button.movies-pagination:hover:not(:disabled) {
             background: var(--primary-dark);
         }
 
-        /* Error Message */
+        .pagination button.anime-pagination:hover:not(:disabled) {
+            background: var(--anime-dark);
+        }
+
         .error-message {
             position: fixed;
             top: 50%;
@@ -268,7 +275,6 @@
             max-width: 80%;
         }
 
-        /* History Page */
         .history-item {
             background: var(--card-bg);
             border-radius: 10px;
@@ -309,7 +315,6 @@
             color: var(--text-secondary);
         }
 
-        /* Bottom Navigation */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -344,11 +349,14 @@
             color: var(--primary);
         }
 
+        .nav-item.anime.active {
+            color: var(--anime);
+        }
+
         .nav-item:hover {
             color: white;
         }
 
-        /* Page Sections */
         .page {
             display: none;
         }
@@ -357,7 +365,6 @@
             display: block;
         }
 
-        /* Empty State */
         .empty-state {
             text-align: center;
             padding: 50px 20px;
@@ -371,7 +378,10 @@
             opacity: 0.5;
         }
 
-        /* Responsive Design */
+        .empty-state.anime i {
+            color: var(--anime);
+        }
+
         @media (max-width: 768px) {
             .search-container input {
                 width: 65%;
@@ -429,80 +439,97 @@
                 font-size: 14px;
             }
         }
+        
+        /* Add download button styles */
+        .download-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .download-btn {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .download-btn:hover {
+            background-color: #45a049;
+        }
+
+        .download-btn i {
+            margin-right: 8px;
+        }
     </style>
 </head>
 <body>
-    <!-- Search Bar -->
+     <script type='text/javascript' src='//pl26289152.effectiveratecpm.com/fc/d9/6d/fcd96dbde463de8a7d3f31c2fb9e05d2.js'></script>
     <div class="search-container">
         <input type="text" id="search" placeholder="Search for movies..." onkeypress="handleKeyPress(event)">
         <button onclick="searchContent()"><i class="fas fa-search"></i></button>
-        
     </div>
 
-    <!-- Page Sections -->
+
     <div class="content">
-        <!-- Trailer Page -->
         <div id="trailerPage" class="page active">
-             
-            <div class="results-container" id="trailerResults"></div>
-            
+            <div class="results-container" id="trailerResults">
+                 
+            </div>
         </div>
 
-        <!-- Movies Page -->
         <div id="moviesPage" class="page">
             <div class="results-container" id="moviesResults"></div>
         </div>
-        
 
-        <!-- History Page -->
+        <div id="animePage" class="page">
+            <div class="results-container" id="animeResults"></div>
+        </div>
+
         <div id="historyPage" class="page">
             <div class="results-container" id="historyContainer"></div>
         </div>
-        
     </div>
 
-    <!-- Video Player -->
     <div class="video-player-container" id="videoPlayerContainer">
-         <div id="awn-z9772678"></div>
-         <script type='text/javascript' src='//pl22648789.effectiveratecpm.com/e7/fc/cf/e7fccf383b3fd8be3a6f942b78372b0e.js'></script>
         <button class="close-player" onclick="closeVideoPlayer()"><i class="fas fa-times"></i></button>
         <div class="video-player">
             <iframe id="videoPlayer" allowfullscreen></iframe>
         </div>
-        <script type="text/javascript">
-
-	atOptions = {
-
-		'key' : '66ca78f55ae9a1fa6d3b6bd6fd4f49ad',
-
-		'format' : 'iframe',
-
-		'height' : 90,
-
-		'width' : 720,
-
-		'params' : {}
-	};
-</script>
-<script type="text/javascript" src="//www.highperformanceformat.com/66ca78f55ae9a1fa6d3b6bd6fd4f49ad/invoke.js"></script>
-</div>
-
-    <!-- Pagination -->
+        <div class="download-container" id="downloadContainer">
+            <a href="#" class="download-btn" id="downloadBtn" target="_blank">
+                <i class="fas fa-download"></i> Download Video
+            </a>
+            <script async="async" data-cfasync="false" src="//pl26288927.effectiveratecpm.com/c7998719d6922af40da88cd913af0ef3/invoke.js"></script>
+<div id="container-c7998719d6922af40da88cd913af0ef3"></div>
+        </div>
+    </div>
     <div class="pagination-container" id="trailerPagination" style="display: none;">
         <div class="pagination">
-            <button id="trailerPrevBtn" onclick="prevPage()"><i class="fas fa-chevron-left"></i> Previous</button>
-            <button id="trailerNextBtn" onclick="nextPage()">Next <i class="fas fa-chevron-right"></i></button>
+            <button id="trailerPrevBtn" class="trailer-pagination" onclick="prevPage()"><i class="fas fa-chevron-left"></i> Previous</button>
+            <button id="trailerNextBtn" class="trailer-pagination" onclick="nextPage()">Next <i class="fas fa-chevron-right"></i></button>
         </div>
     </div>
 
     <div class="pagination-container" id="moviesPagination" style="display: none;">
         <div class="pagination">
-            <button id="moviesPrevBtn" onclick="moviesPrevPage()"><i class="fas fa-chevron-left"></i> Previous</button>
-            <button id="moviesNextBtn" onclick="moviesNextPage()">Next <i class="fas fa-chevron-right"></i></button>
+            <button id="moviesPrevBtn" class="movies-pagination" onclick="moviesPrevPage()"><i class="fas fa-chevron-left"></i> Previous</button>
+            <button id="moviesNextBtn" class="movies-pagination" onclick="moviesNextPage()">Next <i class="fas fa-chevron-right"></i></button>
         </div>
     </div>
 
-    <!-- Bottom Navigation -->
+    <div class="pagination-container" id="animePagination" style="display: none;">
+        <div class="pagination">
+            <button id="animePrevBtn" class="anime-pagination" onclick="animePrevPage()"><i class="fas fa-chevron-left"></i> Previous</button>
+            <button id="animeNextBtn" class="anime-pagination" onclick="animeNextPage()">Next <i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
     <div class="bottom-nav">
         <a href="#" class="nav-item active" onclick="showPage('trailerPage')">
             <i class="fas fa-film"></i>
@@ -512,23 +539,24 @@
             <i class="fas fa-video"></i>
             <span>Movies</span>
         </a>
+        <a href="#" class="nav-item" onclick="showPage('animePage')">
+            <i class="fas fa-dragon"></i>
+            <span>Anime</span>
+        </a>
         <a href="#" class="nav-item" onclick="showPage('historyPage')">
             <i class="fas fa-history"></i>
             <span>History</span>
         </a>
     </div>
 
-    <!-- Loading Indicator -->
     <div class="loading" id="loading">
         <div class="spinner"></div>
         <p>Loading...</p>
     </div>
 
-    <!-- Error Message -->
     <div class="error-message" id="errorMessage"></div>
 
     <script>
-        // API Keys
         const apiKeys = [
             "AIzaSyABi7KdpAijF9gu09dSefpXJyhjIRY66Eg",
             "AIzaSyAqLty-6vku33b3bpdG5S4oLkyoimdw8TU",
@@ -539,33 +567,31 @@
         ];
         let currentKeyIndex = 0;
 
-        // Trailer variables
         let trailerCurrentPage = 0;
         let trailerTotalResults = [];
         const trailerResultsPerPage = 20;
 
-        // Movie variables
         let movieCurrentPage = 0;
         let movieTotalResults = [];
         const movieResultsPerPage = 10;
 
-        // Get current API key
+        let animeCurrentPage = 0;
+        let animeTotalResults = [];
+        const animeResultsPerPage = 15;
+
         function getApiKey() {
             return apiKeys[currentKeyIndex];
         }
 
-        // Switch to next API key
         function switchApiKey() {
             currentKeyIndex = (currentKeyIndex + 1) % apiKeys.length;
             console.log(`Switched to API key ${currentKeyIndex + 1}`);
         }
 
-        // Show loading indicator
         function showLoading(show) {
             document.getElementById('loading').style.display = show ? 'flex' : 'none';
         }
 
-        // Show error message
         function showError(message) {
             const errorDiv = document.getElementById('errorMessage');
             errorDiv.textContent = message;
@@ -575,52 +601,56 @@
             }, 5000);
         }
 
-        // Show page
         function showPage(pageId) {
-            // Hide all pages
             document.querySelectorAll('.page').forEach(page => {
                 page.classList.remove('active');
             });
 
-            // Show selected page
             document.getElementById(pageId).classList.add('active');
 
-            // Update active nav item
             document.querySelectorAll('.nav-item').forEach(item => {
                 item.classList.remove('active');
+                if (item.getAttribute('onclick').includes(pageId)) {
+                    item.classList.add('active');
+                    if (pageId === 'animePage') {
+                        item.classList.add('anime');
+                    }
+                }
             });
-            event.currentTarget.classList.add('active');
 
-            // Load content if needed
             if (pageId === 'trailerPage' && trailerTotalResults.length === 0) {
                 fetchTrendingTrailers();
             } else if (pageId === 'moviesPage' && movieTotalResults.length === 0) {
                 fetchTrendingMovies();
+            } else if (pageId === 'animePage' && animeTotalResults.length === 0) {
+                fetchTrendingAnime();
             } else if (pageId === 'historyPage') {
                 loadHistory();
             }
         }
 
-        // Handle search
         function searchContent() {
             const query = document.getElementById('search').value.trim();
             if (!query) return;
 
-            if (document.querySelector('.page.active').id === 'trailerPage') {
+            const activePage = document.querySelector('.page.active').id;
+            
+            if (activePage === 'trailerPage') {
                 searchTrailers(query);
-            } else {
+            } else if (activePage === 'moviesPage') {
                 searchMovies(query);
+            } else if (activePage === 'animePage') {
+                searchAnime(query);
             }
         }
 
-        // Handle enter key press
         function handleKeyPress(event) {
             if (event.key === 'Enter') {
                 searchContent();
             }
         }
 
-        // ===== TRAILER FUNCTIONS =====
+        // Trailer Functions
         async function fetchTrendingTrailers() {
             showLoading(true);
             try {
@@ -717,6 +747,7 @@
             if (trailerCurrentPage > 0) {
                 trailerCurrentPage--;
                 displayTrailerResults();
+                updateTrailerPagination();
             }
         }
 
@@ -724,10 +755,11 @@
             if ((trailerCurrentPage + 1) * trailerResultsPerPage < trailerTotalResults.length) {
                 trailerCurrentPage++;
                 displayTrailerResults();
+                updateTrailerPagination();
             }
         }
 
-        // ===== MOVIE FUNCTIONS =====
+        // Movie Functions
         async function fetchTrendingMovies() {
             showLoading(true);
             try {
@@ -824,6 +856,7 @@
             if (movieCurrentPage > 0) {
                 movieCurrentPage--;
                 displayMovieResults();
+                updateMoviePagination();
             }
         }
 
@@ -831,17 +864,133 @@
             if ((movieCurrentPage + 1) * movieResultsPerPage < movieTotalResults.length) {
                 movieCurrentPage++;
                 displayMovieResults();
+                updateMoviePagination();
             }
         }
 
-        // ===== VIDEO PLAYER =====
+        // Anime Functions
+        async function fetchTrendingAnime() {
+            showLoading(true);
+            try {
+                const response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&q=latest+anime+trailer+OR+full+movie+-review&type=video&key=${getApiKey()}`);
+                const data = await response.json();
+
+                if (data.error) {
+                    if (data.error.code === 403) {
+                        switchApiKey();
+                        return fetchTrendingAnime();
+                    }
+                    throw new Error(data.error.message);
+                }
+
+                animeTotalResults = data.items || [];
+                animeCurrentPage = 0;
+                displayAnimeResults();
+                updateAnimePagination();
+            } catch (error) {
+                showError(`Failed to load anime: ${error.message}`);
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        async function searchAnime(query) {
+            showLoading(true);
+            try {
+                const response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&q=${encodeURIComponent(query + ' anime trailer OR full movie')}&type=video&key=${getApiKey()}`);
+                const data = await response.json();
+
+                if (data.error) {
+                    if (data.error.code === 403) {
+                        switchApiKey();
+                        return searchAnime(query);
+                    }
+                    throw new Error(data.error.message);
+                }
+
+                animeTotalResults = data.items || [];
+                animeCurrentPage = 0;
+                displayAnimeResults();
+                updateAnimePagination();
+                saveToHistory(query, animeTotalResults[0]?.snippet?.thumbnails?.medium?.url);
+            } catch (error) {
+                showError(`Failed to search anime: ${error.message}`);
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        function displayAnimeResults() {
+            const resultsDiv = document.getElementById('animeResults');
+            resultsDiv.innerHTML = '';
+
+            if (animeTotalResults.length === 0) {
+                resultsDiv.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-dragon"></i>
+                        <p>No anime content found</p>
+                    </div>
+                `;
+                document.getElementById('animePagination').style.display = 'none';
+                return;
+            }
+
+            const start = animeCurrentPage * animeResultsPerPage;
+            const end = start + animeResultsPerPage;
+            const videos = animeTotalResults.slice(start, end);
+
+            videos.forEach(video => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <img src="${video.snippet.thumbnails.medium.url}" class="thumbnail" onclick="playVideo('${video.id.videoId}')">
+                    <div class="card-content">
+                        <div class="video-title">${video.snippet.title}</div>
+                        <div class="channel">${video.snippet.channelTitle}</div>
+                    </div>
+                `;
+                resultsDiv.appendChild(card);
+            });
+
+            document.getElementById('animePagination').style.display = 'flex';
+        }
+
+        function updateAnimePagination() {
+            document.getElementById('animePrevBtn').disabled = animeCurrentPage === 0;
+            document.getElementById('animeNextBtn').disabled = 
+                (animeCurrentPage + 1) * animeResultsPerPage >= animeTotalResults.length;
+        }
+
+        function animePrevPage() {
+            if (animeCurrentPage > 0) {
+                animeCurrentPage--;
+                displayAnimeResults();
+                updateAnimePagination();
+            }
+        }
+
+        function animeNextPage() {
+            if ((animeCurrentPage + 1) * animeResultsPerPage < animeTotalResults.length) {
+                animeCurrentPage++;
+                displayAnimeResults();
+                updateAnimePagination();
+            }
+        }
+
+        // Video Player Functions
         function playVideo(videoId) {
             const player = document.getElementById('videoPlayer');
+            const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
             player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+            
+            // Set up download button
+            const downloadBtn = document.getElementById('downloadBtn');
+            const downloadUrl = `https://en1.savefrom.net/21-youtube-to-mp4-37Nq.html#url=${encodeURIComponent(videoUrl)}`;
+            downloadBtn.href = downloadUrl;
+            
             document.getElementById('videoPlayerContainer').style.display = 'flex';
             document.body.style.overflow = 'hidden';
         }
-
         function closeVideoPlayer() {
             const player = document.getElementById('videoPlayer');
             player.src = '';
@@ -849,7 +998,7 @@
             document.body.style.overflow = 'auto';
         }
 
-        // ===== HISTORY FUNCTIONS =====
+        // History Functions
         function saveToHistory(query, thumbnail) {
             let history = JSON.parse(localStorage.getItem('searchHistory')) || [];
             history = history.filter(item => item.query.toLowerCase() !== query.toLowerCase());
@@ -902,10 +1051,12 @@
         function searchFromHistory(query) {
             document.getElementById('search').value = query;
             
-            // Determine which page to search on based on query
             if (query.toLowerCase().includes('trailer')) {
                 showPage('trailerPage');
                 searchTrailers(query.replace('trailer', '').trim());
+            } else if (query.toLowerCase().includes('anime')) {
+                showPage('animePage');
+                searchAnime(query);
             } else {
                 showPage('moviesPage');
                 searchMovies(query);
@@ -916,20 +1067,18 @@
         document.addEventListener('DOMContentLoaded', () => {
             fetchTrendingTrailers();
             
-            // Restore search input
             const lastSearch = localStorage.getItem('lastSearch');
             if (lastSearch) {
                 document.getElementById('search').value = lastSearch;
             }
             
-            // Save search input on change
             document.getElementById('search').addEventListener('input', (e) => {
                 localStorage.setItem('lastSearch', e.target.value);
             });
         });
         
-   </script>
-    <script async="async" data-cfasync="false" src="//pl22648993.effectiveratecpm.com/89f1e40e0e6d7dcb91eb378512134e8a/invoke.js"></script>
-<div id="container-89f1e40e0e6d7dcb91eb378512134e8a"></div>
+        
+    </script>
+    
 </body>
 </html>
