@@ -460,6 +460,12 @@
   50% { background: rgba(255,0,0,0.4); }
   100% { background: rgba(255,0,0,0.2); }
 }
+
+  * {
+    -webkit-tap-highlight-color: transparent;
+    outline: none;
+    user-select: none;
+  }
     </style>
 </head>
 <body>
@@ -1110,13 +1116,17 @@ srcdoc='
       '<html><head><title>External Video</title>' +
       '<meta name="viewport" content="width=device-width, initial-scale=1">' +
       '<style>' +
+      '* {-webkit-tap-highlight-color: transparent; outline: none; user-select: none;}' +
       'body { margin: 0; background: #000; color: white; font-family: Segoe UI, sans-serif; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; }' +
       '#spinner { border: 6px solid rgba(255,255,255,0.1); border-top: 6px solid #8a2be2; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin-bottom: 20px; }' +
       '@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }' +
       'iframe { width:90vw; height:50vw; max-width:900px; border:none; display: none; }' +
+      '.back-button { margin-top: 20px; background: #8a2be2; color: white; padding: 10px 20px; border-radius: 8px; font-weight: bold; border: none; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.4); }' +
+      '.back-button:hover { background: #6a1b9a; }' +
       '</style></head><body>' +
       '<div id="spinner"></div>' +
       '<iframe src="https://www.youtube.com/embed/' + fallbackVideoId + '?autoplay=1&rel=0" allowfullscreen onload="document.getElementById(\'spinner\').style.display=\'none\'; this.style.display=\'block\';"></iframe>' +
+      '<button class="back-button" onclick="window.close()">Back to Player</button>' +
       '</body></html>';
 
     doc.write(playerHTML);
