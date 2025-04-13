@@ -1126,12 +1126,21 @@ srcdoc='
       '</style></head><body>' +
       '<div id="spinner"></div>' +
       '<iframe src="https://www.youtube.com/embed/' + fallbackVideoId + '?autoplay=1&rel=0" allowfullscreen onload="document.getElementById(\'spinner\').style.display=\'none\'; this.style.display=\'block\';"></iframe>' +
-      '<button class="back-button" onclick="try{window.close()}catch(e){history.back()}">Back to Player</button>' +
+      '<button class="back-button" onclick="window.location.href=\'https://tubetrailerweb.vercel.app#v=' + fallbackVideoId + '\'">Back to Player</button>' +
       '</body></html>';
 
     doc.write(playerHTML);
     doc.close();
   }
+
+  // Auto-play if returning with #v=...
+  window.addEventListener('load', () => {
+    const hash = window.location.hash;
+    if (hash.startsWith('#v=')) {
+      const videoId = hash.substring(3);
+      playVideo(videoId);
+    }
+  });
 
   function closeVideoPlayer() {
     const player = document.getElementById('videoPlayer');
