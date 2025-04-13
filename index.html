@@ -32,10 +32,17 @@
             overflow-x: hidden;
             padding-bottom: 60px;
         }
-
-        .search-container {
+ /* Banner Styles */
+        .banner {
+            width: 100%;
+            max-height: 150px;
+            object-fit: cover;
+            display: block;
+            margin-bottom: 1px;
+        }
+           .search-container {
             height: 50px;
-            position: fixed;
+            position: sticky;
             top: 0;
             left: 0;
             width: 100%;
@@ -48,7 +55,6 @@
             z-index: 1000;
             box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
-
         .search-container input {
             padding: 10px 15px;
             font-size: 16px;
@@ -440,51 +446,81 @@
             }
         }
         
-        /* Add download button styles */
-        .download-container {
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        .download-btn {
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .download-btn:hover {
-            background-color: #45a049;
-        }
-
-        .download-btn i {
-            margin-right: 8px;
-        }
+        #fallbackLink {
+  display: block;
+  background: rgba(255,0,0,0.2);
+  padding: 12px;
+  border-radius: 8px;
+  text-align: center;
+  margin-top: 15px;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0% { background: rgba(255,0,0,0.2); }
+  50% { background: rgba(255,0,0,0.4); }
+  100% { background: rgba(255,0,0,0.2); }
+}
     </style>
 </head>
 <body>
-     <script type='text/javascript' src='//pl26289152.effectiveratecpm.com/fc/d9/6d/fcd96dbde463de8a7d3f31c2fb9e05d2.js'></script>
+     
+<!--Keep the script only once in a hidden container to initialize the ad -->
+     <div style="display:none;">
+  <div id="container-c53c47fd171910c4da636669b2c26e51"></div>
+  <script async="async" data-cfasync="false" src="//pl24473149.profitableratecpm.com/c53c47fd171910c4da636669b2c26e51/invoke.js"></script>
+</div>
+
+     <!-- Banner Image with Link 
+    <a href="https://t.me/tubetrailer" target="_blank" class="banner-container">
+        <img src="https://i.ibb.co/xtYxLbVR/20250405-204332.jpg" alt="TubeTrailer Telegram Channel" class="banner">
+    </a>
+-->
     <div class="search-container">
         <input type="text" id="search" placeholder="Search for movies..." onkeypress="handleKeyPress(event)">
         <button onclick="searchContent()"><i class="fas fa-search"></i></button>
     </div>
-
+    
+    <iframe style="border:none; width:100%; height:140px;" scrolling="no"
+srcdoc='
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #00000;
+        color: #555;
+      }
+      .ad-label {
+        padding: 10px 0;
+        font-size: 14px;
+        font-weight: 600;
+        color: #888;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        border-bottom: 1px solid #eee;
+        margin-bottom: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="ad-label">Ads are placed by sponsors</div>
+    <div id="container-c53c47fd171910c4da636669b2c26e51"></div>
+    <script async data-cfasync="false" src="//pl24473149.profitableratecpm.com/c53c47fd171910c4da636669b2c26e51/invoke.js"></script>
+  </body>
+  </html>
+'></iframe>
 
     <div class="content">
         <div id="trailerPage" class="page active">
-            <div class="results-container" id="trailerResults">
-                 
-            </div>
+            <div class="results-container" id="trailerResults"></div>
         </div>
 
         <div id="moviesPage" class="page">
-            <div class="results-container" id="moviesResults"></div>
+            
+            <div              class="results-container" id="moviesResults"></div>
         </div>
 
         <div id="animePage" class="page">
@@ -496,19 +532,91 @@
         </div>
     </div>
 
-    <div class="video-player-container" id="videoPlayerContainer">
-        <button class="close-player" onclick="closeVideoPlayer()"><i class="fas fa-times"></i></button>
-        <div class="video-player">
-            <iframe id="videoPlayer" allowfullscreen></iframe>
-        </div>
-        <div class="download-container" id="downloadContainer">
-            <a href="#" class="download-btn" id="downloadBtn" target="_blank">
-                <i class="fas fa-download"></i> Download Video
-            </a>
-            <script async="async" data-cfasync="false" src="//pl26288927.effectiveratecpm.com/c7998719d6922af40da88cd913af0ef3/invoke.js"></script>
-<div id="container-c7998719d6922af40da88cd913af0ef3"></div>
-        </div>
-    </div>
+<!-- HTML5 Video Player Alternative with YouTube Fallback Inline Window -->
+<div class="video-player-container" id="videoPlayerContainer">
+  <button class="close-player" onclick="closeVideoPlayer()">
+    <i class="fas fa-times"></i>
+  </button>
+  <iframe id="videoPlayer" allowfullscreen style="width:95%; max-width:900px; height:50vw; border:none;"></iframe>
+  <a id="fallbackLink" href="#" onclick="openFallbackPlayer()" style="
+    display: block;
+    margin-top: 12px;
+    background-color: #8a2be2;
+    color: white;
+    text-align: center;
+    padding: 10px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    transition: background 0.3s;
+  " onmouseover="this.style.backgroundColor='#6a1b9a'" onmouseout="this.style.backgroundColor='#8a2be2'">
+    Trouble playing? Click here to watch externally
+  </a>
+  
+  <iframe style="border:none; width:100%; height:140px;" scrolling="no"
+srcdoc='
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #00000;
+        color: #555;
+      }
+      .ad-label {
+        padding: 10px 0;
+        font-size: 14px;
+        font-weight: 600;
+        color: #888;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        border-bottom: 1px solid #eee;
+        margin-bottom: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="ad-label">Ads are placed by sponsors</div>
+    <div id="container-c53c47fd171910c4da636669b2c26e51"></div>
+    <script async data-cfasync="false" src="//pl24473149.profitableratecpm.com/c53c47fd171910c4da636669b2c26e51/invoke.js"></script>
+  </body>
+  </html>
+'></iframe>
+        <script type="text/javascript">
+
+	atOptions = {
+
+		'key' : '66ca78f55ae9a1fa6d3b6bd6fd4f49ad',
+
+		'format' : 'iframe',
+
+		'height' : 90,
+
+		'width' : 720,
+
+		'params' : {}
+	};
+</script>
+<script type="text/javascript" src="//www.highperformanceformat.com/66ca78f55ae9a1fa6d3b6bd6fd4f49ad/invoke.js"></script>
+
+<script type="text/javascript">
+	atOptions = {
+		'key' : '6512ad7d65fae093238199b7f02f16d2',
+		'format' : 'iframe',
+		'height' : 250,
+		'width' : 300,
+		'params' : {}
+	};
+</script>
+<script type="text/javascript" src="//www.highperformanceformat.com/6512ad7d65fae093238199b7f02f16d2/invoke.js"></script>
+
+</div>
+
+
     <div class="pagination-container" id="trailerPagination" style="display: none;">
         <div class="pagination">
             <button id="trailerPrevBtn" class="trailer-pagination" onclick="prevPage()"><i class="fas fa-chevron-left"></i> Previous</button>
@@ -563,7 +671,8 @@
             "AIzaSyBYixFCdGHJ2P512iW010glQRvd93EB6O8",
             "AIzaSyDLW2mkmVVgQcoUpM86VFtOaCegFvyVk_g",
             "AIzaSyDe7rOrqZFH3vIqP9zBtNkQ0Lqz4mBz9BI",
-            "AIzaSyDFH66idOZwfx-PfO1AXdsUeCa2gV1kCk4"
+            "AIzaSyDFH66idOZwfx-PfO1AXdsUeCa2gV1kCk4",
+"AIzaSyC_syRSRRxQR1DbtHZzMw9glxcR7My8ly4"
         ];
         let currentKeyIndex = 0;
 
@@ -978,26 +1087,48 @@
         }
 
         // Video Player Functions
-        function playVideo(videoId) {
-            const player = document.getElementById('videoPlayer');
-            const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
-            player.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
-            
-            // Set up download button
-            const downloadBtn = document.getElementById('downloadBtn');
-            const downloadUrl = `https://en1.savefrom.net/21-youtube-to-mp4-37Nq.html#url=${encodeURIComponent(videoUrl)}`;
-            downloadBtn.href = downloadUrl;
-            
-            document.getElementById('videoPlayerContainer').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-        function closeVideoPlayer() {
-            const player = document.getElementById('videoPlayer');
-            player.src = '';
-            document.getElementById('videoPlayerContainer').style.display = 'none';
-            document.body.style.overflow = 'auto';
-        }
+        let fallbackVideoId = null;
 
+  function playVideo(videoId) {
+    const player = document.getElementById('videoPlayer');
+    const fallbackLink = document.getElementById('fallbackLink');
+
+    fallbackVideoId = videoId;
+    player.src = "https://www.youtube.com/embed/" + videoId + "?autoplay=1&rel=0";
+    fallbackLink.style.display = 'block';
+
+    document.getElementById('videoPlayerContainer').style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function openFallbackPlayer() {
+    if (!fallbackVideoId) return;
+
+    const win = window.open('', '_blank');
+    const doc = win.document;
+    const playerHTML = '<!DOCTYPE html>' +
+      '<html><head><title>External Video</title>' +
+      '<meta name="viewport" content="width=device-width, initial-scale=1">' +
+      '<style>' +
+      'body { margin: 0; background: #000; color: white; font-family: Segoe UI, sans-serif; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; }' +
+      '#spinner { border: 6px solid rgba(255,255,255,0.1); border-top: 6px solid #8a2be2; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin-bottom: 20px; }' +
+      '@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }' +
+      'iframe { width:90vw; height:50vw; max-width:900px; border:none; display: none; }' +
+      '</style></head><body>' +
+      '<div id="spinner"></div>' +
+      '<iframe src="https://www.youtube.com/embed/' + fallbackVideoId + '?autoplay=1&rel=0" allowfullscreen onload="document.getElementById(\'spinner\').style.display=\'none\'; this.style.display=\'block\';"></iframe>' +
+      '</body></html>';
+
+    doc.write(playerHTML);
+    doc.close();
+  }
+
+  function closeVideoPlayer() {
+    const player = document.getElementById('videoPlayer');
+    player.src = '';
+    document.getElementById('videoPlayerContainer').style.display = 'none';
+    document.body.style.overflow = 'auto';
+  }
         // History Functions
         function saveToHistory(query, thumbnail) {
             let history = JSON.parse(localStorage.getItem('searchHistory')) || [];
@@ -1076,10 +1207,11 @@
                 localStorage.setItem('lastSearch', e.target.value);
             });
         });
-        
-        
     </script>
-    <!-- Default Statcounter code for TubeTrailer http://tubetrailer.vercel.app -->
+    <script async="async" data-cfasync="false" src="//pl22648993.effectiveratecpm.com/89f1e40e0e6d7dcb91eb378512134e8a/invoke.js"></script>
+<div id="container-89f1e40e0e6d7dcb91eb378512134e8a"></div>
+
+<!-- Default Statcounter code for TubeTrailer http://tubetrailer.vercel.app -->
 <script type="text/javascript">
 var sc_project=13118904; 
 var sc_invisible=1; 
