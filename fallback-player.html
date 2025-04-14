@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Video Player</title>
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    iframe {
+      width: 90vw;
+      height: 50.625vw; /* 16:9 aspect ratio */
+      max-width: 900px;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <iframe id="ytplayer" allowfullscreen></iframe>
+
+  <script>
+    const query = new URLSearchParams(window.location.search);
+    const videoId = query.get('v');
+    if (videoId) {
+      document.getElementById('ytplayer').src =
+        'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
+    }
+  </script>
+</body>
+</html>
