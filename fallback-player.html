@@ -1,36 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Video Player</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Custom Video Player</title>
   <style>
     body {
       margin: 0;
       background: #000;
+      font-family: Arial, sans-serif;
+      color: white;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
       align-items: center;
-      height: 100vh;
+      padding: 20px;
     }
-    iframe {
-      width: 90vw;
-      height: 50.625vw; /* 16:9 aspect ratio */
+
+    #controls {
+      margin-bottom: 15px;
+    }
+
+    #controls select {
+      padding: 5px 10px;
+      background: #222;
+      color: white;
+      border: 1px solid #555;
+      border-radius: 5px;
+    }
+
+    #video-wrapper {
+      padding: 5px;
+      border-radius: 15px;
+      background: linear-gradient(45deg, red, purple, blue, cyan, purple, red);
+      background-size: 400% 400%;
+      animation: glowSpin 8s linear infinite;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    iframe#ytplayer {
+      width: 100%;
+      height: calc(100vw * 9 / 16);
+      max-height: 90vh;
+      border: none;
+      border-radius: 10px;
+      display: block;
+    }
+
+    @keyframes glowSpin {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    #quality-tip {
+      margin-top: 20px;
+      font-size: 14px;
+      text-align: center;
+      max-width: 900px;
+    }
+
+    .ad-frame {
+      width: 100%;
       max-width: 900px;
       border: none;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 600px) {
+      iframe#ytplayer {
+        height: calc(100vw * 9 / 16);
+      }
     }
   </style>
 </head>
 <body>
-  <iframe id="ytplayer" allowfullscreen></iframe>
+     <!--Keep the script only once in a hidden container to initialize the ad -->
+     <div style="display:none;">
+  <div id="container-c53c47fd171910c4da636669b2c26e51"></div>
+  <script async="async" data-cfasync="false" src="//pl24473149.profitableratecpm.com/c53c47fd171910c4da636669b2c26e51/invoke.js"></script>
+</div>
+
+  <!-- Aspect Ratio Selector -->
+  <div id="controls">
+    <label for="ratio-select">Aspect Ratio:</label>
+    <select id="ratio-select">
+      <option value="16:9" selected>16:9</option>
+      <option value="4:3">4:3</option>
+      <option value="21:9">21:9</option>
+      <option value="1:1">1:1</option>
+    </select>
+  </div>
+  
+  <iframe style="border:none; width:100%; height:140px;" scrolling="no"
+srcdoc='
+  <!DOCTYPE html>
+  <html>
+  <head>
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #00000;
+        color: #555;
+      }
+      .ad-label {
+        padding: 10px 0;
+        font-size: 14px;
+        font-weight: 600;
+        color: #888;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        border-bottom: 1px solid #eee;
+        margin-bottom: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="ad-label"><!--Ads are placed by sponsors--></div>
+    <div id="container-c53c47fd171910c4da636669b2c26e51"></div>
+    <script async data-cfasync="false" src="//pl24473149.profitableratecpm.com/c53c47fd171910c4da636669b2c26e51/invoke.js"></script>
+  </body>
+  </html>
+'></iframe>
+
+  <!-- YouTube Video Wrapper -->
+  <div id="video-wrapper">
+    <iframe id="ytplayer" allowfullscreen></iframe>
+  </div>
+
+  <!-- Quality Tip + Ad Section -->
+  <div id="quality-tip">
+    Tip: Click the gear icon in the video player to change quality (360p, 720p, 1080p).
+  </div>
+
+  <!-- Sponsored Ad Note + Ad Frame -->
+  <iframe class="ad-frame" scrolling="no" style="height: 220px;"
+    srcdoc='
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <style>
+          body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            background-color: #111;
+            color: #aaa;
+            font-size: 14px;
+            text-align: center;
+          }
+          .ad-label {
+            padding: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="ad-label">Ads are placed by sponsors</div>
+        <div id="container-c53c47fd171910c4da636669b2c26e51"></div>
+        <script async data-cfasync="false" src="//pl24473149.profitableratecpm.com/c53c47fd171910c4da636669b2c26e51/invoke.js"></script>
+      </body>
+      </html>'>
+  </iframe>
+  
+  
+
+  <!-- External Ad Scripts (only loaded once) -->
+  <div style="display:none;">
+    <div id="container-c53c47fd171910c4da636669b2c26e51"></div>
+    <script async="async" data-cfasync="false" src="//pl24473149.profitableratecpm.com/c53c47fd171910c4da636669b2c26e51/invoke.js"></script>
+    <script type="text/javascript">
+      atOptions = {
+        'key' : '6512ad7d65fae093238199b7f02f16d2',
+        'format' : 'iframe',
+        'height' : 359,
+        'width' : 300,
+        'params' : {}
+      };
+    </script>
+    <script type="text/javascript" src="//www.highperformanceformat.com/6512ad7d65fae093238199b7f02f16d2/invoke.js"></script>
+    
+  </div>
+  
 
   <script>
     const query = new URLSearchParams(window.location.search);
     const videoId = query.get('v');
+    const yt = document.getElementById('ytplayer');
+
     if (videoId) {
-      document.getElementById('ytplayer').src =
-        'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
+      yt.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
     }
+
+    document.getElementById('ratio-select').addEventListener('change', function () {
+      const aspect = this.value;
+      const wrapper = document.getElementById('video-wrapper');
+      let heightRatio;
+
+      switch (aspect) {
+        case '4:3': heightRatio = 3 / 4; break;
+        case '21:9': heightRatio = 9 / 21; break;
+        case '1:1': heightRatio = 1; break;
+        case '16:9':
+        default: heightRatio = 9 / 16;
+      }
+
+      // Adjust height of iframe
+      yt.style.height = `calc(100vw * ${heightRatio})`;
+    });
   </script>
+  
 </body>
 </html>
