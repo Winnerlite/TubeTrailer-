@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-<head><meta name="msvalidate.01" content="79952FEBB6AB65F1DDF3E2171FAFB9B2" />
-   <script type="text/javascript">
+<head>
+     <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
         t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "r4ikpxyih2");
-   </script>
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-   <meta name="msvalidate.01" content="79952FEBB6AB65F1DDF3E2171FAFB9B2" />
     <title>Movie & Trailer App</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -31,6 +30,9 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+            user-select: none;
         }
         
         body {
@@ -39,22 +41,25 @@
             min-height: 100vh;
             overflow-x: hidden;
             padding-bottom: 60px;
+            transition: background 0.3s ease;
         }
- /* Banner Styles */
-        .banner {
-            width: 100%;
-            max-height: 150px;
-            object-fit: cover;
-            display: block;
-            margin-bottom: 1px;
+
+        body.light-mode {
+            --bg: #f5f5f5;
+            --card-bg: #ffffff;
+            --text: #333333;
+            --text-secondary: #666666;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-           .search-container {
+
+        /* Header & Search */
+        .search-container {
             height: 50px;
             position: sticky;
             top: 0;
             left: 0;
             width: 100%;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(15, 15, 18, 0.9);
             backdrop-filter: blur(10px);
             padding: 10px 15px;
             display: flex;
@@ -62,7 +67,22 @@
             align-items: center;
             z-index: 1000;
             box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            transition: background 0.3s ease;
+            
         }
+
+        body.light-mode .search-container {
+            background: rgba(245, 245, 245, 0.9);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .search-wrapper {
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+        }
+
         .search-container input {
             padding: 10px 15px;
             font-size: 16px;
@@ -74,6 +94,11 @@
             color: white;
             text-align: center;
             transition: all 0.3s ease-in-out;
+        }
+
+        body.light-mode .search-container input {
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--text);
         }
 
         .search-container button {
@@ -92,51 +117,183 @@
             background: var(--primary-dark);
         }
 
+        .search-history {
+            position: absolute;
+            top: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70%;
+            background: var(--card-bg);
+            border-radius: 0 0 15px 15px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 1001;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            display: none;
+        }
+
+        .search-history-item {
+            padding: 10px 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .search-history-item:hover {
+            background: rgba(138, 43, 226, 0.1);
+        }
+
+        .search-history-item:last-child {
+            border-bottom: none;
+        }
+
+.reload-btn {
+    padding: 10px 15px;
+    font-size: 16px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 25px;
+    margin-right: 10px;
+    transition: all 0.3s;
+}
+
+.reload-btn:hover {
+    background: var(--primary-dark);
+    transform: rotate(90deg);
+}
+        /* Hero Carousel */
+        .hero-section {
+        
+    width: 100%;
+    height: 200px;
+    position: relative;
+    margin-bottom: 20px;
+    overflow: hidden;
+    height: calc(100vh - 130px); /* Adjust based on your needs */
+    min-height: 300px; /* Minimum height */
+}
+
+.hero-carousel {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s ease;
+   
+    will-change: transform;
+
+}
+
+.hero-item {
+    min-width: 100%;
+    height: 100%;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.hero-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+        .hero-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+        }
+
+        .hero-content h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+            color: white;
+        }
+
+        .hero-content p {
+            margin-bottom: 12px;
+            font-size: 14px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .hero-btn {
+            padding: 6px 16px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .hero-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        /* Content Sections */
         .content {
             margin-top: 60px;
             padding-bottom: 20px;
         }
 
-        .loading {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            background: rgba(0, 0, 0, 0.8);
-            padding: 20px;
-            border-radius: 10px;
-            z-index: 1001;
-            display: none;
+        .section-title {
+            padding: 15px 15px 5px;
+            font-size: 20px;
+            font-weight: bold;
         }
 
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid rgba(255, 255, 255, 0.2);
-            border-top: 5px solid var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 15px;
+        body.light-mode .section-title {
+            color: var(--text);
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .genre-section {
+            margin-bottom: 20px;
         }
 
+        .genre-title {
+            padding: 0 15px 5px;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Cards */
         .results-container {
             padding: 15px;
-            margin-bottom: 70px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        @media (min-width: 768px) {
+            .results-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .results-container {
+                grid-template-columns: repeat(4, 1fr);
+            }
         }
 
         .card {
             background: var(--card-bg);
-            border-radius: 10px;
+            border-radius: 12px;
             overflow: hidden;
-            margin-bottom: 15px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
         }
 
         .card:hover {
@@ -146,10 +303,15 @@
 
         .thumbnail {
             width: 100%;
-            height: 180px;
+            height: 220px;
             object-fit: cover;
             cursor: pointer;
             display: block;
+            transition: transform 0.3s;
+        }
+
+        .card:hover .thumbnail {
+            transform: scale(1.03);
         }
 
         .card-content {
@@ -160,17 +322,98 @@
             font-size: 16px;
             font-weight: 500;
             margin-bottom: 5px;
-            white-space: nowrap;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
             overflow: hidden;
             text-overflow: ellipsis;
+        }
+
+        body.light-mode .video-title {
+            color: var(--text);
         }
 
         .channel {
             font-size: 14px;
             color: var(--text-secondary);
+            margin-bottom: 8px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        
+        .card-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 8px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .views-count {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .likes-count {
+            background: rgba(255, 50, 50, 0.2);
+            padding: 2px 6px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .trending-badge {
+            color: #ff4757;
+            animation: pulse 1.5s infinite;
+        }
+
+        .favorite-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.5);
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 2;
+        }
+
+        .favorite-btn.active {
+            color: var(--primary);
+            background: rgba(138, 43, 226, 0.7);
+        }
+
+        .favorite-btn:hover {
+            transform: scale(1.1);
+        }
+
+        /* Anime-specific tweak - purple heart for anime */
+        .anime-page .likes-count {
+            background: rgba(138, 43, 226, 0.2);
+        }
+
+        /* Make fire emoji pink for anime */
+        .anime-page .trending-badge {
+            color: #e91e63;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.8; }
+            50% { opacity: 1; }
+            100% { opacity: 0.8; }
+        }
+
+        /* Pagination */
         .pagination-container {
             position: fixed;
             bottom: 70px;
@@ -182,6 +425,12 @@
             justify-content: center;
             z-index: 999;
             box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+            transition: background 0.3s ease;
+        }
+
+        body.light-mode .pagination-container {
+            background: rgba(245, 245, 245, 0.9);
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
         }
 
         .pagination {
@@ -226,6 +475,35 @@
             background: var(--anime-dark);
         }
 
+        /* Loading & Error States */
+        .loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 1001;
+            display: none;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(255, 255, 255, 0.2);
+            border-top: 5px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
         .error-message {
             position: fixed;
             top: 50%;
@@ -241,46 +519,93 @@
             max-width: 80%;
         }
 
-        .history-item {
+        /* Me Page - Updated to vertical list */
+        #mePage .results-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding: 15px;
+        }
+
+        .me-card {
             background: var(--card-bg);
             border-radius: 10px;
             padding: 15px;
-            margin-bottom: 15px;
+            transition: all 0.3s;
             display: flex;
             align-items: center;
-            cursor: pointer;
-            transition: all 0.3s;
+            gap: 15px;
         }
 
-        .history-item:hover {
+        .me-card:hover {
             background: rgba(138, 43, 226, 0.1);
         }
 
-        .history-thumbnail {
-            width: 60px;
-            height: 60px;
-            border-radius: 8px;
-            object-fit: cover;
-            margin-right: 15px;
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            flex-shrink: 0;
         }
 
-        .history-content {
+        .me-card-content {
             flex: 1;
         }
 
-        .history-query {
+        .me-card-title {
             font-size: 16px;
+            font-weight: 500;
             margin-bottom: 5px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
-        .history-date {
-            font-size: 12px;
+        .me-card-desc {
+            font-size: 14px;
             color: var(--text-secondary);
         }
 
+        .theme-switcher {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .theme-btn {
+            flex: 1;
+            padding: 8px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            transition: all 0.3s;
+        }
+
+        .theme-btn.dark {
+            background: #333;
+            color: white;
+        }
+
+        .theme-btn.light {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .theme-btn.active {
+            outline: 2px solid var(--primary);
+        }
+
+        /* Bottom Navigation */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -292,6 +617,12 @@
             padding: 10px 0;
             z-index: 1000;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
+            transition: background 0.3s ease;
+        }
+
+        body.light-mode .bottom-nav {
+            background: rgba(255, 255, 255, 0.95);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         .nav-item {
@@ -320,9 +651,10 @@
         }
 
         .nav-item:hover {
-            color: white;
+            color: var(--primary);
         }
 
+        /* Pages */
         .page {
             display: none;
         }
@@ -348,6 +680,27 @@
             color: var(--anime);
         }
 
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 70px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            z-index: 10000;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 14px;
+        }
+
+        .toast.show {
+            opacity: 1;
+        }
+
+        /* Responsive Adjustments */
         @media (max-width: 768px) {
             .search-container input {
                 width: 65%;
@@ -361,7 +714,7 @@
             }
             
             .thumbnail {
-                height: 150px;
+                height: 180px;
             }
             
             .video-title {
@@ -376,6 +729,18 @@
                 padding: 6px 12px;
                 font-size: 13px;
             }
+
+            .hero-section {
+                height: 180px;
+            }
+
+            .hero-content h3 {
+                font-size: 18px;
+            }
+
+            .hero-content p {
+                font-size: 12px;
+            }
         }
 
         @media (max-width: 480px) {
@@ -388,92 +753,132 @@
             }
             
             .thumbnail {
-                height: 120px;
+                height: 160px;
             }
             
-            .history-item {
-                padding: 10px;
+            .hero-section {
+                height: 160px;
             }
-            
-            .history-thumbnail {
-                width: 50px;
-                height: 50px;
-                margin-right: 10px;
+
+            .hero-content {
+                padding: 15px;
             }
-            
-            .history-query {
-                font-size: 14px;
+
+            .hero-content h3 {
+                font-size: 16px;
             }
         }
         
-        #fallbackLink {
-  display: block;
-  background: rgba(255,0,0,0.2);
-  padding: 12px;
-  border-radius: 8px;
-  text-align: center;
-  margin-top: 15px;
-  animation: pulse 2s infinite;
-}
-@keyframes pulse {
-  0% { background: rgba(255,0,0,0.2); }
-  50% { background: rgba(255,0,0,0.4); }
-  100% { background: rgba(255,0,0,0.2); }
+           /* Add modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            max-width: 400px;
+            margin: 20vh auto;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+
+        .modal-input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            background: rgba(255,255,255,0.05);
+            color: var(--text);
+            transition: var(--transition);
+        }
+
+        body.light-mode .modal-input {
+            background: rgba(0,0,0,0.05);
+            border-color: rgba(0,0,0,0.1);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .modal-btn.primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .modal-btn.secondary {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            
+        }
+        
+        /* Add this to your existing CSS */
+#mePage ~ .pagination-container {
+    display: none !important;
 }
 
-  * {
-    -webkit-tap-highlight-color: transparent;
-    outline: none;
-    user-select: none;
-  }
-  
-  /* Add to your existing CSS */
-.card-stats {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 8px;
-  font-size: 12px;
+
+.notification-list {
+  text-align: left;
+  margin-top: 15px;
+  padding-left: 20px;
   color: var(--text-secondary);
 }
 
-.views-count {
-  display: flex;
-  align-items: center;
-  gap: 4px;
+.notification-list li {
+  margin-bottom: 10px;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
-.likes-count {
-  background: rgba(255, 50, 50, 0.2);
-  padding: 2px 6px;
+.tour-toast {
+  position: absolute;
+  background: var(--card-bg);
+  color: var(--text-color);
+  padding: 10px 15px;
   border-radius: 10px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  font-size: 14px;
+  z-index: 9999;
+  max-width: 200px;
+  animation: fadeInScale 0.3s ease;
 }
 
-.trending-badge {
-  color: #ff4757;
-  animation: pulse 1.5s infinite;
-}
-
-@keyframes pulse {
-  0% { opacity: 0.8; }
-  50% { opacity: 1; }
-  100% { opacity: 0.8; }
-}
-
-/* Anime-specific tweak - purple heart for anime */
-.anime-page .likes-count {
-    background: rgba(138, 43, 226, 0.2); /* Purple highlight */
-}
-
-/* Make fire emoji pink for anime */
-.anime-page .trending-badge {
-    color: #e91e63;
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
     </style>
 </head>
 <body>
+     
      
 <!--Keep the script only once in a hidden container to initialize the ad -->
      <div style="display:none;">
@@ -487,10 +892,27 @@
     </a>
 -->
     <div class="search-container">
-        <input type="text" id="search" placeholder="Search for movies..." onkeypress="handleKeyPress(event)">
-        <button onclick="searchContent()"><i class="fas fa-search"></i></button>
-    </div>
-    
+  <div class="search-wrapper">
+    <button id="reloadBtn" onclick="clearAllCache()" class="reload-btn">
+      <i class="fas fa-sync-alt"></i>
+    </button>
+
+    <input 
+      type="text" 
+      id="search" 
+      placeholder="Search for movies..." 
+      onfocus="showSearchHistory()" 
+      onblur="hideSearchHistory()" 
+      oninput="filterSearchHistory()" 
+      onkeypress="handleKeyPress(event)"
+    >
+
+    <button onclick="searchContent()"><i class="fas fa-search"></i></button>
+
+    <!-- Dropdown for recent searches -->
+    <div class="search-history" id="searchHistoryList"></div>
+  </div>
+</div>
     <iframe style="border:none; width:100%; height:140px;" scrolling="no"
 srcdoc='
   <!DOCTYPE html>
@@ -514,13 +936,12 @@ srcdoc='
         border-bottom: 1px solid #eee;
         margin-bottom: 8px;
       }
+      
+       
     </style>
-         <meta name="msvalidate.01" content="79952FEBB6AB65F1DDF3E2171FAFB9B2" />
-     
   </head>
-       <meta name="msvalidate.01" content="79952FEBB6AB65F1DDF3E2171FAFB9B2" />
   <body>
-    <div class="ad-label">Ads are placed by sponsors</div>
+    <div class="ad-label"></div>
     <div id="container-c53c47fd171910c4da636669b2c26e51"></div>
     <script async data-cfasync="false" src="//pl24473149.profitableratecpm.com/c53c47fd171910c4da636669b2c26e51/invoke.js"></script>
   </body>
@@ -540,14 +961,73 @@ srcdoc='
         <div id="animePage" class="page">
             <div class="results-container" id="animeResults"></div>
         </div>
+        
+        <!-- Add this Me Page section -->
+    <div id="mePage" class="page">
+        <h2 class="section-title">My Account</h2>
+        <div class="results-container">
+            <div class="me-card" onclick="showAccountModal()">
+                <div class="avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="me-card-content">
+                    <div class="me-card-title">Account</div>
+                    <div class="me-card-desc" id="userStatus">Guest Mode</div>
+                </div>
+            </div>
+            
+            <div class="me-card">
+                <div class="avatar" style="background-color: #6a1b9a;">
+                    <i class="fas fa-moon"></i>
+                </div>
+                <div class="me-card-content">
+                    <div class="me-card-title">Appearance</div>
+                    <div class="me-card-desc">Choose your preferred theme</div>
+                    <div class="theme-switcher">
+                        <button class="theme-btn dark active" onclick="setTheme('dark')">
+                            <i class="fas fa-moon"></i> Dark
+                        </button>
+                        
+                        <button class="theme-btn light" onclick="setTheme('light')">
+                            <i class="fas fa-sun"></i> Light
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="me-card" onclick="showAbout()">
+                <div class="avatar" style="background-color: #e91e63;">
+                    <i class="fas fa-info-circle"></i>
+                </div>
+                
+                <div class="me-card-content">
+                    <div class="me-card-title">About</div>
+                    <div class="me-card-desc">Version 2.0.0</div>
+                </div>
+            </div>
+            <div class="me-option" onclick="showNotificationModal()">
+  <div class="me-option-left">
+    <i class="fas fa-bell"></i>
+    <span>Notifications</span>
+  </div>
+  </div>
+  <div class="me-option" onclick="restartUserTour()">
+  <div class="me-option-left">
+    <i class="fas fa-map-signs"></i>
+    <span>Show App Tour</span>
+  </div>
+</div>
+</div>
+        </div>
+    </div>
+</div>
 
+<!--
         <div id="historyPage" class="page">
             <div class="results-container" id="historyContainer"></div>
         </div>
     </div>
-
-
-
+    -->
 
     <div class="pagination-container" id="trailerPagination" style="display: none;">
         <div class="pagination">
@@ -571,32 +1051,191 @@ srcdoc='
     </div>
 
     <div class="bottom-nav">
-        <a href="#" class="nav-item active" onclick="showPage('trailerPage')">
-            <i class="fas fa-film"></i>
-            <span>Trailers</span>
-        </a>
-        <a href="#" class="nav-item" onclick="showPage('moviesPage')">
-            <i class="fas fa-video"></i>
-            <span>Movies</span>
-        </a>
-        <a href="#" class="nav-item" onclick="showPage('animePage')">
-            <i class="fas fa-dragon"></i>
-            <span>Anime</span>
-        </a>
-        <a href="#" class="nav-item" onclick="showPage('historyPage')">
-            <i class="fas fa-history"></i>
-            <span>History</span>
-        </a>
-    </div>
-
+    <a href="#" class="nav-item active" onclick="showPage('trailerPage')">
+        <i class="fas fa-film"></i>
+        <span>Trailers</span>
+    </a>
+    <a href="#" class="nav-item" onclick="showPage('moviesPage')">
+        <i class="fas fa-video"></i>
+        <span>Movies</span>
+    </a>
+    <a href="#" class="nav-item" onclick="showPage('animePage')">
+        <i class="fas fa-dragon"></i>
+        <span>Anime</span>
+    </a>
+    
+    <a href="https://example.com/download" class="nav-item" target="_blank">
+        <i class="fas fa-download"></i>
+        <span>Download</span>
+    </a>
+    <a href="#" class="nav-item" onclick="showPage('mePage')">
+        <i class="fas fa-user"></i>
+        <span>Me</span>
+    </a>
+</div>
+    
     <div class="loading" id="loading">
         <div class="spinner"></div>
         <p>Loading...</p>
     </div>
 
     <div class="error-message" id="errorMessage"></div>
+    
+    </div>
+    
 
     <script>
+         
+         function restartUserTour() {
+  localStorage.removeItem('userSeenTour');
+  startUserTour(); // This will immediately begin the intro tour
+}
+         
+         function startUserTour() {
+  const steps = [
+    { selector: ".nav-item:nth-child(1)", message: "This is the Trailers tab. See trending trailers here." },
+    { selector: ".nav-item:nth-child(2)", message: "This is the Movies tab. Browse popular movies here." },
+    { selector: ".nav-item:nth-child(3)", message: "This is the Anime tab. All things anime live here." },
+    { selector: ".nav-item:nth-child(4)", message: "This is the Download tab. View Upcoming Downloads here." },
+    { selector: ".nav-item:nth-child(5)", message: "This is your Profile tab. Update settings here." },
+    { selector: ".search-container", message: "Use the search bar to find any content quickly and reload it." }
+  ];
+
+  let current = 0;
+
+  function showStep() {
+    const step = steps[current];
+    const el = document.querySelector(step.selector);
+
+    if (!el) return;
+
+    const rect = el.getBoundingClientRect();
+    const toast = document.createElement('div');
+    toast.className = 'tour-toast';
+    toast.innerText = step.message;
+
+    // Positioning the toast
+    // Default: show above element
+let top = window.scrollY + rect.top - 60;
+
+// If too close to top, show below
+if (top < 20) {
+  top = window.scrollY + rect.bottom + 80;
+}
+
+toast.style.top = top + "px";
+toast.style.left = (window.scrollX + rect.left + rect.width / 2 - 100) + "px";
+
+    document.body.appendChild(toast);
+
+    // Auto-advance to next step
+    setTimeout(() => {
+      toast.remove();
+      current++;
+      if (current < steps.length) {
+        showStep();
+      } else {
+        localStorage.setItem("userSeenTour", "true");
+      }
+    }, 3000);
+  }
+
+  showStep();
+}
+
+         function showNotificationModal() {
+  document.getElementById('notificationModal').style.display = 'block';
+}
+
+function hideNotificationModal() {
+  document.getElementById('notificationModal').style.display = 'none';
+}
+
+         // Add these functions to your script
+function setTheme(theme) {
+    if (theme === 'dark') {
+        document.body.classList.add('dark-mode');
+        document.body.classList.remove('light-mode');
+        // Update theme buttons
+        document.querySelector('.theme-btn.dark').classList.add('active');
+        document.querySelector('.theme-btn.light').classList.remove('active');
+    } else {
+        document.body.classList.add('light-mode');
+        document.body.classList.remove('dark-mode');
+        // Update theme buttons
+        document.querySelector('.theme-btn.light').classList.add('active');
+        document.querySelector('.theme-btn.dark').classList.remove('active');
+    }
+    // Save to localStorage if needed
+    localStorage.setItem('themePreference', theme);
+}
+
+function showAbout() {
+    alert('Movie & Trailer App\nVersion 2.0.0\n\nA simple app to browse movies and trailers');
+}
+
+// Initialize theme on load
+document.addEventListener('DOMContentLoaded', function() {
+    const savedTheme = localStorage.getItem('themePreference') || 'dark';
+    setTheme(savedTheme);
+    
+   
+});
+
+         function showAccountModal() {
+        const modal = document.getElementById('accountModal');
+        const user = JSON.parse(localStorage.getItem('userProfile')) || {};
+        document.getElementById('userName').value = user.name || '';
+        document.getElementById('userEmail').value = user.email || '';
+        modal.style.display = 'block';
+    }
+
+    function closeModal() {
+        document.getElementById('accountModal').style.display = 'none';
+    }
+
+    function saveAccount(e) {
+        e.preventDefault();
+        const userProfile = {
+            name: document.getElementById('userName').value.trim(),
+            email: document.getElementById('userEmail').value.trim(),
+            joined: new Date().toISOString()
+        };
+        
+        localStorage.setItem('userProfile', JSON.stringify(userProfile));
+        updateUserStatus();
+        closeModal();
+        showToast('Profile saved successfully');
+    }
+
+    function updateUserStatus() {
+        const user = JSON.parse(localStorage.getItem('userProfile'));
+        const statusElement = document.getElementById('userStatus');
+        const avatar = document.querySelector('#mePage .me-card:first-child .avatar');
+        
+        if (user && user.name) {
+            statusElement.textContent = user.name;
+            avatar.innerHTML = '<i class="fas fa-user-check"></i>';
+            avatar.style.backgroundColor = '#4CAF50';
+        } else {
+            statusElement.textContent = 'Guest Mode';
+            avatar.innerHTML = '<i class="fas fa-user"></i>';
+            avatar.style.backgroundColor = 'var(--primary)';
+        }
+    }
+
+    // Initialize on load
+    document.addEventListener('DOMContentLoaded', () => {
+        updateUserStatus();
+        
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('accountModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        };
+    });
         const apiKeys = [
             "AIzaSyABi7KdpAijF9gu09dSefpXJyhjIRY66Eg",
             "AIzaSyAqLty-6vku33b3bpdG5S4oLkyoimdw8TU",
@@ -605,8 +1244,7 @@ srcdoc='
             "AIzaSyDe7rOrqZFH3vIqP9zBtNkQ0Lqz4mBz9BI",
             "AIzaSyDFH66idOZwfx-PfO1AXdsUeCa2gV1kCk4",
 "AIzaSyC_syRSRRxQR1DbtHZzMw9glxcR7My8ly4",
-"AIzaSyAlbWmxyzhL2RaNPNlPsANzY7R0JZUj_TU",
-             "AIzaSyC4WKW6-m7RlZyu6EctRsN9XjiOz5Z7GWk"
+"AIzaSyAlbWmxyzhL2RaNPNlPsANzY7R0JZUj_TU"
         ];
         let currentKeyIndex = 0;
 
@@ -643,6 +1281,45 @@ function escapeHtml(unsafe) {
         function showLoading(show) {
             document.getElementById('loading').style.display = show ? 'flex' : 'none';
         }
+        
+        function showSearchHistory() {
+  const history = JSON.parse(localStorage.getItem('searchHistory')) || [];
+  const list = document.getElementById('searchHistoryList');
+  const displayItems = history.slice(0, 10); // Last 10 only
+
+  list.innerHTML = '';
+  displayItems.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'search-history-item';
+    div.textContent = item.query;
+    div.onclick = () => {
+      document.getElementById('search').value = item.query;
+      list.style.display = 'none';
+      searchContent();
+    };
+    list.appendChild(div);
+  });
+
+  if (displayItems.length > 0) {
+    list.style.display = 'block';
+  }
+}
+
+function hideSearchHistory() {
+  // Delay so click still registers
+  setTimeout(() => {
+    document.getElementById('searchHistoryList').style.display = 'none';
+  }, 150);
+}
+
+function filterSearchHistory() {
+  const input = document.getElementById('search').value.toLowerCase();
+  const allItems = document.querySelectorAll('.search-history-item');
+
+  allItems.forEach(item => {
+    item.style.display = item.textContent.toLowerCase().includes(input) ? 'block' : 'none';
+  });
+}
 
         function showError(message) {
             const errorDiv = document.getElementById('errorMessage');
@@ -655,33 +1332,50 @@ function escapeHtml(unsafe) {
 
 
         function showPage(pageId) {
-            document.querySelectorAll('.page').forEach(page => {
-                page.classList.remove('active');
-            });
+    // Switch visible page
+    document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+    });
+    document.getElementById(pageId).classList.add('active');
 
-            document.getElementById(pageId).classList.add('active');
-
-            document.querySelectorAll('.nav-item').forEach(item => {
-                item.classList.remove('active');
-                if (item.getAttribute('onclick').includes(pageId)) {
-                    item.classList.add('active');
-                    if (pageId === 'animePage') {
-                        item.classList.add('anime');
-                    }
-                }
-            });
-
-            if (pageId === 'trailerPage' && trailerTotalResults.length === 0) {
-                fetchTrendingTrailers();
-            } else if (pageId === 'moviesPage' && movieTotalResults.length === 0) {
-                fetchTrendingMovies();
-            } else if (pageId === 'animePage' && animeTotalResults.length === 0) {
-                fetchTrendingAnime();
-            } else if (pageId === 'historyPage') {
-                loadHistory();
+    // Update bottom nav active state
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+        const onclickAttr = item.getAttribute('onclick') || '';
+        if (onclickAttr.includes(pageId)) {
+            item.classList.add('active');
+            if (pageId === 'animePage') {
+                item.classList.add('anime');
             }
         }
+    });
 
+    // Load data if needed
+    if (pageId === 'trailerPage' && trailerTotalResults.length === 0) {
+        fetchTrendingTrailers();
+    } else if (pageId === 'moviesPage' && movieTotalResults.length === 0) {
+        fetchTrendingMovies();
+    } else if (pageId === 'animePage' && animeTotalResults.length === 0) {
+        fetchTrendingAnime();
+    } else if (pageId === 'historyPage') {
+        loadHistory();
+    }
+
+    // Show/hide search bar
+    const searchBar = document.querySelector('.search-container');
+    if (pageId === 'mePage') {
+        searchBar.style.display = 'none';
+    } else {
+        searchBar.style.display = 'flex';
+    }
+
+    // Hide all pagination if on Me page
+    document.querySelectorAll('.pagination-container').forEach(p => {
+        if (pageId === 'mePage') {
+            p.style.display = 'none';
+        }
+    });
+}
         function searchContent() {
             const query = document.getElementById('search').value.trim();
             if (!query) return;
@@ -747,7 +1441,9 @@ function escapeHtml(unsafe) {
                 trailerCurrentPage = 0;
                 displayTrailerResults();
                 updateTrailerPagination();
-                saveToHistory(query, trailerTotalResults[0]?.snippet?.thumbnails?.medium?.url);
+                if (query) {
+  saveToHistory(query, trailerTotalResults[0]?.snippet?.thumbnails?.medium?.url || '');
+}
             } catch (error) {
                 showError(`Failed to search trailers: ${error.message}`);
             } finally {
@@ -910,7 +1606,9 @@ async function fetchVideoStats(videoId) {
                 movieCurrentPage = 0;
                 displayMovieResults();
                 updateMoviePagination();
-                saveToHistory(query, movieTotalResults[0]?.snippet?.thumbnails?.medium?.url);
+                if (query) {
+  saveToHistory(query, movieTotalResults[0]?.snippet?.thumbnails?.medium?.url || '');
+}
             } catch (error) {
                 showError(`Failed to search movies: ${error.message}`);
             } finally {
@@ -1142,23 +1840,25 @@ function playVideo(videoId, title="", thumbnail="") {
   }, 300);
 }
         // History Functions
-        function saveToHistory(query, thumbnail) {
-            let history = JSON.parse(localStorage.getItem('searchHistory')) || [];
-            history = history.filter(item => item.query.toLowerCase() !== query.toLowerCase());
-            
-            history.unshift({
-                query,
-                thumbnail,
-                date: new Date().toISOString()
-            });
-            
-            if (history.length > 50) {
-                history = history.slice(0, 50);
-            }
-            
-            localStorage.setItem('searchHistory', JSON.stringify(history));
-        }
+       function saveToHistory(query, thumbnail) {
+  let history = JSON.parse(localStorage.getItem('searchHistory')) || [];
 
+  // Remove duplicates (case-insensitive)
+  history = history.filter(item => item.query.toLowerCase() !== query.toLowerCase());
+
+  history.unshift({
+    query,
+    thumbnail,
+    date: new Date().toISOString()
+  });
+
+  // Only keep last 10
+  if (history.length > 10) {
+    history = history.slice(0, 10);
+  }
+
+  localStorage.setItem('searchHistory', JSON.stringify(history));
+}
         function loadHistory() {
             const history = JSON.parse(localStorage.getItem('searchHistory')) || [];
             const container = document.getElementById('historyContainer');
@@ -1221,6 +1921,25 @@ function playVideo(videoId, title="", thumbnail="") {
                 localStorage.setItem('lastSearch', e.target.value);
             });
         });
+        
+        function clearAllCache() {
+    Object.keys(localStorage).forEach(key => {
+        if (key.startsWith('preload-') || key.includes('Trending') || key.includes('Results')) {
+            localStorage.removeItem(key);
+        }
+    });
+    location.reload();
+}
+
+//For Tour startup
+window.addEventListener('DOMContentLoaded', () => {
+  const seenTour = localStorage.getItem("userSeenTour");
+  if (!seenTour) {
+    setTimeout(() => {
+      startUserTour();
+    }, 1000); // slight delay after load
+  }
+});
     </script>
     <script async="async" data-cfasync="false" src="//pl22648993.effectiveratecpm.com/89f1e40e0e6d7dcb91eb378512134e8a/invoke.js"></script>
 <div id="container-89f1e40e0e6d7dcb91eb378512134e8a"></div>
@@ -1239,5 +1958,35 @@ class="statcounter" src="https://c.statcounter.com/13118904/0/0bf9b7d3/1/"
 alt="Web Analytics Made Easy - Statcounter"
 referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
 <!-- End of Statcounter Code -->
+
+
+<div id="notificationModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="hideNotificationModal()">&times;</span>
+    <h2>Notifications</h2>
+    <ul class="notification-list">
+      <li><strong>Update:</strong> 250+ Movies added.</li>
+      <li><strong>New:</strong> Anime tab now supports trending filters.</li>
+      <li><strong>Tip:</strong> Instant Download is coming soon.</li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- Add the modal markup right before the closing </body> tag -->
+    <!-- Account Modal -->
+    <div id="accountModal" class="modal">
+        <div class="modal-content">
+            <h3 style="margin-bottom: 20px;">Account Settings</h3>
+            <form id="accountForm" onsubmit="saveAccount(event)">
+                <input type="text" class="modal-input" id="userName" placeholder="Your Name" required>
+                <input type="email" class="modal-input" id="userEmail" placeholder="Email (optional)">
+                <div class="modal-actions">
+                    <button type="button" class="modal-btn secondary" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="modal-btn primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
