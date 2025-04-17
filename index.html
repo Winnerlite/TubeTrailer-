@@ -1064,7 +1064,7 @@ srcdoc='
         <span>Anime</span>
     </a>
     
-    <a href="https://example.com/download" class="nav-item" target="_blank">
+    <a href="https://phoampor.top/4/9219988" class="nav-item" target="_blank">
         <i class="fas fa-download"></i>
         <span>Download</span>
     </a>
@@ -1170,8 +1170,12 @@ function setTheme(theme) {
     localStorage.setItem('themePreference', theme);
 }
 
-function showAbout() {
-    alert('Movie & Trailer App\nVersion 2.0.0\n\nA simple app to browse movies and trailers');
+function showAboutModal() {
+  document.getElementById('aboutModal').style.display = 'block';
+}
+
+function hideAboutModal() {
+  document.getElementById('aboutModal').style.display = 'none';
 }
 
 // Initialize theme on load
@@ -1988,5 +1992,15 @@ referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
             </form>
         </div>
     </div>
+    
+    <div id="aboutModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="hideAboutModal()">&times;</span>
+    <h2>About This App</h2>
+    <p>Version 2.0.0</p>
+    <p>Developed by HaugenDesign</p>
+    <p>This app lets you browse movies, trailers, and anime with ease.</p>
+  </div>
+</div>
 </body>
 </html>
