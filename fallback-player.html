@@ -79,6 +79,61 @@
         height: calc(100vw * 9 / 16);
       }
     }
+    
+    .download-section {
+  margin-top: 25px;
+  text-align: center;
+}
+
+#downloadBtn {
+  padding: 18px 40px;
+  font-size: 18px;
+  color: #fff;
+  background: linear-gradient(90deg, #ff5f6d, #ffc371, #42e695, #3bb2b8);
+  background-size: 300% 300%;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-weight: bold;
+  animation: glowShift 5s linear infinite;
+}
+
+#downloadBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.download-options {
+  margin-top: 15px;
+}
+
+.download-options button {
+  margin: 5px;
+  padding: 8px 14px;
+  background-color: #222;
+  color: white;
+  border: 1px solid #555;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+@keyframes glowShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+button, button:focus, button:active {
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none;    /* Firefox */
+  -ms-user-select: none;     /* IE10+/Edge */
+  user-select: none;         /* Standard */
+}
   </style>
 </head>
 <body>
@@ -136,6 +191,24 @@ srcdoc='
   <div id="video-wrapper">
     <iframe id="ytplayer" allowfullscreen></iframe>
   </div>
+  
+  <div class="download-section">
+  <button id="downloadBtn" onclick="simulateDownload()">Download Video</button>
+ <div class="download-options">
+  <button id="realDownloadBtn">720p .MP4</button>
+  <button onclick="window.location.href='https://pubertytechnicallyknowhow.com/m06est9z?key=c719d5e4c9dd79e8821c8639b98ab94f';">1080p .MP4</button>
+  <button onclick="window.location.href='<script>
+  
+  const realBtn = document.getElementById('realDownloadBtn');
+  if (videoId) {
+    // Example using y2mate.tools (or change to another clean one)
+    realBtn.onclick = () => {
+      const url = `https://y2mate.tools/en68?q=https://www.youtube.com/watch?v=${videoId}`;
+      window.location.href = url;
+    };
+  }
+</script>';">Mobile Version</button>
+</div>
 
   <!-- Quality Tip + Ad Section -->
   <div id="quality-tip">
@@ -201,7 +274,25 @@ srcdoc='
     if (videoId) {
       yt.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
     }
+// Save viewed video to localStorage with thumbnail and title
+fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`)
+  .then(response => response.json())
+  .then(data => {
+    const watched = JSON.parse(localStorage.getItem("watchedVideos")) || [];
 
+    if (!watched.some(v => v.id === videoId)) {
+      watched.push({
+        id: videoId,
+        title: data.title,
+        thumbnail: `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
+      });
+
+      localStorage.setItem("watchedVideos", JSON.stringify(watched));
+    }
+  })
+  .catch(err => {
+    console.error("Failed to fetch video info:", err);
+  });
     document.getElementById('ratio-select').addEventListener('change', function () {
       const aspect = this.value;
       const wrapper = document.getElementById('video-wrapper');
@@ -218,7 +309,29 @@ srcdoc='
       // Adjust height of iframe
       yt.style.height = `calc(100vw * ${heightRatio})`;
     });
+    
+    
+  const realBtn = document.getElementById('realDownloadBtn');
+  if (videoId) {
+  realBtn.onclick = () => {
+    const url = `https://ssyoutube.com/watch?v=${videoId}`;
+    window.location.href = url;
+  };
+}
+    
   </script>
   
+  <script>
+  function simulateDownload() {
+    const btn = document.getElementById('downloadBtn');
+    btn.textContent = "Preparing download...";
+    btn.disabled = true;
+
+    setTimeout(() => {
+      window.location.href = "https://pubertytechnicallyknowhow.com/m06est9z?key=c719d5e4c9dd79e8821c8639b98ab94f";
+    }, 5000); // 5 seconds delay
+  }
+  
+</script>
 </body>
 </html>

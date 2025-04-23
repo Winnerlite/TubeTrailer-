@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Downloads</title>
+  <style>
+    body {
+      background: #0b0b0b;
+      color: white;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      text-align: center;
+    }
+    h1 {
+      font-size: 26px;
+      margin-bottom: 10px;
+    }
+    .video-card {
+      background: #1a1a1a;
+      padding: 15px;
+      margin: 15px auto;
+      border-radius: 12px;
+      max-width: 600px;
+      box-shadow: 0 0 8px #111;
+    }
+    .video-card h3 {
+      margin-bottom: 8px;
+    }
+    .video-card button {
+      margin: 5px;
+      padding: 8px 16px;
+      background: #222;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .video-card button:hover {
+      background: #333;
+    }
+    .idle-ad {
+      margin-top: 60px;
+      font-size: 14px;
+      color: #aaa;
+    }
+    
+    body {
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none;    /* Firefox */
+  -ms-user-select: none;     /* IE10+/Edge */
+  user-select: none;         /* Standard */
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+.dots::after {
+  content: "...";
+  animation: blink 1.2s steps(3, end) infinite;
+}
+
+#idleAdMessage.loaded {
+  color: #58f;
+  cursor: pointer;
+  font-weight: bold;
+  animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+  from { text-shadow: 0 0 5px #58f; }
+  to { text-shadow: 0 0 20px #58f; }
+}
+  </style>
+</head>
+<body>
+
+  <h1>Download and watch history</h1>
+  <div id="downloadsContainer"></div>
+
+  <div class="idle-ad" id="idleAdMessage">
+  <span id="loadingText">Looking for more downloads</span><span class="dots">...</span>
+</div>
+
+  <script>
+    const downloads = JSON.parse(localStorage.getItem("watchedVideos")) || [];
+
+    const container = document.getElementById("downloadsContainer");
+
+    if (downloads.length === 0) {
+      container.innerHTML = "<p>No downloads yet. Watch something first!</p>";
+    } else {
+      downloads.forEach(vid => {
+        const card = document.createElement("div");
+        card.className = "video-card";
+        card.innerHTML = `
+  <img src="${vid.thumbnail}" alt="Thumbnail" style="width:100%; border-radius:10px; margin-bottom:10px;">
+  <h3>${vid.title}</h3>
+  <button onclick="watchAgain('${vid.id}')">Watch Again</button>
+  <button onclick="downloadAgain('${vid.id}')">Download Again</button>
+`;
+        container.appendChild(card);
+      });
+    }
+
+    function watchAgain(id) {
+      window.location.href = "fallback-player.html?v=" + id;
+    }
+
+    function downloadAgain(id) {
+      // Ad trigger
+      window.location.href = "https://your-adsterra-direct-link.com";
+    }
+
+    // Optional: Ad redirect if user idles for 20 seconds
+    setTimeout(() => {
+  const msg = document.getElementById("idleAdMessage");
+  const dots = document.querySelector(".dots");
+  const loader = document.getElementById("loadingText");
+
+  loader.textContent = "Get more downloads here";
+  dots.style.display = "none";
+  msg.classList.add("loaded");
+
+  msg.onclick = () => {
+    window.location.href = "https://pubertytechnicallyknowhow.com/tmi7yv3z3t?key=10d1f1faf8d88f843112f5d3158b918a";
+  };
+}, 7000);
+  </script>
+
+</body>
+</html>
