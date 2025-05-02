@@ -1,26 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script type="text/javascript">
+       <script>
+    // Immediately set theme class before any rendering
+    (function() {
+      const savedTheme = localStorage.getItem('themePreference') || 'dark';
+      document.documentElement.className = savedTheme === 'light' ? 'light-mode' : 'dark-mode';
+    })();
+  </script>
+  <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "r4ikpxyih2");
-</script>
+  </script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Custom Video Player</title>
   <style>
+  :root.dark-mode {
+      --bg: #000;
+      --text: white;
+      --text-secondary: #aaa;
+      --button-bg: #222;
+      --button-hover: #333;
+      --border-color: #555;
+      --gradient-start: red;
+      --gradient-mid: purple;
+      --gradient-end: blue;
+      --download-gradient-start: #ff5f6d;
+      --download-gradient-mid: #ffc371;
+      --download-gradient-end: #42e695;
+    }
+
+    :root.light-mode {
+      --bg: #f5f5f5;
+      --text: #333;
+      --text-secondary: #666;
+      --button-bg: #e0e0e0;
+      --button-hover: #d0d0d0;
+      --border-color: #ccc;
+      --gradient-start: #8a2be2;
+      --gradient-mid: #4b6cb7;
+      --gradient-end: #182848;
+      --download-gradient-start: #6a11cb;
+      --download-gradient-mid: #2575fc;
+      --download-gradient-end: #00d2ff;
+    }
+    
+    body.light-mode {
+      --bg: #f5f5f5;
+      --text: #333;
+      --text-secondary: #666;
+      --button-bg: #e0e0e0;
+      --button-hover: #d0d0d0;
+      --border-color: #ccc;
+      --gradient-start: #8a2be2;
+      --gradient-mid: #4b6cb7;
+      --gradient-end: #182848;
+      --download-gradient-start: #6a11cb;
+      --download-gradient-mid: #2575fc;
+      --download-gradient-end: #00d2ff;
+    }
+
     body {
       margin: 0;
-      background: #000;
+      background: var(--bg);
       font-family: Arial, sans-serif;
-      color: white;
+      color: var(--text);
       display: flex;
       flex-direction: column;
       align-items: center;
       padding: 20px;
+      transition: background 0.3s ease, color 0.3s ease;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
     }
 
     #controls {
@@ -29,16 +86,22 @@
 
     #controls select {
       padding: 5px 10px;
-      background: #222;
-      color: white;
-      border: 1px solid #555;
+      background: var(--button-bg);
+      color: var(--text);
+      border: 1px solid var(--border-color);
       border-radius: 5px;
+      transition: all 0.3s ease;
     }
 
     #video-wrapper {
       padding: 5px;
       border-radius: 15px;
-      background: linear-gradient(45deg, red, purple, blue, cyan, purple, red);
+      background: linear-gradient(45deg, 
+        var(--gradient-start), 
+        var(--gradient-mid), 
+        var(--gradient-end), 
+        var(--gradient-mid), 
+        var(--gradient-start));
       background-size: 400% 400%;
       animation: glowSpin 8s linear infinite;
       width: 100%;
@@ -65,6 +128,7 @@
       font-size: 14px;
       text-align: center;
       max-width: 900px;
+      color: var(--text-secondary);
     }
 
     .ad-frame {
@@ -74,74 +138,109 @@
       margin-top: 20px;
     }
 
+    .download-section {
+      margin-top: 25px;
+      text-align: center;
+    }
+
+    #downloadBtn {
+      padding: 18px 40px;
+      font-size: 18px;
+      color: #fff;
+      background: linear-gradient(90deg, 
+        var(--download-gradient-start), 
+        var(--download-gradient-mid), 
+        var(--download-gradient-end),
+        var(--download-gradient-mid));
+      background-size: 300% 300%;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: bold;
+      animation: glowShift 5s linear infinite;
+    }
+
+    #downloadBtn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .download-options {
+      margin-top: 15px;
+    }
+
+    .download-options button {
+      margin: 5px;
+      padding: 8px 14px;
+      background-color: var(--button-bg);
+      color: var(--text);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .download-options button:hover {
+      background-color: var(--button-hover);
+    }
+
+    @keyframes glowShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    button, button:focus, button:active {
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
     @media (max-width: 600px) {
       iframe#ytplayer {
         height: calc(100vw * 9 / 16);
       }
     }
-    
-    .download-section {
-  margin-top: 25px;
-  text-align: center;
-}
-
-#downloadBtn {
-  padding: 18px 40px;
-  font-size: 18px;
-  color: #fff;
-  background: linear-gradient(90deg, #ff5f6d, #ffc371, #42e695, #3bb2b8);
-  background-size: 300% 300%;
-  border: none;
-  border-radius: 50px;
-  cursor: pointer;
-  font-weight: bold;
-  animation: glowShift 5s linear infinite;
-}
-
-#downloadBtn:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-
-.download-options {
-  margin-top: 15px;
-}
-
-.download-options button {
-  margin: 5px;
-  padding: 8px 14px;
-  background-color: #222;
-  color: white;
-  border: 1px solid #555;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-@keyframes glowShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-button, button:focus, button:active {
-  outline: none;
-  -webkit-tap-highlight-color: transparent;
-}
-
-body {
-  -webkit-user-select: none; /* Safari */
-  -moz-user-select: none;    /* Firefox */
-  -ms-user-select: none;     /* IE10+/Edge */
-  user-select: none;         /* Standard */
-}
   </style>
 </head>
 <body>
-     <!--Keep the script only once in a hidden container to initialize the ad -->
-     <div style="display:none;">
-  <div id="container-c53c47fd171910c4da636669b2c26e51"></div>
-  <script async="async" data-cfasync="false" src="//pl24473149.profitableratecpm.com/c53c47fd171910c4da636669b2c26e51/invoke.js"></script>
-</div>
+  <!-- Hidden ad container -->
+  <div style="display:none;">
+    <div id="container-c53c47fd171910c4da636669b2c26e51"></div>
+    <script async="async" data-cfasync="false" src="//pl24473149.profitableratecpm.com/c53c47fd171910c4da636669b2c26e51/invoke.js"></script>
+  </div>
+
+  <!-- Top Ad Banner -->
+  <iframe style="border:none; width:100%; height:140px;" scrolling="no" srcdoc='
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <style>
+        body {
+          margin: 0;
+          padding: 0;
+          font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+          background-color: #00000;
+          color: #555;
+        }
+        .ad-label {
+          padding: 10px 0;
+          font-size: 14px;
+          font-weight: 600;
+          color: #888;
+          letter-spacing: 0.5px;
+          text-transform: uppercase;
+          border-bottom: 1px solid #eee;
+          margin-bottom: 8px;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="ad-label"><!--Ads are placed by sponsors--></div>
+      <div id="container-c53c47fd171910c4da636669b2c26e51"></div>
+      <script async data-cfasync="false" src="//pl24473149.profitableratecpm.com/c53c47fd171910c4da636669b2c26e51/invoke.js"></script>
+    </body>
+    </html>'>
+  </iframe>
 
   <!-- Aspect Ratio Selector -->
   <div id="controls">
@@ -154,104 +253,59 @@ body {
     </select>
   </div>
   
-  <iframe style="border:none; width:100%; height:140px;" scrolling="no"
-srcdoc='
-  <!DOCTYPE html>
-  <html>
-  <head>
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        background-color: #00000;
-        color: #555;
-      }
-      .ad-label {
-        padding: 10px 0;
-        font-size: 14px;
-        font-weight: 600;
-        color: #888;
-        letter-spacing: 0.5px;
-        text-transform: uppercase;
-        border-bottom: 1px solid #eee;
-        margin-bottom: 8px;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="ad-label"><!--Ads are placed by sponsors--></div>
-    <div id="container-c53c47fd171910c4da636669b2c26e51"></div>
-    <script async data-cfasync="false" src="//pl24473149.profitableratecpm.com/c53c47fd171910c4da636669b2c26e51/invoke.js"></script>
-  </body>
-  </html>
-'></iframe>
-
   <!-- YouTube Video Wrapper -->
   <div id="video-wrapper">
     <iframe id="ytplayer" allowfullscreen></iframe>
   </div>
   
   <div class="download-section">
-  <button id="downloadBtn" onclick="simulateDownload()">Download Video</button>
- <div class="download-options">
-  <button id="realDownloadBtn">720p .MP4</button>
-  <button onclick="window.location.href='https://pubertytechnicallyknowhow.com/m06est9z?key=c719d5e4c9dd79e8821c8639b98ab94f';">1080p .MP4</button>
-  <button onclick="window.location.href='<script>
-  
-  const realBtn = document.getElementById('realDownloadBtn');
-  if (videoId) {
-    // Example using y2mate.tools (or change to another clean one)
-    realBtn.onclick = () => {
-      const url = `https://y2mate.tools/en68?q=https://www.youtube.com/watch?v=${videoId}`;
-      window.location.href = url;
-    };
-  }
-</script>';">Mobile Version</button>
-</div>
+    <button id="downloadBtn" onclick="simulateDownload()">Download Video</button>
+    <div class="download-options">
+      <button id="realDownloadBtn">720p .MP4</button>
+      <button onclick="window.location.href='https://pubertytechnicallyknowhow.com/m06est9z?key=c719d5e4c9dd79e8821c8639b98ab94f';">1080p .MP4</button>
+      <button onclick="window.location.href='https://y2mate.tools/en68';">Mobile Version</button>
+    </div>
+  </div>
 
-  <!-- Quality Tip + Ad Section -->
+  <!-- Quality Tip -->
   <div id="quality-tip">
     Tip: Click the gear icon in the video player to change quality (360p, 720p, 1080p).
   </div>
 
-  <!-- Sponsored Ad Note + Ad Frame -->
-  <iframe class="ad-frame" scrolling="no" style="height: 220px;"
-    srcdoc='
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <style>
-          body {
-            margin: 0;
-            padding: 0;
-            font-family: sans-serif;
-            background-color: #111;
-            color: #aaa;
-            font-size: 14px;
-            text-align: center;
-          }
-          .ad-label {
-            padding: 10px;
-            font-weight: bold;
-            text-transform: uppercase;
-          }
-        </style>
-      </head>
-      <body>
-        <div class="ad-label">Ads are placed by sponsors</div>
-        <div id="container-c53c47fd171910c4da636669b2c26e51"></div>
-        <script async data-cfasync="false" src="//pl24473149.profitableratecpm.com/c53c47fd171910c4da636669b2c26e51/invoke.js"></script>
-      </body>
-      </html>'>
+  <!-- Bottom Ad Banner -->
+  <iframe class="ad-frame" scrolling="no" style="height: 220px;" srcdoc='
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <style>
+        body {
+          margin: 0;
+          padding: 0;
+          font-family: sans-serif;
+          background-color: #111;
+          color: #aaa;
+          font-size: 14px;
+          text-align: center;
+        }
+        .ad-label {
+          padding: 10px;
+          font-weight: bold;
+          text-transform: uppercase;
+        }
+      </style>
+    </head>
+    <body>
+      <div class="ad-label">Ads are placed by sponsors</div>
+      <div id="container-c53c47fd171910c4da636669b2c26e51"></div>
+      <script async data-cfasync="false" src="//pl24473149.profitableratecpm.com/c53c47fd171910c4da636669b2c26e51/invoke.js"></script>
+    </body>
+    </html>'>
   </iframe>
   
-  
-
-  <!-- External Ad Scripts (only loaded once) -->
+  <!-- Additional Ad Scripts -->
   <div style="display:none;">
-    <div id="container-c53c47fd171910c4da636669b2c26e51"></div>
-    <script async="async" data-cfasync="false" src="//pl24473149.profitableratecpm.com/c53c47fd171910c4da636669b2c26e51/invoke.js"></script>
+    <div id="container-89f1e40e0e6d7dcb91eb378512134e8a"></div>
+    <script async="async" data-cfasync="false" src="//pl22648993.effectiveratecpm.com/89f1e40e0e6d7dcb91eb378512134e8a/invoke.js"></script>
     <script type="text/javascript">
       atOptions = {
         'key' : '6512ad7d65fae093238199b7f02f16d2',
@@ -262,40 +316,56 @@ srcdoc='
       };
     </script>
     <script type="text/javascript" src="//www.highperformanceformat.com/6512ad7d65fae093238199b7f02f16d2/invoke.js"></script>
-    
   </div>
-  
 
   <script>
+       
+        // Theme management - now runs after initial render
+    function checkTheme() {
+      const theme = localStorage.getItem('themePreference') || 'dark';
+      document.documentElement.className = theme === 'light' ? 'light-mode' : 'dark-mode';
+    }
+
+    window.addEventListener('storage', function(event) {
+      if (event.key === 'themePreference') {
+        checkTheme();
+      }
+    });
+
+    // Video player setup
     const query = new URLSearchParams(window.location.search);
     const videoId = query.get('v');
     const yt = document.getElementById('ytplayer');
 
     if (videoId) {
       yt.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
-    }
-// Save viewed video to localStorage with thumbnail and title
-fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`)
-  .then(response => response.json())
-  .then(data => {
-    const watched = JSON.parse(localStorage.getItem("watchedVideos")) || [];
+      
+      // Save to watch history
+      fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`)
+        .then(response => response.json())
+        .then(data => {
+          const watched = JSON.parse(localStorage.getItem("watchedVideos")) || [];
+          if (!watched.some(v => v.id === videoId)) {
+            watched.push({
+              id: videoId,
+              title: data.title,
+              thumbnail: `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
+            });
+            localStorage.setItem("watchedVideos", JSON.stringify(watched));
+          }
+        })
+        .catch(console.error);
 
-    if (!watched.some(v => v.id === videoId)) {
-      watched.push({
-        id: videoId,
-        title: data.title,
-        thumbnail: `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
-      });
-
-      localStorage.setItem("watchedVideos", JSON.stringify(watched));
+      // Setup download button
+      const realBtn = document.getElementById('realDownloadBtn');
+      realBtn.onclick = () => {
+        window.location.href = `https://ssyoutube.com/watch?v=${videoId}`;
+      };
     }
-  })
-  .catch(err => {
-    console.error("Failed to fetch video info:", err);
-  });
-    document.getElementById('ratio-select').addEventListener('change', function () {
+
+    // Aspect ratio control
+    document.getElementById('ratio-select').addEventListener('change', function() {
       const aspect = this.value;
-      const wrapper = document.getElementById('video-wrapper');
       let heightRatio;
 
       switch (aspect) {
@@ -306,32 +376,17 @@ fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${vide
         default: heightRatio = 9 / 16;
       }
 
-      // Adjust height of iframe
       yt.style.height = `calc(100vw * ${heightRatio})`;
     });
-    
-    
-  const realBtn = document.getElementById('realDownloadBtn');
-  if (videoId) {
-  realBtn.onclick = () => {
-    const url = `https://ssyoutube.com/watch?v=${videoId}`;
-    window.location.href = url;
-  };
-}
-    
-  </script>
-  
-  <script>
-  function simulateDownload() {
-    const btn = document.getElementById('downloadBtn');
-    btn.textContent = "Preparing download...";
-    btn.disabled = true;
 
-    setTimeout(() => {
-      window.location.href = "https://pubertytechnicallyknowhow.com/m06est9z?key=c719d5e4c9dd79e8821c8639b98ab94f";
-    }, 5000); // 5 seconds delay
-  }
-  
-</script>
+    function simulateDownload() {
+      const btn = document.getElementById('downloadBtn');
+      btn.textContent = "Preparing download...";
+      btn.disabled = true;
+      setTimeout(() => {
+        window.location.href = "https://pubertytechnicallyknowhow.com/m06est9z?key=c719d5e4c9dd79e8821c8639b98ab94f";
+      }, 5000);
+    }
+  </script>
 </body>
 </html>
