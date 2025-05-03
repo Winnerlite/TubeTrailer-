@@ -1,7 +1,8 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-       <script>
+  <script>
     // Immediately set theme class before any rendering
     (function() {
       const savedTheme = localStorage.getItem('themePreference') || 'dark';
@@ -19,7 +20,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Custom Video Player</title>
   <style>
-  :root.dark-mode {
+    :root.dark-mode {
       --bg: #000;
       --text: white;
       --text-secondary: #aaa;
@@ -32,8 +33,9 @@
       --download-gradient-start: #ff5f6d;
       --download-gradient-mid: #ffc371;
       --download-gradient-end: #42e695;
+      --card-bg: #1a1a1a;
+      --primary: #8a2be2;
     }
-
     :root.light-mode {
       --bg: #f5f5f5;
       --text: #333;
@@ -47,23 +49,9 @@
       --download-gradient-start: #6a11cb;
       --download-gradient-mid: #2575fc;
       --download-gradient-end: #00d2ff;
+      --card-bg: #ffffff;
+      --primary: #8a2be2;
     }
-    
-    body.light-mode {
-      --bg: #f5f5f5;
-      --text: #333;
-      --text-secondary: #666;
-      --button-bg: #e0e0e0;
-      --button-hover: #d0d0d0;
-      --border-color: #ccc;
-      --gradient-start: #8a2be2;
-      --gradient-mid: #4b6cb7;
-      --gradient-end: #182848;
-      --download-gradient-start: #6a11cb;
-      --download-gradient-mid: #2575fc;
-      --download-gradient-end: #00d2ff;
-    }
-
     body {
       margin: 0;
       background: var(--bg);
@@ -79,11 +67,18 @@
       -ms-user-select: none;
       user-select: none;
     }
-
+    .player-container {
+      width: 100%;
+      max-width: 900px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg);
+      padding-bottom: 10px;
+    }
     #controls {
       margin-bottom: 15px;
     }
-
     #controls select {
       padding: 5px 10px;
       background: var(--button-bg);
@@ -92,7 +87,6 @@
       border-radius: 5px;
       transition: all 0.3s ease;
     }
-
     #video-wrapper {
       padding: 5px;
       border-radius: 15px;
@@ -105,9 +99,7 @@
       background-size: 400% 400%;
       animation: glowSpin 8s linear infinite;
       width: 100%;
-      max-width: 900px;
     }
-
     iframe#ytplayer {
       width: 100%;
       height: calc(100vw * 9 / 16);
@@ -116,36 +108,20 @@
       border-radius: 10px;
       display: block;
     }
-
     @keyframes glowSpin {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-
-    #quality-tip {
-      margin-top: 20px;
-      font-size: 14px;
-      text-align: center;
-      max-width: 900px;
-      color: var(--text-secondary);
-    }
-
-    .ad-frame {
-      width: 100%;
-      max-width: 900px;
-      border: none;
-      margin-top: 20px;
-    }
-
     .download-section {
-      margin-top: 25px;
+      margin-top: 15px;
       text-align: center;
+      padding: 15px 0;
+      border-bottom: 1px solid var(--border-color);
     }
-
     #downloadBtn {
-      padding: 18px 40px;
-      font-size: 18px;
+      padding: 12px 30px;
+      font-size: 16px;
       color: #fff;
       background: linear-gradient(90deg, 
         var(--download-gradient-start), 
@@ -159,16 +135,13 @@
       font-weight: bold;
       animation: glowShift 5s linear infinite;
     }
-
     #downloadBtn:disabled {
       opacity: 0.7;
       cursor: not-allowed;
     }
-
     .download-options {
-      margin-top: 15px;
+      margin-top: 10px;
     }
-
     .download-options button {
       margin: 5px;
       padding: 8px 14px;
@@ -179,27 +152,92 @@
       cursor: pointer;
       transition: all 0.3s ease;
     }
-
     .download-options button:hover {
       background-color: var(--button-hover);
     }
-
     @keyframes glowShift {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
-
+    .related-videos {
+      width: 100%;
+      max-width: 900px;
+      margin-top: 20px;
+    }
+    .related-videos h2 {
+      font-size: 20px;
+      margin-bottom: 15px;
+      color: var(--text);
+      border-bottom: 2px solid var(--primary);
+      padding-bottom: 5px;
+    }
+    .related-videos-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 15px;
+    }
+    .video-card {
+      background: var(--card-bg);
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .video-card:hover {
+      transform: translateY(-5px);
+    }
+    .video-thumbnail {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+    }
+    .video-info {
+      padding: 10px;
+    }
+    .video-title {
+      font-size: 14px;
+      margin-bottom: 5px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .video-channel {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    .loading-spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,.3);
+      border-radius: 50%;
+      border-top-color: var(--primary);
+      animation: spin 1s ease-in-out infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
     button, button:focus, button:active {
       outline: none;
       -webkit-tap-highlight-color: transparent;
     }
-
     @media (max-width: 600px) {
       iframe#ytplayer {
         height: calc(100vw * 9 / 16);
       }
+      .related-videos-container {
+        grid-template-columns: 1fr;
+      }
     }
+    
+  .video-card:focus {
+    outline: none;
+    /* Optional alternative for focus visibility */
+    /* box-shadow: 0 0 0 2px var(--primary); */
+  }
+
   </style>
 </head>
 <body>
@@ -208,166 +246,180 @@
     <div id="container-c53c47fd171910c4da636669b2c26e51"></div>
     <script async="async" data-cfasync="false" src="//pl24473149.profitableratecpm.com/c53c47fd171910c4da636669b2c26e51/invoke.js"></script>
   </div>
-
-  <!-- Top Ad Banner -->
-  <iframe style="border:none; width:100%; height:140px;" scrolling="no" srcdoc='
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <style>
-        body {
-          margin: 0;
-          padding: 0;
-          font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-          background-color: #00000;
-          color: #555;
-        }
-        .ad-label {
-          padding: 10px 0;
-          font-size: 14px;
-          font-weight: 600;
-          color: #888;
-          letter-spacing: 0.5px;
-          text-transform: uppercase;
-          border-bottom: 1px solid #eee;
-          margin-bottom: 8px;
-        }
-      </style>
-    </head>
-    <body>
-      <div class="ad-label"><!--Ads are placed by sponsors--></div>
-      <div id="container-c53c47fd171910c4da636669b2c26e51"></div>
-      <script async data-cfasync="false" src="//pl24473149.profitableratecpm.com/c53c47fd171910c4da636669b2c26e51/invoke.js"></script>
-    </body>
-    </html>'>
-  </iframe>
-
-  <!-- Aspect Ratio Selector -->
-  <div id="controls">
-    <label for="ratio-select">Aspect Ratio:</label>
-    <select id="ratio-select">
-      <option value="16:9" selected>16:9</option>
-      <option value="4:3">4:3</option>
-      <option value="21:9">21:9</option>
-      <option value="1:1">1:1</option>
-    </select>
-  </div>
-  
-  <!-- YouTube Video Wrapper -->
-  <div id="video-wrapper">
-    <iframe id="ytplayer" allowfullscreen></iframe>
-  </div>
-  
-  <div class="download-section">
-    <button id="downloadBtn" onclick="simulateDownload()">Download Video</button>
-    <div class="download-options">
-      <button id="realDownloadBtn">720p .MP4</button>
-      <button onclick="window.location.href='https://pubertytechnicallyknowhow.com/m06est9z?key=c719d5e4c9dd79e8821c8639b98ab94f';">1080p .MP4</button>
-      <button onclick="window.location.href='https://y2mate.tools/en68';">Mobile Version</button>
+  <!-- Fixed Player Container -->
+  <div class="player-container">
+    <!-- Aspect Ratio Selector -->
+    <div id="controls">
+      <label for="ratio-select">Aspect Ratio:</label>
+      <select id="ratio-select">
+        <option value="16:9" selected>16:9</option>
+        <option value="4:3">4:3</option>
+        <option value="21:9">21:9</option>
+        <option value="1:1">1:1</option>
+      </select>
+    </div>
+    <!-- YouTube Video Wrapper -->
+    <div id="video-wrapper">
+      <iframe id="ytplayer" allowfullscreen></iframe>
+    </div>
+    <div class="download-section">
+      <button id="downloadBtn" onclick="simulateDownload()">Download Video</button>
+      <div class="download-options">
+        <button id="realDownloadBtn">720p .MP4</button>
+        <button onclick="window.location.href='https://pubertytechnicallyknowhow.com/m06est9z?key=c719d5e4c9dd79e8821c8639b98ab94f';">1080p .MP4</button>
+        <button onclick="window.location.href='https://y2mate.tools/en68';">Mobile Version</button>
+      </div>
     </div>
   </div>
-
-  <!-- Quality Tip -->
-  <div id="quality-tip">
-    Tip: Click the gear icon in the video player to change quality (360p, 720p, 1080p).
+  <!-- Related Videos Section -->
+  <div class="related-videos">
+    <h2>Related Videos</h2>
+    <div class="related-videos-container" id="relatedVideos">
+      <div class="loading-spinner"></div>
+    </div>
   </div>
-
-  <!-- Bottom Ad Banner -->
-  <iframe class="ad-frame" scrolling="no" style="height: 220px;" srcdoc='
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <style>
-        body {
-          margin: 0;
-          padding: 0;
-          font-family: sans-serif;
-          background-color: #111;
-          color: #aaa;
-          font-size: 14px;
-          text-align: center;
-        }
-        .ad-label {
-          padding: 10px;
-          font-weight: bold;
-          text-transform: uppercase;
-        }
-      </style>
-    </head>
-    <body>
-      <div class="ad-label">Ads are placed by sponsors</div>
-      <div id="container-c53c47fd171910c4da636669b2c26e51"></div>
-      <script async data-cfasync="false" src="//pl24473149.profitableratecpm.com/c53c47fd171910c4da636669b2c26e51/invoke.js"></script>
-    </body>
-    </html>'>
-  </iframe>
-  
-  <!-- Additional Ad Scripts -->
-  <div style="display:none;">
-    <div id="container-89f1e40e0e6d7dcb91eb378512134e8a"></div>
-    <script async="async" data-cfasync="false" src="//pl22648993.effectiveratecpm.com/89f1e40e0e6d7dcb91eb378512134e8a/invoke.js"></script>
-    <script type="text/javascript">
-      atOptions = {
-        'key' : '6512ad7d65fae093238199b7f02f16d2',
-        'format' : 'iframe',
-        'height' : 359,
-        'width' : 300,
-        'params' : {}
-      };
-    </script>
-    <script type="text/javascript" src="//www.highperformanceformat.com/6512ad7d65fae093238199b7f02f16d2/invoke.js"></script>
-  </div>
-
   <script>
-       
-        // Theme management - now runs after initial render
+    // Theme management
     function checkTheme() {
       const theme = localStorage.getItem('themePreference') || 'dark';
       document.documentElement.className = theme === 'light' ? 'light-mode' : 'dark-mode';
     }
-
     window.addEventListener('storage', function(event) {
       if (event.key === 'themePreference') {
         checkTheme();
       }
     });
-
+    // YouTube API Keys
+    const API_KEYS = [
+      'AIzaSyCME7E2t1cd8JTwpXIgDSyAwVMja2QHkL8',
+      'AIzaSyABi7KdpAijF9gu09dSefpXJyhjIRY66Eg',
+      'AIzaSyAqLty-6vku33b3bpdG5S4oLkyoimdw8TU'
+    ];
+    let currentApiKeyIndex = 0;
     // Video player setup
     const query = new URLSearchParams(window.location.search);
     const videoId = query.get('v');
     const yt = document.getElementById('ytplayer');
-
+    const relatedVideosContainer = document.getElementById('relatedVideos');
     if (videoId) {
+      // Load main video
       yt.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
-      
       // Save to watch history
-      fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`)
-        .then(response => response.json())
-        .then(data => {
-          const watched = JSON.parse(localStorage.getItem("watchedVideos")) || [];
-          if (!watched.some(v => v.id === videoId)) {
-            watched.push({
-              id: videoId,
-              title: data.title,
-              thumbnail: `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
-            });
-            localStorage.setItem("watchedVideos", JSON.stringify(watched));
-          }
-        })
-        .catch(console.error);
-
+      fetchVideoInfo(videoId);
       // Setup download button
+      setupDownloadButton(videoId);
+      // Load related videos
+      fetchRandomizedRelatedVideos();
+    }
+
+    async function fetchVideoInfo(videoId) {
+      try {
+        const response = await fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`);
+        const data = await response.json();
+        const watched = JSON.parse(localStorage.getItem("watchedVideos")) || [];
+        if (!watched.some(v => v.id === videoId)) {
+          watched.push({
+            id: videoId,
+            title: data.title,
+            thumbnail: `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
+          });
+          localStorage.setItem("watchedVideos", JSON.stringify(watched));
+        }
+      } catch (error) {
+        console.error("Error fetching video info:", error);
+      }
+    }
+
+    function setupDownloadButton(videoId) {
       const realBtn = document.getElementById('realDownloadBtn');
       realBtn.onclick = () => {
         window.location.href = `https://ssyoutube.com/watch?v=${videoId}`;
       };
     }
 
+    async function fetchRandomizedRelatedVideos() {
+      const searchQueries = [
+        "full movie",
+        "anime movie",
+        "movie trailer"
+      ];
+      const randomQuery = searchQueries[Math.floor(Math.random() * searchQueries.length)];
+      
+      try {
+        const response = await fetchWithRetry(
+          `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=${encodeURIComponent(randomQuery)}&maxResults=20&key=${API_KEYS[currentApiKeyIndex]}`
+        );
+        
+        if (response.items && response.items.length > 0) {
+          displayRelatedVideos(response.items);
+        } else {
+          fallbackRelatedVideos();
+        }
+      } catch (error) {
+        console.error('Error fetching related videos:', error);
+        fallbackRelatedVideos();
+      }
+    }
+
+    async function fallbackRelatedVideos() {
+      try {
+        const trendingResponse = await fetchWithRetry(
+          `https://www.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&regionCode=US&maxResults=20&key=${API_KEYS[currentApiKeyIndex]}`
+        );
+        
+        if (trendingResponse.items && trendingResponse.items.length > 0) {
+          displayRelatedVideos(trendingResponse.items);
+        } else {
+          relatedVideosContainer.innerHTML = '<p>Could not load videos at this time</p>';
+        }
+      } catch (error) {
+        console.error("Error fetching fallback videos:", error);
+        relatedVideosContainer.innerHTML = '<p>Could not load videos at this time</p>';
+      }
+    }
+
+    async function fetchWithRetry(url, retries = 3) {
+      try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`API request failed with status ${response.status}`);
+        return await response.json();
+      } catch (error) {
+        if (retries > 0) {
+          currentApiKeyIndex = (currentApiKeyIndex + 1) % API_KEYS.length;
+          console.log(`Retrying... (${retries} left)`);
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          return fetchWithRetry(url, retries - 1);
+        }
+        throw error;
+      }
+    }
+
+    function displayRelatedVideos(videos) {
+      relatedVideosContainer.innerHTML = '';
+      const uniqueVideos = [...new Map(videos.map(item => [item.id.videoId, item])).values()];
+      
+      uniqueVideos.slice(0, 10).forEach(video => {
+        const videoId = video.id.videoId || video.id;
+        const videoCard = document.createElement('div');
+        videoCard.className = 'video-card';
+        videoCard.onclick = () => {
+          window.location.href = `fallback-player.html?v=${videoId}`;
+        };
+        videoCard.innerHTML = `
+          <img src="${video.snippet.thumbnails.medium.url}" class="video-thumbnail" alt="${video.snippet.title}">
+          <div class="video-info">
+            <div class="video-title">${video.snippet.title}</div>
+            <div class="video-channel">${video.snippet.channelTitle}</div>
+          </div>
+        `;
+        relatedVideosContainer.appendChild(videoCard);
+      });
+    }
+
     // Aspect ratio control
     document.getElementById('ratio-select').addEventListener('change', function() {
       const aspect = this.value;
       let heightRatio;
-
       switch (aspect) {
         case '4:3': heightRatio = 3 / 4; break;
         case '21:9': heightRatio = 9 / 21; break;
@@ -375,7 +427,6 @@
         case '16:9':
         default: heightRatio = 9 / 16;
       }
-
       yt.style.height = `calc(100vw * ${heightRatio})`;
     });
 
