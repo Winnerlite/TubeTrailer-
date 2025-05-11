@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -120,10 +119,12 @@
       border-bottom: 1px solid var(--border-color);
     }
     #downloadBtn {
+    position: relative;
+    z-index: 10000;
       padding: 12px 30px;
       font-size: 16px;
       color: #fff;
-      background: linear-gradient(90deg, 
+      background: linear-gradient(90deg,  
         var(--download-gradient-start), 
         var(--download-gradient-mid), 
         var(--download-gradient-end),
@@ -232,15 +233,148 @@
       }
     }
     
-  .video-card:focus {
-    outline: none;
-    /* Optional alternative for focus visibility */
-    /* box-shadow: 0 0 0 2px var(--primary); */
-  }
+    .video-card:focus {
+      outline: none;
+    }
+    
+    .how-to-download {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 14px;
+      color: var(--primary);
+      cursor: pointer;
+      text-decoration: underline;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background-color: var(--card-bg);
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 600px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: var(--button-bg);
+      border: none;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: var(--text);
+    }
+
+    .modal-close:hover {
+      background: var(--button-hover);
+    }
+
+    .modal-title {
+      font-size: 20px;
+      margin-bottom: 15px;
+      color: var(--primary);
+      text-align: center;
+    }
+
+    .modal-step {
+      margin-bottom: 20px;
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .step-number {
+      background-color: var(--primary);
+      color: white;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+
+    .step-content {
+      flex: 1;
+    }
+
+    .step-image {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-top: 10px;
+      border: 1px solid var(--border-color);
+    }
+    
+    .download-ready-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.7);
+  z-index: 9998; /* Below your main modal but above other content */
+  display: none;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.download-ready-modal.show {
+  display: flex;
+  opacity: 1;
+}
+
+.download-ready-modal .modal-content {
+  background-color: var(--card-bg);
+  padding: 25px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 300px;
+  animation: modalFadeIn 0.3s ease;
+}
+
+.download-ready-modal i {
+  font-size: 40px;
+  color: var(--primary);
+  margin-bottom: 15px;
+  display: block;
+}
+
+@keyframes modalFadeIn {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
 
   </style>
 </head>
-<body>
+<body> 
+     
+     
   <!-- Hidden ad container -->
   <div style="display:none;">
     <div id="container-c53c47fd171910c4da636669b2c26e51"></div>
@@ -263,31 +397,38 @@
       <iframe id="ytplayer" allowfullscreen></iframe>
     </div>
     
-        
+    <!-- Download Section -->
     <div class="download-section">
-      <button id="downloadBtn" onclick="simulateDownload()">Download Video</button>
+      <button id="downloadBtn">Download Video</button>
+      
       
       <!-- Ad Container with Removal Option -->
-<div class="ad-wrapper" style="margin: 20px 0; text-align: center;">
-  <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 8px;">
-    Tap to remove Ad
-  </div>
-  <div id="ad-container">
-    <script type='text/javascript' src='//pubertytechnicallyknowhow.com/e7/fc/cf/e7fccf383b3fd8be3a6f942b78372b0e.js'></script>
-  </div>
-  <button onclick="document.querySelector('.ad-wrapper').style.display='none'"
-          style="margin-top: 8px; padding: 5px 10px; background: var(--button-bg); color: var(--text); border: 1px solid var(--border-color); border-radius: 5px; cursor: pointer;">
-    Hide Ad
-  </button>
-</div>
+      <div class="ad-wrapper" style="margin: 20px 0; text-align: center;">
+        <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 8px;">
+          Tap to remove Ad
+        </div>
+        <div id="ad-container">
+          <script type='text/javascript' src='//pubertytechnicallyknowhow.com/e7/fc/cf/e7fccf383b3fd8be3a6f942b78372b0e.js'></script>
+        </div>
+        <button onclick="document.querySelector('.ad-wrapper').style.display='none'"
+                style="margin-top: 8px; padding: 5px 10px; background: var(--button-bg); color: var(--text); border: 1px solid var(--border-color); border-radius: 5px; cursor: pointer;">
+          Hide Ad
+        </button>
+      </div>
 
+      <!-- Download Options -->
       <div class="download-options">
-        <button id="realDownloadBtn">720p .MP4</button>
-        <button onclick="window.location.href='https://pubertytechnicallyknowhow.com/m06est9z?key=c719d5e4c9dd79e8821c8639b98ab94f';">1080p .MP4</button>
-        <button onclick="window.location.href='https://y2mate.tools/en68';">Mobile Version</button>
+        <button id="mp4DownloadBtn">MP4 (720p)</button>
+        <button id="hdDownloadBtn">HD (1080p)</button>
+        <button id="audioDownloadBtn">Audio Only</button>
       </div>
     </div>
   </div>
+  
+    <!-- Add this right after the download-options div -->
+  <div class="how-to-download" id="howToDownload">How to Download?</div>
+  
+  
   <!-- Related Videos Section -->
   <div class="related-videos">
     <h2>Related Videos</h2>
@@ -295,7 +436,63 @@
       <div class="loading-spinner"></div>
     </div>
   </div>
+
+ <!-- Add the modal HTML before the script tag-->
+  <div class="modal-overlay" id="downloadModal">
+    <div class="modal-content">
+      <button class="modal-close" id="modalClose">&times;</button>
+      <h3 class="modal-title">How to Download Videos</h3>
+      
+      <div class="modal-step">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <p>Tap on any of the download buttons above to start your download:</p>
+          <ul style="margin-top: 5px; padding-left: 20px;">
+            <li><strong>Download Video</strong> - Automatically selects the best quality</li>
+            <li><strong>MP4 (720p)</strong> - Standard quality video</li>
+            <li><strong>HD (1080p)</strong> - High definition video (if available)</li>
+            <li><strong>Audio Only</strong> - Just the audio track</li>
+          </ul>
+          <img src="https://i.ibb.co/bgQsSsGp/i-Markup-20250511-204448.png" alt="Download buttons" class="step-image">
+        </div>
+      </div>
+      
+      <div class="modal-step">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <p>Wait for the download to prepare. You'll see a Download Started below. while we process your request.</p>
+          <img src="https://i.ibb.co/HTZ8zWC1/i-Markup-20250511-204520.png" alt="Loading spinner" class="step-image">
+        </div>
+      </div>
+      
+      <div class="modal-step">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <p>You will automatically taken to the download video page. Tap on the three dot right of video to reveal a download link. Tap on it to download.
+ Check your downloads folder for the file.</p>
+          <img src="https://i.ibb.co/Y4M5FD4s/i-Markup-20250511-204547.png" alt="Download in progress" class="step-image">
+        </div>
+      </div>
+      
+      <div class="modal-step">
+        <div class="step-number">4</div>
+        <div class="step-content">
+          <p>If you have any issues:</p>
+          <ul style="margin-top: 5px; padding-left: 20px;">
+            <li>Try a different quality option</li>
+            <li>Check your internet connection</li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+
   <script>
+       
+        
     // Theme management
     function checkTheme() {
       const theme = localStorage.getItem('themePreference') || 'dark';
@@ -306,27 +503,198 @@
         checkTheme();
       }
     });
+    
     // YouTube API Keys
     const API_KEYS = [
-      'AIzaSyCME7E2t1cd8JTwpXIgDSyAwVMja2QHkL8',
-      'AIzaSyABi7KdpAijF9gu09dSefpXJyhjIRY66Eg',
-      'AIzaSyAqLty-6vku33b3bpdG5S4oLkyoimdw8TU'
+      'AIzaSyC_syRSRRxQR1DbtHZzMw9glxcR7My8ly4',
+      
+'AIzaSyABi7KdpAijF9gu09dSefpXJyhjIRY66Eg',
+
+            'AIzaSyAqLty-6vku33b3bpdG5S4oLkyoimdw8TU',
+
+            'AIzaSyBYixFCdGHJ2P512iW010glQRvd93EB6O8',
+
+           'AIzaSyDLW2mkmVVgQcoUpM86VFtOaCegFvyVk_g',
+
+            'AIzaSyDe7rOrqZFH3vIqP9zBtNkQ0Lqz4mBz9BI'
     ];
     let currentApiKeyIndex = 0;
+    
     // Video player setup
     const query = new URLSearchParams(window.location.search);
     const videoId = query.get('v');
     const yt = document.getElementById('ytplayer');
     const relatedVideosContainer = document.getElementById('relatedVideos');
+    
+    // RapidAPI configuration
+    const RAPID_API_KEY = 'cbb6e2b6bamsh041eed1c81e7e0dp1b846ejsn669acdaca5ed';
+    const RAPID_API_HOST = 'ytstream-download-youtube-videos.p.rapidapi.com';
+    
     if (videoId) {
       // Load main video
       yt.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
+      
       // Save to watch history
       fetchVideoInfo(videoId);
-      // Setup download button
-      setupDownloadButton(videoId);
+      
+      // Setup download buttons
+      setupDownloadButtons(videoId);
+      
       // Load related videos
       fetchRandomizedRelatedVideos();
+    }
+
+    function setupDownloadButtons(videoId) {
+      const downloadBtn = document.getElementById('downloadBtn');
+      const mp4Btn = document.getElementById('mp4DownloadBtn');
+      const hdBtn = document.getElementById('hdDownloadBtn');
+      const audioBtn = document.getElementById('audioDownloadBtn');
+      
+      // Main download button - uses RapidAPI
+      downloadBtn.onclick = async () => {
+        try {
+          downloadBtn.innerHTML = '<span class="loading-spinner"></span> Preparing Download...';
+          downloadBtn.disabled = true;
+          
+          // Get best available format
+          const downloadUrl = await getDownloadUrl(videoId, 'best');
+          startDownload(downloadUrl, `video_${videoId}.mp4`);
+          
+          // Show success message
+          showStatusMessage('Download started!', 'success');
+        } catch (error) {
+          console.error('Download failed:', error);
+          showStatusMessage(`Download failed: ${error.message}`, 'error');
+        } finally {
+          downloadBtn.innerHTML = 'Download Video';
+          downloadBtn.disabled = false;
+        }
+      };
+      
+      // MP4 (720p) download button
+      mp4Btn.onclick = async () => {
+        try {
+          mp4Btn.innerHTML = '<span class="loading-spinner"></span> Preparing...';
+          const downloadUrl = await getDownloadUrl(videoId, '720p');
+          startDownload(downloadUrl, `video_${videoId}_720p.mp4`);
+          showStatusMessage('720p download started!', 'success');
+        } catch (error) {
+          console.error('Download failed:', error);
+          showStatusMessage(`720p download failed: ${error.message}`, 'error');
+        } finally {
+          mp4Btn.innerHTML = 'MP4 (720p)';
+        }
+      };
+      
+      // HD (1080p) download button
+      hdBtn.onclick = async () => {
+        try {
+          hdBtn.innerHTML = '<span class="loading-spinner"></span> Preparing...';
+          const downloadUrl = await getDownloadUrl(videoId, '1080p');
+          startDownload(downloadUrl, `video_${videoId}_1080p.mp4`);
+          showStatusMessage('1080p download started!', 'success');
+        } catch (error) {
+          console.error('Download failed:', error);
+          showStatusMessage(`1080p download failed: ${error.message}`, 'error');
+        } finally {
+          hdBtn.innerHTML = 'HD (1080p)';
+        }
+      };
+      
+      // Audio only download button
+      audioBtn.onclick = async () => {
+        try {
+          audioBtn.innerHTML = '<span class="loading-spinner"></span> Preparing...';
+          const downloadUrl = await getDownloadUrl(videoId, 'audio');
+          startDownload(downloadUrl, `audio_${videoId}.mp3`);
+          showStatusMessage('Audio download started!', 'success');
+        } catch (error) {
+          console.error('Download failed:', error);
+          showStatusMessage(`Audio download failed: ${error.message}`, 'error');
+        } finally {
+          audioBtn.innerHTML = 'Audio Only';
+        }
+      };
+    }
+
+    async function getDownloadUrl(videoId, quality) {
+      try {
+        const response = await fetch(`https://${RAPID_API_HOST}/dl?id=${videoId}`, {
+          method: 'GET',
+          headers: {
+            'X-RapidAPI-Key': RAPID_API_KEY,
+            'X-RapidAPI-Host': RAPID_API_HOST
+          }
+        });
+        
+        if (!response.ok) {
+          throw new Error(`API request failed with status ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        if (!data || !data.formats || data.formats.length === 0) {
+          throw new Error("No downloadable formats found.");
+        }
+        
+        // Filter based on quality
+        let format;
+        if (quality === 'audio') {
+          format = data.formats.find(f => f.mimeType.includes('audio/mp4'));
+        } else if (quality === '720p') {
+          format = data.formats.find(f => 
+            f.mimeType.includes('video/mp4') && 
+            f.qualityLabel.includes('720p')
+          );
+        } else if (quality === '1080p') {
+          format = data.formats.find(f => 
+            f.mimeType.includes('video/mp4') && 
+            f.qualityLabel.includes('1080p')
+          );
+        } else {
+          // Get best available format
+          format = data.formats.find(f => f.mimeType.includes('video/mp4')) || 
+                  data.formats.find(f => f.mimeType.includes('audio/mp4'));
+        }
+        
+        if (!format) throw new Error(`No ${quality} format found.`);
+        return format.url;
+      } catch (error) {
+        console.error('Error getting download URL:', error);
+        throw error;
+      }
+    }
+
+    function startDownload(url, filename) {
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    function showStatusMessage(message, type) {
+      const statusElement = document.createElement('div');
+      statusElement.className = `status-message ${type}`;
+      statusElement.innerHTML = message;
+      statusElement.style.position = 'fixed';
+      statusElement.style.bottom = '20px';
+      statusElement.style.left = '50%';
+      statusElement.style.transform = 'translateX(-50%)';
+      statusElement.style.padding = '10px 20px';
+      statusElement.style.borderRadius = '5px';
+      statusElement.style.zIndex = '1000';
+      statusElement.style.animation = 'fadeIn 0.3s ease-in-out';
+      
+      document.body.appendChild(statusElement);
+      
+      setTimeout(() => {
+        statusElement.style.animation = 'fadeOut 0.3s ease-in-out';
+        setTimeout(() => {
+          document.body.removeChild(statusElement);
+        }, 300);
+      }, 3000);
     }
 
     async function fetchVideoInfo(videoId) {
@@ -345,13 +713,6 @@
       } catch (error) {
         console.error("Error fetching video info:", error);
       }
-    }
-
-    function setupDownloadButton(videoId) {
-      const realBtn = document.getElementById('realDownloadBtn');
-      realBtn.onclick = () => {
-        window.location.href = `https://ssyoutube.com/watch?v=${videoId}`;
-      };
     }
 
     async function fetchRandomizedRelatedVideos() {
@@ -447,14 +808,88 @@
       yt.style.height = `calc(100vw * ${heightRatio})`;
     });
 
-    function simulateDownload() {
-      const btn = document.getElementById('downloadBtn');
-      btn.textContent = "Preparing download...";
-      btn.disabled = true;
+    // Add fade animations for status messages
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes fadeIn {
+        from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+        to { opacity: 1; transform: translateX(-50%) translateY(0); }
+      }
+      @keyframes fadeOut {
+        from { opacity: 1; transform: translateX(-50%) translateY(0); }
+        to { opacity: 0; transform: translateX(-50%) translateY(20px); }
+      }
+      .status-message.success {
+        background-color: rgba(106, 90, 205, 0.9);
+        color: white;
+      }
+      .status-message.error {
+        background-color: rgba(255, 77, 125, 0.9);
+        color: white;
+      }
+    `;
+    document.head.appendChild(style);
+    
+   
+// Add toast notification functionality
+    // Replace the toast code with this modal version
+document.addEventListener('DOMContentLoaded', function() {
+  const readyModal = document.getElementById('downloadReadyModal');
+  
+  if (readyModal) {
+    // Show modal after 1 second
+    setTimeout(() => {
+      readyModal.classList.add('show');
+      
+      // Auto-hide after 3 seconds
       setTimeout(() => {
-        window.location.href = "https://pubertytechnicallyknowhow.com/m06est9z?key=c719d5e4c9dd79e8821c8639b98ab94f";
-      }, 5000);
-    }
+        readyModal.classList.remove('show');
+        
+        // Optional: Remove from DOM after hiding
+        setTimeout(() => {
+          readyModal.remove();
+        }, 300); // Match this with CSS transition time
+      }, 3000);
+    }, 1000);
+  }
+});
+
+    // Add this modal functionality at tion for how to download Modal
+    const howToDownload = document.getElementById('howToDownload');
+    const downloadModal = document.getElementById('downloadModal');
+    const modalClose = document.getElementById('modalClose');
+
+    howToDownload.addEventListener('click', () => {
+      downloadModal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    });
+
+    modalClose.addEventListener('click', () => {
+      downloadModal.style.display = 'none';
+      document.body.style.overflow = 'auto';
+    });
+
+    downloadModal.addEventListener('click', (e) => {
+      if (e.target === downloadModal) {
+        downloadModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }
+    });
+
+    // Close modal with Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && downloadModal.style.display === 'flex') {
+        downloadModal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+      }
+    });
   </script>
 </body>
+<!-- Remove the toast div and replace with this modal structure -->
+<div class="download-ready-modal" id="downloadReadyModal">
+  <div class="modal-content">
+    <i class="fas fa-check-circle"></i>
+    <p>Download options are now ready!</p>
+  </div>
+</div>
 </html>
