@@ -1142,6 +1142,94 @@
     font-size: 1.4rem;
   }
 }
+
+/* Carousel Styles */
+.carousel-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    margin: 0 auto 30px;
+    padding: 0;
+}
+
+.carousel-track {
+    display: flex;
+    gap: 15px; /* Space between items */
+    padding: 0 15px; /* Side padding */
+    transition: transform 0.5s ease;
+}
+
+.carousel-item {
+    flex: 0 0 calc(50% - 15px); /* Default: 2 items visible on mobile */
+    min-width: 0; /* Prevent flex items from overflowing */
+    aspect-ratio: 16/9; /* Force 16:9 aspect ratio */
+}
+
+/* Responsive adjustments */
+@media (min-width: 768px) {
+    .carousel-item {
+        flex: 0 0 calc(33.33% - 15px); /* 3 items on tablets */
+    }
+}
+
+@media (min-width: 1024px) {
+    .carousel-item {
+        flex: 0 0 calc(25% - 15px); /* 4 items on desktop */
+    }
+}
+
+/* Ensure thumbnails fill the container without stretching */
+.carousel-item .thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background: rgba(0,0,0,0.5);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 2;
+    color: white;
+    font-size: 20px;
+}
+
+.carousel-prev {
+    left: 5px;
+}
+
+.carousel-next {
+    right: 5px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .carousel-item {
+        min-width: calc(33.33% - 15px);
+    }
+}
+
+@media (max-width: 768px) {
+    .carousel-item {
+        min-width: calc(50% - 15px);
+    }
+}
+
+@media (max-width: 480px) {
+    .carousel-item {
+        min-width: calc(100% - 15px);
+    }
+}
+
     </style>
 </head>
 <body>
@@ -1220,20 +1308,20 @@ srcdoc='
 
 
 
-    <div class="content">
-        <div id="trailerPage" class="page active">
-            <div class="results-container" id="trailerResults"></div>
-        </div>
+    <div id="trailerPage" class="page active">
+    <div id="trailerCarousel"></div>
+    <div class="results-container" id="trailerResults"></div>
+</div>
 
-        <div id="moviesPage" class="page">
-            
-            <div              class="results-container" id="moviesResults"></div>
-        </div>
+<div id="moviesPage" class="page">
+    <div id="moviesCarousel"></div>
+    <div class="results-container" id="moviesResults"></div>
+</div>
 
-        <div id="animePage" class="page">
-            <div class="results-container" id="animeResults"></div>
-        </div>
-        
+<div id="animePage" class="page">
+    <div id="animeCarousel"></div>
+    <div class="results-container" id="animeResults"></div>
+</div>
         <!-- Add this Me Page section -->
    <!-- Upgraded Me Tab -->
 <div id="mePage" class="page">
@@ -1383,6 +1471,89 @@ srcdoc='
         console.log(`Tracked event: ${eventName}`);
     }
 }
+         // Carousel functionality
+function createCarousel(containerId, items) {
+    const container = document.getElementById(containerId);
+    if (!container || !items || items.length === 0) return;
+    
+    // Create carousel HTML
+    container.innerHTML = `
+        <div class="carousel-container">
+            <div class="carousel-track" id="${containerId}-track"></div>
+            <div class="carousel-nav carousel-prev" onclick="moveCarousel('${containerId}', -1)">
+                <i class="fas fa-chevron-left"></i>
+            </div>
+            <div class="carousel-nav carousel-next" onclick="moveCarousel('${containerId}', 1)">
+                <i class="fas fa-chevron-right"></i>
+            </div>
+        </div>
+    `;
+    
+    const track = document.getElementById(`${containerId}-track`);
+    
+    // Add items to carousel
+    items.forEach(item => {
+        const carouselItem = document.createElement('div');
+        carouselItem.className = 'carousel-item';
+        carouselItem.innerHTML = `
+            <div class="card">
+                <img src="${item.snippet.thumbnails.medium.url}" class="thumbnail" 
+                     onclick="playVideo('${item.id.videoId}', '${item.snippet.title.replace(/'/g, "\\'")}', '${item.snippet.thumbnails.medium.url}')">
+                <div class="card-content">
+                    <div class="video-title">${item.snippet.title}</div>
+                    <div class="channel">${item.snippet.channelTitle}</div>
+                </div>
+            </div>
+        `;
+        track.appendChild(carouselItem);
+    });
+    
+    // Start auto-scroll
+    startAutoScroll(containerId);
+}
+
+let carouselIntervals = {};
+
+function startAutoScroll(containerId) {
+    // Clear any existing interval
+    if (carouselIntervals[containerId]) {
+        clearInterval(carouselIntervals[containerId]);
+    }
+    
+    // Set up new interval
+    carouselIntervals[containerId] = setInterval(() => {
+        moveCarousel(containerId, 1);
+    }, 5000); // Change slide every 5 seconds
+}
+
+function moveCarousel(containerId, direction) {
+    const track = document.getElementById(`${containerId}-track`);
+    if (!track) return;
+    
+    const items = track.querySelectorAll('.carousel-item');
+    if (items.length === 0) return;
+    
+    const itemWidth = items[0].offsetWidth + 15; // width + margin
+    const currentPosition = track.style.transform ? 
+        parseInt(track.style.transform.split('(')[1].split('px')[0]) : 0;
+    
+    let newPosition = currentPosition - (itemWidth * direction);
+    const maxPosition = -(itemWidth * (items.length - 4));
+    
+    // Handle bounds
+    if (newPosition > 0) {
+        newPosition = maxPosition;
+    } else if (newPosition < maxPosition) {
+        newPosition = 0;
+    }
+    
+    track.style.transform = `translateX(${newPosition}px)`;
+    
+    // Reset auto-scroll timer
+    startAutoScroll(containerId);
+}
+         
+         
 
          function showNotificationModal() {
   document.getElementById('notificationModal').style.display = 'block';
@@ -1797,38 +1968,20 @@ function toggleFavorite(event, videoId, title, thumbnail) {
         document.getElementById('trailerPagination').style.display = 'none';
         return;
     }
+    
+    // Add carousel for top trailers (only if we have enough items)
+    if (trailerTotalResults.length >= 4) { // Only show carousel if we have at least 4 items
+        const topTrailers = trailerTotalResults.slice(0, 12); // Show first 12 in carousel
+        createCarousel('trailerCarousel', topTrailers);
+    }
 
+    // Regular grid results
     const start = trailerCurrentPage * trailerResultsPerPage;
     const end = start + trailerResultsPerPage;
     const videos = trailerTotalResults.slice(start, end);
 
     videos.forEach(video => {
-        // Generate random stats (replace with real API data later)
-        const views = Math.floor(Math.random() * 10000000).toLocaleString();
-        const likes = Math.floor(Math.random() * 500000).toLocaleString();
-        const isHot = likes > 300000; // Threshold for "hot" content
-
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-            <img src="${video.snippet.thumbnails.medium.url}" class="thumbnail" 
-                 onclick="playVideo('${video.id.videoId}', '${video.snippet.title.replace(/'/g, "\\'")}', '${video.snippet.thumbnails.medium.url}')">
-            <div class="card-content">
-                <div class="video-title">${video.snippet.title}</div>
-                <div class="channel">${video.snippet.channelTitle}</div>
-                <div class="card-stats">
-                    <div class="views-count">
-                        <i class="fas fa-eye"></i> ${views}
-                    </div>
-                    <div class="likes-count">
-                        <i class="fas fa-heart"></i>
-                        ${isHot ? '<span class="trending-badge">🔥</span>' : ''}
-                        ${likes}
-                    </div>
-                </div>
-            </div>
-        `;
-        resultsDiv.appendChild(card);
+        resultsDiv.appendChild(generateVideoCard(video));
     });
 
     document.getElementById('trailerPagination').style.display = 'flex';
@@ -1932,38 +2085,20 @@ async function fetchVideoStats(videoId) {
         document.getElementById('moviesPagination').style.display = 'none';
         return;
     }
+    
+    // Add carousel for top movies (only if we have enough items)
+    if (movieTotalResults.length >= 4) {
+        const topMovies = movieTotalResults.slice(0, 12);
+        createCarousel('moviesCarousel', topMovies);
+    }
 
+    // Regular grid results
     const start = movieCurrentPage * movieResultsPerPage;
     const end = start + movieResultsPerPage;
     const videos = movieTotalResults.slice(start, end);
 
     videos.forEach(video => {
-        // Generate random stats (replace with real API data later)
-        const views = Math.floor(Math.random() * 10000000).toLocaleString();
-        const likes = Math.floor(Math.random() * 500000).toLocaleString();
-        const isHot = likes > 300000; // Threshold for "hot" content
-
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-            <img src="${video.snippet.thumbnails.medium.url}" class="thumbnail" 
-                 onclick="playVideo('${video.id.videoId}', '${video.snippet.title.replace(/'/g, "\\'")}', '${video.snippet.thumbnails.medium.url}')">
-            <div class="card-content">
-                <div class="video-title">${video.snippet.title}</div>
-                <div class="channel">${video.snippet.channelTitle}</div>
-                <div class="card-stats">
-                    <div class="views-count">
-                        <i class="fas fa-eye"></i> ${views}
-                    </div>
-                    <div class="likes-count">
-                        <i class="fas fa-heart"></i>
-                        ${isHot ? '<span class="trending-badge">🔥</span>' : ''}
-                        ${likes}
-                    </div>
-                </div>
-            </div>
-        `;
-        resultsDiv.appendChild(card);
+        resultsDiv.appendChild(generateVideoCard(video));
     });
 
     document.getElementById('moviesPagination').style.display = 'flex';
@@ -2057,38 +2192,20 @@ async function fetchVideoStats(videoId) {
         document.getElementById('animePagination').style.display = 'none';
         return;
     }
+    
+    // Add carousel for top anime (only if we have enough items)
+    if (animeTotalResults.length >= 4) {
+        const topAnime = animeTotalResults.slice(0, 12);
+        createCarousel('animeCarousel', topAnime);
+    }
 
+    // Regular grid results
     const start = animeCurrentPage * animeResultsPerPage;
     const end = start + animeResultsPerPage;
     const videos = animeTotalResults.slice(start, end);
 
     videos.forEach(video => {
-        // Generate random stats (replace with real API data later)
-        const views = Math.floor(Math.random() * 10000000).toLocaleString();
-        const likes = Math.floor(Math.random() * 500000).toLocaleString();
-        const isHot = likes > 300000; // Threshold for "hot" content
-
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-            <img src="${video.snippet.thumbnails.medium.url}" class="thumbnail" 
-                 onclick="playVideo('${video.id.videoId}', '${video.snippet.title.replace(/'/g, "\\'")}', '${video.snippet.thumbnails.medium.url}')">
-            <div class="card-content">
-                <div class="video-title">${video.snippet.title}</div>
-                <div class="channel">${video.snippet.channelTitle}</div>
-                <div class="card-stats">
-                    <div class="views-count">
-                        <i class="fas fa-eye"></i> ${views}
-                    </div>
-                    <div class="likes-count">
-                        <i class="fas fa-heart"></i>
-                        ${isHot ? '<span class="trending-badge">🔥</span>' : ''}
-                        ${likes}
-                    </div>
-                </div>
-            </div>
-        `;
-        resultsDiv.appendChild(card);
+        resultsDiv.appendChild(generateVideoCard(video));
     });
 
     document.getElementById('animePagination').style.display = 'flex';
@@ -2326,8 +2443,7 @@ setInterval(() => {
   }
 }, 15000); // check every 15s
 </script>
-     -->
-
+-->
     <script async="async" data-cfasync="false" src="//pl22648993.effectiveratecpm.com/89f1e40e0e6d7dcb91eb378512134e8a/invoke.js"></script>
 <div id="container-89f1e40e0e6d7dcb91eb378512134e8a"></div>
 
