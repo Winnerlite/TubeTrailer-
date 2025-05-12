@@ -369,6 +369,91 @@
   to { transform: translateY(0); opacity: 1; }
 }
 
+/* Add this to your existing CSS */
+#adCountdownModal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(5px);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease-out;
+}
+
+#adCountdownModal > div {
+  background: linear-gradient(135deg, #1a1a1e 0%, #2a2a32 100%);
+  padding: 30px;
+  border-radius: 16px;
+  width: 80%;
+  max-width: 320px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transform: scale(0.95);
+  animation: scaleUp 0.3s ease-out forwards;
+}
+
+#adCountdownModal h3 {
+  color: #fff;
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+#adCountdownModal p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  margin-top: 10px;
+}
+
+#countdown {
+  color: #8a2be2; /* Your primary purple color */
+  font-weight: bold;
+  font-size: 1.6rem;
+  display: inline-block;
+  min-width: 30px;
+  text-align: center;
+  animation: pulse 1.5s infinite;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleUp {
+  from { transform: scale(0.95); }
+  to { transform: scale(1); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  #adCountdownModal > div {
+    padding: 25px 20px;
+    width: 85%;
+  }
+  
+  #adCountdownModal h3 {
+    font-size: 1.2rem;
+  }
+  
+  #countdown {
+    font-size: 1.4rem;
+  }
+}
 
   </style>
 </head>
@@ -912,7 +997,7 @@ let adCooldown = false;
 function showAdCountdownModal() {
   const modal = document.getElementById('adCountdownModal');
   const counter = document.getElementById('countdown');
-  let seconds = 5;
+  let seconds = 2;
 
   modal.style.display = 'flex';
   counter.textContent = seconds;
@@ -935,8 +1020,8 @@ setInterval(() => {
   if (!adCooldown) {
     showAdCountdownModal();
     adCooldown = true;
-    setTimeout(() => adCooldown = false, 60000); // cooldown resets after 1 min
+    setTimeout(() => adCooldown = false, 6000); // cooldown resets after 6 secs
   }
-}, 60000); // check every 60s
+}, 6000); // check every 6s
 </script>
 </html>
