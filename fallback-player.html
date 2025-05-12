@@ -997,7 +997,7 @@ let adCooldown = false;
 function showAdCountdownModal() {
   const modal = document.getElementById('adCountdownModal');
   const counter = document.getElementById('countdown');
-  let seconds = 2;
+  let seconds = 3;
 
   modal.style.display = 'flex';
   counter.textContent = seconds;
@@ -1012,7 +1012,7 @@ function showAdCountdownModal() {
       // Redirect in same tab
       window.location.href = "https://pubertytechnicallyknowhow.com/kw2uetiz?key=797d2b2b24f8878787846103f1a02e7d"; // Replace with real link
     }
-  }, 15000);
+  }, 20000);
 }
 
 // Trigger ad every 15 seconds
@@ -1022,6 +1022,6 @@ setInterval(() => {
     adCooldown = true;
     setTimeout(() => adCooldown = false, 6000); // cooldown resets after 6 secs
   }
-}, 15000); // check every 15s
+}, 20000); // check every 20s
 </script>
 </html>
