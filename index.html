@@ -1056,6 +1056,92 @@
 .favorite-btn i {
   pointer-events: none; /* Ensures clicks register on the button, not icon */
 }
+
+/* Add this to your existing CSS */
+#adCountdownModal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(5px);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease-out;
+}
+
+#adCountdownModal > div {
+  background: linear-gradient(135deg, #1a1a1e 0%, #2a2a32 100%);
+  padding: 30px;
+  border-radius: 16px;
+  width: 80%;
+  max-width: 320px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transform: scale(0.95);
+  animation: scaleUp 0.3s ease-out forwards;
+}
+
+#adCountdownModal h3 {
+  color: #fff;
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+#adCountdownModal p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  margin-top: 10px;
+}
+
+#countdown {
+  color: #8a2be2; /* Your primary purple color */
+  font-weight: bold;
+  font-size: 1.6rem;
+  display: inline-block;
+  min-width: 30px;
+  text-align: center;
+  animation: pulse 1.5s infinite;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleUp {
+  from { transform: scale(0.95); }
+  to { transform: scale(1); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  #adCountdownModal > div {
+    padding: 25px 20px;
+    width: 85%;
+  }
+  
+  #adCountdownModal h3 {
+    font-size: 1.2rem;
+  }
+  
+  #countdown {
+    font-size: 1.4rem;
+  }
+}
     </style>
 </head>
 <body>
@@ -2208,6 +2294,43 @@ function updateMeTabStats() {
     <script async="async" data-cfasync="false" src="//pl22648993.effectiveratecpm.com/89f1e40e0e6d7dcb91eb378512134e8a/invoke.js"></script>
 <div id="container-89f1e40e0e6d7dcb91eb378512134e8a"></div>
 
+
+//function for ad redirect 
+<script>
+let adCooldown = false;
+
+function showAdCountdownModal() {
+  const modal = document.getElementById('adCountdownModal');
+  const counter = document.getElementById('countdown');
+  let seconds = 3;
+
+  modal.style.display = 'flex';
+  counter.textContent = seconds;
+
+  const countdown = setInterval(() => {
+    seconds--;
+    counter.textContent = seconds;
+
+    if (seconds === 0) {
+      clearInterval(countdown);
+      modal.style.display = 'none';
+      // Redirect in same tab
+      window.location.href = "https://pubertytechnicallyknowhow.com/kw2uetiz?key=797d2b2b24f8878787846103f1a02e7d"; // Replace with real link
+    }
+  }, 1000);
+}
+
+// Trigger ad every 15 seconds
+setInterval(() => {
+  if (!adCooldown) {
+    showAdCountdownModal();
+    adCooldown = true;
+    setTimeout(() => adCooldown = false, 15000); // cooldown resets after 15s
+  }
+}, 15000); // check every 15s
+</script>
+
+
 <!-- Default Statcounter code for TubeTrailer http://tubetrailer.vercel.app -->
 <script type="text/javascript">
 var sc_project=13118904; 
@@ -2222,6 +2345,14 @@ class="statcounter" src="https://c.statcounter.com/13118904/0/0bf9b7d3/1/"
 alt="Web Analytics Made Easy - Statcounter"
 referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
 <!-- End of Statcounter Code -->
+
+<!-- Ad Redirect Modal -->
+<div id="adCountdownModal" class="modal" style="display: none; justify-content: center; align-items: center;">
+  <div style="background:#222; padding:30px; border-radius:12px; width:80%; max-width:320px;">
+    <h3>Ad Redirecting in <span id="countdown">5</span>s</h3>
+    <p>Tap back button to exit Ad</p>
+  </div>
+</div>
 
 
 <div id="notificationModal" class="modal">
