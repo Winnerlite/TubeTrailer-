@@ -11,6 +11,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>My Downloads</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     :root {
       --bg: #0b0b0b;
@@ -38,6 +39,7 @@
       color: var(--text);
       font-family: Arial, sans-serif;
       padding: 20px;
+      padding-bottom: 70px; /* Add space for bottom nav */
       text-align: center;
       transition: background 0.3s ease, color 0.3s ease;
       -webkit-user-select: none;
@@ -92,6 +94,51 @@
       color: var(--text-secondary);
     }
 
+    /* Bottom Navigation */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.95);
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+      z-index: 1000;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      transition: background 0.3s ease;
+    }
+
+    body.light-mode .bottom-nav {
+      background: rgba(255, 255, 255, 0.95);
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 12px;
+      transition: all 0.3s;
+      padding: 5px 10px;
+      border-radius: 8px;
+    }
+
+    .nav-item i {
+      font-size: 20px;
+      margin-bottom: 3px;
+    }
+
+    .nav-item.active {
+      color: var(--primary);
+    }
+
+    .nav-item:hover {
+      color: var(--primary);
+    }
+
     @keyframes blink {
       0%, 100% { opacity: 0; }
       50% { opacity: 1; }
@@ -116,6 +163,30 @@
   </style>
 </head>
 <body>
+
+  <!-- Bottom Navigation -->
+  <div class="bottom-nav">
+    <a href="index.html" class="nav-item">
+      <i class="fas fa-film"></i>
+      <span>Trailers</span>
+    </a>
+    <a href="index.html#moviesPage" class="nav-item">
+      <i class="fas fa-video"></i>
+      <span>Movies</span>
+    </a>
+    <a href="index.html#animePage" class="nav-item">
+      <i class="fas fa-dragon"></i>
+      <span>Anime</span>
+    </a>
+    <a href="downloads.html" class="nav-item active">
+      <i class="fas fa-download"></i>
+      <span>Download</span>
+    </a>
+    <a href="index.html#mePage" class="nav-item">
+      <i class="fas fa-user"></i>
+      <span>Me</span>
+    </a>
+  </div>
 
   <h1>Download and watch history</h1>
   <div id="downloadsContainer"></div>
