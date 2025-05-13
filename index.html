@@ -28,7 +28,7 @@
             --text-secondary: #b0b0b0;
             --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
-        
+
         * {
             margin: 0;
             padding: 0;
@@ -38,7 +38,7 @@
             outline: none;
             user-select: none;
         }
-        
+
         body {
             background: var(--bg);
             color: var(--text);
@@ -72,7 +72,7 @@
             z-index: 1000;
             box-shadow: 0 2px 10px rgba(0,0,0,0.3);
             transition: background 0.3s ease;
-            
+
         }
 
         body.light-mode .search-container {
@@ -169,7 +169,7 @@
 }
         /* Hero Carousel */
         .hero-section {
-        
+
     width: 100%;
     height: 200px;
     position: relative;
@@ -184,7 +184,7 @@
     width: 100%;
     height: 100%;
     transition: transform 0.5s ease;
-   
+
     will-change: transform;
 
 }
@@ -711,24 +711,24 @@
                 font-size: 14px;
                 padding: 8px 12px;
             }
-            
+
             .search-container button {
                 font-size: 14px;
                 padding: 8px 12px;
             }
-            
+
             .thumbnail {
                 height: 180px;
             }
-            
+
             .video-title {
                 font-size: 14px;
             }
-            
+
             .channel {
                 font-size: 12px;
             }
-            
+
             .pagination button {
                 padding: 6px 12px;
                 font-size: 13px;
@@ -751,15 +751,15 @@
             .search-container {
                 padding: 10px;
             }
-            
+
             .search-container input {
                 width: 70%;
             }
-            
+
             .thumbnail {
                 height: 160px;
             }
-            
+
             .hero-section {
                 height: 160px;
             }
@@ -772,7 +772,7 @@
                 font-size: 16px;
             }
         }
-        
+
            /* Add modal styles */
         .modal {
             display: none;
@@ -835,9 +835,9 @@
             background: transparent;
             border: 1px solid var(--primary);
             color: var(--primary);
-            
+
         }
-        
+
         /* Add this to your existing CSS */
 #mePage ~ .pagination-container {
     display: none !important;
@@ -1133,11 +1133,11 @@
     padding: 25px 20px;
     width: 85%;
   }
-  
+
   #adCountdownModal h3 {
     font-size: 1.2rem;
   }
-  
+
   #countdown {
     font-size: 1.4rem;
   }
@@ -1233,15 +1233,15 @@
     </style>
 </head>
 <body>
-     
-     
+
+
 <!--Keep the script only once in a hidden container to initialize the ad -->
      <div style="display:none;">
   <div id="container-c53c47fd171910c4da636669b2c26e51"></div>
   <script async="async" data-cfasync="false" src="//pl24473149.profitableratecpm.com/c53c47fd171910c4da636669b2c26e51/invoke.js"></script>
 </div>
 
-     <!-- Banner Image with Link 
+     <!-- Banner Image with Link
     <a href="https://t.me/tubetrailer" target="_blank" class="banner-container">
         <img src="https://i.ibb.co/xtYxLbVR/20250405-204332.jpg" alt="TubeTrailer Telegram Channel" class="banner">
     </a>
@@ -1252,13 +1252,13 @@
       <i class="fas fa-sync-alt"></i>
     </button>
 
-    <input 
-      type="text" 
-      id="search" 
-      placeholder="Search for movies..." 
-      onfocus="showSearchHistory()" 
-      onblur="hideSearchHistory()" 
-      oninput="filterSearchHistory()" 
+    <input
+      type="text"
+      id="search"
+      placeholder="Search for movies..."
+      onfocus="showSearchHistory()"
+      onblur="hideSearchHistory()"
+      oninput="filterSearchHistory()"
       onkeypress="handleKeyPress(event)"
     >
 
@@ -1292,13 +1292,13 @@ srcdoc='
         border-bottom: 1px solid #eee;
         margin-bottom: 8px;
       }
-      
-       
+
+
     </style>
   </head>
   <body>
-      
-      
+
+
     <div class="ad-label"></div>
     <div id="container-c53c47fd171910c4da636669b2c26e51"></div>
     <script async data-cfasync="false" src="//pl24473149.profitableratecpm.com/c53c47fd171910c4da636669b2c26e51/invoke.js"></script>
@@ -1340,7 +1340,7 @@ srcdoc='
 
     <!-- Stats Bar -->
     <div class="profile-stats">
-        
+
         <div class="stat-item">
             <div class="stat-value" id="watchHistoryCount">0</div>
             <div class="stat-label">Watched</div>
@@ -1360,7 +1360,7 @@ srcdoc='
             <h3>Account</h3>
             <p>Manage profile and preferences</p>
         </div>
-        
+
        <div class="settings-card" onclick="toggleTheme()">
             <div class="settings-icon appearance">
                 <i class="fas fa-palette"></i>
@@ -1368,7 +1368,7 @@ srcdoc='
             <h3>Appearance</h3>
             <p>Theme and display options</p>
         </div>
-        
+
         <div class="settings-card" onclick="showNotificationModal()">
             <div class="settings-icon notifications">
                 <i class="fas fa-bell"></i>
@@ -1376,7 +1376,7 @@ srcdoc='
             <h3>Notifications</h3>
             <p>Alerts and reminders</p>
         </div>
-        
+
         <div class="settings-card" onclick="showAboutModal()">
             <div class="settings-icon about">
                 <i class="fas fa-info-circle"></i>
@@ -1427,7 +1427,7 @@ srcdoc='
         <i class="fas fa-dragon"></i>
         <span>Anime</span>
     </a>
-    
+
     <a href="downloads.html" class="nav-item">
   <i class="fas fa-download"></i>
   <span>Download</span>
@@ -1437,19 +1437,40 @@ srcdoc='
         <span>Me</span>
     </a>
 </div>
-    
+
     <div class="loading" id="loading">
         <div class="spinner"></div>
         <p>Loading...</p>
     </div>
 
     <div class="error-message" id="errorMessage"></div>
-    
+
     </div>
-    
+
 
     <script>
-         
+
+    function isFullLengthVideo(video) {
+    const duration = video.contentDetails?.duration;
+    if (!duration) return false;
+
+    // Convert ISO 8601 duration to seconds
+    const regex = /PT(\d+H)?(\d+M)?(\d+S)?/;
+    const matches = duration.match(regex);
+    if (!matches) return false;
+
+    const hours = parseInt(matches[1]) || 0;
+    const minutes = parseInt(matches[2]) || 0;
+    const seconds = parseInt(matches[3]) || 0;
+    const totalSeconds = hours * 3600 + minutes * 60 + seconds;
+
+    // Consider anything less than 60s as Shorts or short form
+    return totalSeconds >= 60;
+}
+
+    function sortItemsByPublishedDate(items) {
+    return items.sort((a, b) => new Date(b.snippet.publishedAt) - new Date(a.snippet.publishedAt));
+}
          function trackStatcounterEvent(eventName) {
     if (typeof sc_project !== 'undefined' && typeof sc_invisible !== 'undefined') {
         // Statcounter's default tracking method
@@ -1457,16 +1478,16 @@ srcdoc='
         var sec = sc_security;
         var r = new Date().getTime();
         var url = "https://www.statcounter.com/counter/counter.js?" + r;
-        
+
         // Create a new script element
         var script = document.createElement('script');
         script.type = 'text/javascript';
         script.async = true;
         script.src = url;
-        
+
         // Insert the script into the DOM
         document.getElementsByTagName('head')[0].appendChild(script);
-        
+
         // Optional: You can also track custom events if needed
         console.log(`Tracked event: ${eventName}`);
     }
@@ -1475,7 +1496,7 @@ srcdoc='
 function createCarousel(containerId, items) {
     const container = document.getElementById(containerId);
     if (!container || !items || items.length === 0) return;
-    
+
     // Create carousel HTML
     container.innerHTML = `
         <div class="carousel-container">
@@ -1488,16 +1509,16 @@ function createCarousel(containerId, items) {
             </div>
         </div>
     `;
-    
+
     const track = document.getElementById(`${containerId}-track`);
-    
+
     // Add items to carousel
     items.forEach(item => {
         const carouselItem = document.createElement('div');
         carouselItem.className = 'carousel-item';
         carouselItem.innerHTML = `
             <div class="card">
-                <img src="${item.snippet.thumbnails.medium.url}" class="thumbnail" 
+                <img src="${item.snippet.thumbnails.medium.url}" class="thumbnail"
                      onclick="playVideo('${item.id.videoId}', '${item.snippet.title.replace(/'/g, "\\'")}', '${item.snippet.thumbnails.medium.url}')">
                 <div class="card-content">
                     <div class="video-title">${item.snippet.title}</div>
@@ -1507,7 +1528,7 @@ function createCarousel(containerId, items) {
         `;
         track.appendChild(carouselItem);
     });
-    
+
     // Start auto-scroll
     startAutoScroll(containerId);
 }
@@ -1519,7 +1540,7 @@ function startAutoScroll(containerId) {
     if (carouselIntervals[containerId]) {
         clearInterval(carouselIntervals[containerId]);
     }
-    
+
     // Set up new interval
     carouselIntervals[containerId] = setInterval(() => {
         moveCarousel(containerId, 1);
@@ -1529,31 +1550,31 @@ function startAutoScroll(containerId) {
 function moveCarousel(containerId, direction) {
     const track = document.getElementById(`${containerId}-track`);
     if (!track) return;
-    
+
     const items = track.querySelectorAll('.carousel-item');
     if (items.length === 0) return;
-    
+
     const itemWidth = items[0].offsetWidth + 15; // width + margin
-    const currentPosition = track.style.transform ? 
+    const currentPosition = track.style.transform ?
         parseInt(track.style.transform.split('(')[1].split('px')[0]) : 0;
-    
+
     let newPosition = currentPosition - (itemWidth * direction);
     const maxPosition = -(itemWidth * (items.length - 4));
-    
+
     // Handle bounds
     if (newPosition > 0) {
         newPosition = maxPosition;
     } else if (newPosition < maxPosition) {
         newPosition = 0;
     }
-    
+
     track.style.transform = `translateX(${newPosition}px)`;
-    
+
     // Reset auto-scroll timer
     startAutoScroll(containerId);
 }
-         
-         
+
+
 
          function showNotificationModal() {
   document.getElementById('notificationModal').style.display = 'block';
@@ -1588,7 +1609,7 @@ function hideAboutModal() {
 document.addEventListener('DOMContentLoaded', function() {
     const savedTheme = localStorage.getItem('themePreference') || 'dark';
     setTheme(savedTheme);
-   
+
 });
 
 function toggleTheme() {
@@ -1616,7 +1637,7 @@ function toggleTheme() {
         email: document.getElementById('userEmail').value.trim(),
         joined: new Date().toISOString()
     };
-    
+
     localStorage.setItem('userProfile', JSON.stringify(userProfile));
     updateUserStatus();
     closeModal();
@@ -1627,11 +1648,11 @@ function toggleTheme() {
     const user = JSON.parse(localStorage.getItem('userProfile')) || {};
     const statusElement = document.getElementById('userStatus');
     const nameElement = document.getElementById('userProfileName');
-    
+
     if (user && user.name) {
         if (nameElement) nameElement.textContent = user.name;
         if (statusElement) statusElement.textContent = "Premium Member";
-        
+
         // Update avatar in the new design
         const avatarIcon = document.querySelector('.profile-avatar i');
         if (avatarIcon) {
@@ -1641,7 +1662,7 @@ function toggleTheme() {
     } else {
         if (nameElement) nameElement.textContent = 'Guest User';
         if (statusElement) statusElement.textContent = 'Basic Member';
-        
+
         // Reset avatar
         const avatarIcon = document.querySelector('.profile-avatar i');
         if (avatarIcon) {
@@ -1654,7 +1675,7 @@ function toggleTheme() {
     // Initialize on load
     document.addEventListener('DOMContentLoaded', () => {
         updateUserStatus();
-        
+
         // Close modal when clicking outside
         window.onclick = function(event) {
             const modal = document.getElementById('accountModal');
@@ -1677,15 +1698,15 @@ function toggleTheme() {
 
         let trailerCurrentPage = 0;
         let trailerTotalResults = [];
-        const trailerResultsPerPage = 20;
+        const trailerResultsPerPage = 26;
 
         let movieCurrentPage = 0;
         let movieTotalResults = [];
-        const movieResultsPerPage = 10;
+        const movieResultsPerPage = 26;
 
         let animeCurrentPage = 0;
         let animeTotalResults = [];
-        const animeResultsPerPage = 15;
+        const animeResultsPerPage = 26;
 
 // Add this near your other utility functions
 function escapeHtml(unsafe) {
@@ -1708,7 +1729,7 @@ function escapeHtml(unsafe) {
         function showLoading(show) {
             document.getElementById('loading').style.display = show ? 'flex' : 'none';
         }
-        
+
         function showSearchHistory() {
   const history = JSON.parse(localStorage.getItem('searchHistory')) || [];
   const list = document.getElementById('searchHistoryList');
@@ -1831,7 +1852,7 @@ function filterSearchHistory() {
         searchAnime(query);
     }
 }
- 
+
         function handleKeyPress(event) {
             if (event.key === 'Enter') {
                 searchContent();
@@ -1840,29 +1861,43 @@ function filterSearchHistory() {
 
         // Trailer Functions
         async function fetchTrendingTrailers() {
-            showLoading(true);
-            try {
-                const response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&order=viewCount&q=latest+movie+trailers&type=video&key=${getApiKey()}`);
-                const data = await response.json();
-
-                if (data.error) {
-                    if (data.error.code === 403) {
-                        switchApiKey();
-                        return fetchTrendingTrailers();
-                    }
-                    throw new Error(data.error.message);
-                }
-
-                trailerTotalResults = data.items || [];
-                trailerCurrentPage = 0;
-                displayTrailerResults();
-                updateTrailerPagination();
-            } catch (error) {
-                showError(`Failed to load trailers: ${error.message}`);
-            } finally {
-                showLoading(false);
+    showLoading(true);
+    try {
+        const response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&order=viewCount&q=latest+movie+trailers&type=video&key= ${getApiKey()}`);
+        const data = await response.json();
+        if (data.error) {
+            if (data.error.code === 403) {
+                switchApiKey();
+                return fetchTrendingTrailers();
             }
+            throw new Error(data.error.message);
         }
+
+        // Get detailed info including duration
+        const videoIds = data.items.map(item => item.id.videoId).join(',');
+        const detailsResponse = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id= ${videoIds}&key=${getApiKey()}`);
+        const detailsData = await detailsResponse.json();
+
+        // Combine snippet with contentDetails
+        const fullVideos = data.items.map(item => ({
+            ...item,
+            contentDetails: detailsData.items.find(detail => detail.id === item.id.videoId)?.contentDetails
+        }));
+
+        // Filter full-length videos only
+        const fullLengthVideos = fullVideos.filter(isFullLengthVideo);
+
+        // Sort by date
+        trailerTotalResults = sortItemsByPublishedDate(data.items || []);
+        trailerCurrentPage = 0;
+        displayTrailerResults();
+        updateTrailerPagination();
+    } catch (error) {
+        showError(`Failed to load trailers: ${error.message}`);
+    } finally {
+        showLoading(false);
+    }
+}
 
         async function searchTrailers(query) {
             showLoading(true);
@@ -1891,21 +1926,21 @@ function filterSearchHistory() {
                 showLoading(false);
             }
         }
-        
+
  function generateVideoCard(video) {
   const card = document.createElement('div');
   card.className = 'card';
-  
+
   // Check if this video is already favorited
   const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
   const isFavorited = favorites.some(fav => fav.videoId === video.id.videoId);
 
   card.innerHTML = `
-    <button class="favorite-btn ${isFavorited ? 'active' : ''}" 
+    <button class="favorite-btn ${isFavorited ? 'active' : ''}"
             onclick="toggleFavorite(event, '${video.id.videoId}', '${escapeHtml(video.snippet.title)}', '${video.snippet.thumbnails.medium.url}')">
       <i class="fas fa-heart"></i>
     </button>
-    <img src="${video.snippet.thumbnails.medium.url}" class="thumbnail" 
+    <img src="${video.snippet.thumbnails.medium.url}" class="thumbnail"
          onclick="playVideo('${video.id.videoId}', '${escapeHtml(video.snippet.title)}', '${video.snippet.thumbnails.medium.url}')">
     <div class="card-content">
       <div class="video-title">${escapeHtml(video.snippet.title)}</div>
@@ -1915,7 +1950,7 @@ function filterSearchHistory() {
           <i class="fas fa-eye"></i> ${Math.floor(Math.random() * 10000000).toLocaleString()}
         </div>
         <div class="likes-count">
-          <i class="fas fa-heart"></i> 
+          <i class="fas fa-heart"></i>
           ${Math.floor(Math.random() * 500000).toLocaleString()}
         </div>
       </div>
@@ -1926,17 +1961,17 @@ function filterSearchHistory() {
 
 function toggleFavorite(event, videoId, title, thumbnail) {
   event.stopPropagation(); // Prevent triggering card click
-  
+
   const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
   const favIndex = favorites.findIndex(fav => fav.videoId === videoId);
-  
+
   if (favIndex === -1) {
     // Add to favorites
-    favorites.push({ 
-      videoId, 
-      title, 
-      thumbnail, 
-      date: new Date().toISOString() 
+    favorites.push({
+      videoId,
+      title,
+      thumbnail,
+      date: new Date().toISOString()
     });
     event.target.classList.add('active');
     showToast('Added to favorites!');
@@ -1946,9 +1981,9 @@ function toggleFavorite(event, videoId, title, thumbnail) {
     event.target.classList.remove('active');
     showToast('Removed from favorites!');
   }
-  
+
   localStorage.setItem('favorites', JSON.stringify(favorites));
-  
+
   // Update Me tab if open
   if (document.getElementById('mePage').classList.contains('active')) {
     updateMeTabStats();
@@ -1968,7 +2003,7 @@ function toggleFavorite(event, videoId, title, thumbnail) {
         document.getElementById('trailerPagination').style.display = 'none';
         return;
     }
-    
+
     // Add carousel for top trailers (only if we have enough items)
     if (trailerTotalResults.length >= 4) { // Only show carousel if we have at least 4 items
         const topTrailers = trailerTotalResults.slice(0, 12); // Show first 12 in carousel
@@ -1986,7 +2021,7 @@ function toggleFavorite(event, videoId, title, thumbnail) {
 
     document.getElementById('trailerPagination').style.display = 'flex';
 }
-        
+
         // Modify your API calls to include statistics:
 async function fetchVideoStats(videoId) {
   const response = await fetch(
@@ -1997,7 +2032,7 @@ async function fetchVideoStats(videoId) {
 
         function updateTrailerPagination() {
             document.getElementById('trailerPrevBtn').disabled = trailerCurrentPage === 0;
-            document.getElementById('trailerNextBtn').disabled = 
+            document.getElementById('trailerNextBtn').disabled =
                 (trailerCurrentPage + 1) * trailerResultsPerPage >= trailerTotalResults.length;
         }
 
@@ -2019,29 +2054,43 @@ async function fetchVideoStats(videoId) {
 
         // Movie Functions
         async function fetchTrendingMovies() {
-            showLoading(true);
-            try {
-                const response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&q=latest+full+movie+-trailer&type=video&videoDuration=long&key=${getApiKey()}`);
-                const data = await response.json();
-
-                if (data.error) {
-                    if (data.error.code === 403) {
-                        switchApiKey();
-                        return fetchTrendingMovies();
-                    }
-                    throw new Error(data.error.message);
-                }
-
-                movieTotalResults = data.items || [];
-                movieCurrentPage = 0;
-                displayMovieResults();
-                updateMoviePagination();
-            } catch (error) {
-                showError(`Failed to load movies: ${error.message}`);
-            } finally {
-                showLoading(false);
+    showLoading(true);
+    try {
+        const response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&q=latest+full+movie+-trailer&type=video&key= ${getApiKey()}`);
+        const data = await response.json();
+        if (data.error) {
+            if (data.error.code === 403) {
+                switchApiKey();
+                return fetchTrendingMovies();
             }
+            throw new Error(data.error.message);
         }
+
+        // Get detailed info including duration
+        const videoIds = data.items.map(item => item.id.videoId).join(',');
+        const detailsResponse = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id= ${videoIds}&key=${getApiKey()}`);
+        const detailsData = await detailsResponse.json();
+
+        // Combine snippet with contentDetails
+        const fullVideos = data.items.map(item => ({
+            ...item,
+            contentDetails: detailsData.items.find(detail => detail.id === item.id.videoId)?.contentDetails
+        }));
+
+        // Filter full-length videos only
+        const fullLengthVideos = fullVideos.filter(isFullLengthVideo);
+
+        // Sort by latest
+        movieTotalResults = sortItemsByPublishedDate(fullLengthVideos);
+        movieCurrentPage = 0;
+        displayMovieResults();
+        updateMoviePagination();
+    } catch (error) {
+        showError(`Failed to load movies: ${error.message}`);
+    } finally {
+        showLoading(false);
+    }
+}
 
         async function searchMovies(query) {
             showLoading(true);
@@ -2085,7 +2134,7 @@ async function fetchVideoStats(videoId) {
         document.getElementById('moviesPagination').style.display = 'none';
         return;
     }
-    
+
     // Add carousel for top movies (only if we have enough items)
     if (movieTotalResults.length >= 4) {
         const topMovies = movieTotalResults.slice(0, 12);
@@ -2106,7 +2155,7 @@ async function fetchVideoStats(videoId) {
 
         function updateMoviePagination() {
             document.getElementById('moviesPrevBtn').disabled = movieCurrentPage === 0;
-            document.getElementById('moviesNextBtn').disabled = 
+            document.getElementById('moviesNextBtn').disabled =
                 (movieCurrentPage + 1) * movieResultsPerPage >= movieTotalResults.length;
         }
 
@@ -2126,57 +2175,160 @@ async function fetchVideoStats(videoId) {
             }
         }
 
+        // Check if video is full-length (60 seconds or more)
+function isFullLengthVideo(video) {
+    const duration = video.contentDetails?.duration;
+    if (!duration) return false;
+
+    // Convert ISO 8601 duration to seconds
+    const regex = /PT(\d+H)?(\d+M)?(\d+S)?/;
+    const matches = duration.match(regex);
+    if (!matches) return false;
+
+    const hours = parseInt(matches[1]) || 0;
+    const minutes = parseInt(matches[2]) || 0;
+    const seconds = parseInt(matches[3]) || 0;
+    const totalSeconds = hours * 3600 + minutes * 60 + seconds;
+
+    return totalSeconds >= 60; // Full-length videos only
+}
+
+// Detect if a video is anime-related
+function isAnimeRelated(video) {
+    const title = video.snippet.title.toLowerCase();
+    const description = (video.snippet.description || '').toLowerCase();
+
+    const animeKeywords = [
+        // General Anime Terms
+        'anime', 'episode', 'series', 'season', 'part', 'opening', 'ending',
+        'dub', 'sub', 'subbed', 'dubbed', 'watch online', 'full episode',
+
+        // Popular Titles (Add more as needed)
+        'naruto', 'one piece', 'bleach', 'attack on titan',
+        'my hero', 'boku no hero', 'mha', 'demon slayer', 'tokyo ghoul', 'dragon ball',
+        'sailor moon', 'cowboy bebop', 'code geass', 'death note', 'evangelion',
+        'pokemon', 'dbz', 'goku', 'luffy', 'eren', 'levi', 'itachi', 'madara',
+
+        // Genre & Style Tags
+        'shonen', 'shoujo', 'isekai', 'mecha', 'fantasy', 'adventure', 'action',
+        'comedy', 'romance', 'slice of life', 'ecchi', 'harem', 'school', 'horror',
+
+        // Platforms or Channels
+        'crunchyroll', 'funimation', 'animelabs', 'neon genesis', 'myanimelist',
+        'aniplex', 'madhouse', 'ufotable', 'bones', 'studio pierrot'
+    ];
+
+    return animeKeywords.some(kw => title.includes(kw) || description.includes(kw));
+}
+
+// Sort by published date (latest first)
+function sortItemsByPublishedDate(items) {
+    return items.sort((a, b) => new Date(b.snippet.publishedAt) - new Date(a.snippet.publishedAt));
+}
+
         // Anime Functions
-        async function fetchTrendingAnime() {
-            showLoading(true);
-            try {
-                const response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&q=latest+anime+trailer+OR+full+movie+-review&type=video&key=${getApiKey()}`);
-                const data = await response.json();
+        // Helper function to check for full-length videos
+function isFullLengthVideo(video) {
+    const duration = video.contentDetails?.duration;
+    if (!duration) return false;
 
-                if (data.error) {
-                    if (data.error.code === 403) {
-                        switchApiKey();
-                        return fetchTrendingAnime();
-                    }
-                    throw new Error(data.error.message);
-                }
+    // Convert ISO 8601 duration to seconds
+    const regex = /PT(\d+H)?(\d+M)?(\d+S)?/;
+    const matches = duration.match(regex);
+    if (!matches) return false;
 
-                animeTotalResults = data.items || [];
-                animeCurrentPage = 0;
-                displayAnimeResults();
-                updateAnimePagination();
-            } catch (error) {
-                showError(`Failed to load anime: ${error.message}`);
-            } finally {
-                showLoading(false);
+    const hours = parseInt(matches[1]) || 0;
+    const minutes = parseInt(matches[2]) || 0;
+    const seconds = parseInt(matches[3]) || 0;
+    const totalSeconds = hours * 3600 + minutes * 60 + seconds;
+
+    return totalSeconds >= 60; // Only videos 60s or longer
+}
+
+// Helper function to sort by published date (latest first)
+function sortItemsByPublishedDate(items) {
+    return items.sort((a, b) => new Date(b.snippet.publishedAt) - new Date(a.snippet.publishedAt));
+}
+
+// Updated fetchTrendingAnime function
+async function fetchTrendingAnime() {
+    showLoading(true);
+    try {
+        const response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&q=latest+anime+trailer+OR+full+movie+-review&type=video&key= ${getApiKey()}`);
+        const data = await response.json();
+        if (data.error) {
+            if (data.error.code === 403) {
+                switchApiKey();
+                return fetchTrendingAnime();
             }
+            throw new Error(data.error.message);
         }
 
-        async function searchAnime(query) {
-            showLoading(true);
-            try {
-                const response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&q=${encodeURIComponent(query + ' anime trailer OR full movie')}&type=video&key=${getApiKey()}`);
-                const data = await response.json();
+        // Get detailed info including duration
+        const videoIds = data.items.map(item => item.id.videoId).join(',');
+        const detailsResponse = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id= ${videoIds}&key=${getApiKey()}`);
+        const detailsData = await detailsResponse.json();
 
-                if (data.error) {
-                    if (data.error.code === 403) {
-                        switchApiKey();
-                        return searchAnime(query);
-                    }
-                    throw new Error(data.error.message);
-                }
+        // Combine snippet with contentDetails
+        const fullVideos = data.items.map(item => ({
+            ...item,
+            contentDetails: detailsData.items.find(detail => detail.id === item.id.videoId)?.contentDetails
+        }));
 
-                animeTotalResults = data.items || [];
-                animeCurrentPage = 0;
-                displayAnimeResults();
-                updateAnimePagination();
-                saveToHistory(query, animeTotalResults[0]?.snippet?.thumbnails?.medium?.url);
-            } catch (error) {
-                showError(`Failed to search anime: ${error.message}`);
-            } finally {
-                showLoading(false);
+        // Filter full-length AND anime-related videos
+        const filtered = fullVideos.filter(video => isFullLengthVideo(video) && isAnimeRelated(video));
+
+        // Sort by latest published date
+        animeTotalResults = sortItemsByPublishedDate(filtered);
+        animeCurrentPage = 0;
+        displayAnimeResults();
+        updateAnimePagination();
+    } catch (error) {
+        showError(`Failed to load anime: ${error.message}`);
+    } finally {
+        showLoading(false);
+    }
+}
+
+       async function searchAnime(query) {
+    showLoading(true);
+    try {
+        const response = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&q= ${encodeURIComponent(query + ' anime trailer OR full movie')}&type=video&key=${getApiKey()}`);
+        const data = await response.json();
+        if (data.error) {
+            if (data.error.code === 403) {
+                switchApiKey();
+                return searchAnime(query);
             }
+            throw new Error(data.error.message);
         }
+
+        // Get detailed info including duration
+        const videoIds = data.items.map(item => item.id.videoId).join(',');
+        const detailsResponse = await fetch(`https://www.googleapis.com/youtube/v3/videos?part=contentDetails&id= ${videoIds}&key=${getApiKey()}`);
+        const detailsData = await detailsResponse.json();
+
+        // Combine snippet with contentDetails
+        const fullVideos = data.items.map(item => ({
+            ...item,
+            contentDetails: detailsData.items.find(detail => detail.id === item.id.videoId)?.contentDetails
+        }));
+
+        // Filter full-length AND anime-related videos
+        const filtered = fullVideos.filter(video => isFullLengthVideo(video) && isAnimeRelated(video));
+
+        // Sort by latest published date
+        animeTotalResults = sortItemsByPublishedDate(filtered);
+        animeCurrentPage = 0;
+        displayAnimeResults();
+        updateAnimePagination();
+        saveToHistory(query, filtered[0]?.snippet?.thumbnails?.medium?.url);
+    } catch (error) {
+        showError(`Failed to search anime: ${error.message}`);
+    } finally {
+        showLoading(false);
+    }
+}
 
         function displayAnimeResults() {
     const resultsDiv = document.getElementById('animeResults');
@@ -2192,12 +2344,12 @@ async function fetchVideoStats(videoId) {
         document.getElementById('animePagination').style.display = 'none';
         return;
     }
-    
+
     // Add carousel for top anime (only if we have enough items)
-    if (animeTotalResults.length >= 4) {
-        const topAnime = animeTotalResults.slice(0, 12);
-        createCarousel('animeCarousel', topAnime);
-    }
+   if (animeTotalResults.length >= 4) {
+    const topAnime = sortItemsByPublishedDate(animeTotalResults).slice(0, 12);
+    createCarousel('animeCarousel', topAnime);
+}
 
     // Regular grid results
     const start = animeCurrentPage * animeResultsPerPage;
@@ -2212,7 +2364,7 @@ async function fetchVideoStats(videoId) {
 }
         function updateAnimePagination() {
             document.getElementById('animePrevBtn').disabled = animeCurrentPage === 0;
-            document.getElementById('animeNextBtn').disabled = 
+            document.getElementById('animeNextBtn').disabled =
                 (animeCurrentPage + 1) * animeResultsPerPage >= animeTotalResults.length;
         }
 
@@ -2242,7 +2394,7 @@ function playVideo(videoId, title="", thumbnail="") {
         title: title,
         source: 'thumbnail_click'
     });
-    
+
   // 1. Track video play in watch history
   let watchHistory = JSON.parse(localStorage.getItem('watchHistory')) || [];
   watchHistory.unshift({  // Add to beginning of array (newest first)
@@ -2251,19 +2403,19 @@ function playVideo(videoId, title="", thumbnail="") {
     thumbnail: thumbnail,
     date: new Date().toISOString()
   });
-  
+
   // Keep only the last 100 watched items (optional limit)
   if (watchHistory.length > 100) {
     watchHistory = watchHistory.slice(0, 100);
   }
-  
+
   localStorage.setItem('watchHistory', JSON.stringify(watchHistory));
-  
+
   // 2. Update Me tab stats if visible
   if (document.getElementById('mePage').classList.contains('active')) {
     updateMeTabStats();
   }
-  
+
   // 3. Save to search history if title exists (original functionality)
   if (title) {
     saveToHistory(title, thumbnail);
@@ -2271,11 +2423,11 @@ function playVideo(videoId, title="", thumbnail="") {
 
   // 4. Open external player
   const fallbackWindow = window.open(
-    `fallback-player.html?v=${videoId}`, 
+    `fallback-player.html?v=${videoId}`,
     '_blank',
     'width=900,height=506,scrollbars=no,location=no'
   );
-  
+
   // 5. Fallback for strict popup blockers
   setTimeout(() => {
     if (!fallbackWindow || fallbackWindow.closed) {
@@ -2325,7 +2477,7 @@ function playVideo(videoId, title="", thumbnail="") {
                 const historyItem = document.createElement('div');
                 historyItem.className = 'history-item';
                 historyItem.onclick = () => searchFromHistory(item.query);
-                
+
                 historyItem.innerHTML = `
                     ${item.thumbnail ? `<img src="${item.thumbnail}" class="history-thumbnail">` : ''}
                     <div class="history-content">
@@ -2333,14 +2485,14 @@ function playVideo(videoId, title="", thumbnail="") {
                         <div class="history-date">${new Date(item.date).toLocaleString()}</div>
                     </div>
                 `;
-                
+
                 container.appendChild(historyItem);
             });
         }
 
         function searchFromHistory(query) {
             document.getElementById('search').value = query;
-            
+
             if (query.toLowerCase().includes('trailer')) {
                 showPage('trailerPage');
                 searchTrailers(query.replace('trailer', '').trim());
@@ -2352,23 +2504,23 @@ function playVideo(videoId, title="", thumbnail="") {
                 searchMovies(query);
             }
         }
-        
-        
+
+
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
             fetchTrendingTrailers();
-            
+
             const lastSearch = localStorage.getItem('lastSearch');
             if (lastSearch) {
                 document.getElementById('search').value = lastSearch;
             }
-            
+
             document.getElementById('search').addEventListener('input', (e) => {
                 localStorage.setItem('lastSearch', e.target.value);
             });
         });
-        
+
         function clearAllCache() {
     Object.keys(localStorage).forEach(key => {
         if (key.startsWith('preload-') || key.includes('Trending') || key.includes('Results')) {
@@ -2408,7 +2560,7 @@ function updateMeTabStats() {
     }
 }
     </script>
-    
+
     <!--function for ad redirect
 <script>
 let adCooldown = false;
@@ -2452,9 +2604,9 @@ setInterval(() => {
 
 <!-- Default Statcounter code for TubeTrailer http://tubetrailer.vercel.app -->
 <script type="text/javascript">
-var sc_project=13118904; 
-var sc_invisible=1; 
-var sc_security="0bf9b7d3"; 
+var sc_project=13118904;
+var sc_invisible=1;
+var sc_security="0bf9b7d3";
 </script>
 <script type="text/javascript"
 src="https://www.statcounter.com/counter/counter.js" async></script>
@@ -2502,11 +2654,11 @@ referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
             </form>
         </div>
     </div>
-    
+
     <div id="aboutModal" class="modal">
   <div class="modal-content">
     <span class="close-btn" onclick="hideAboutModal()">&times;</span>
-    
+
     <h2>About This App</h2>
     <p><strong>Version 2.0.0</strong><br>Developed by <i>Younetwork</i></p>
     <br>
@@ -2522,7 +2674,7 @@ referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
       <strong>Movies</strong> - Full-length films</li>
       <li><p>🐉
       <strong>Anime</strong> - Series and movies</li>
-      
+
       <li><p>⚙️ <strong>Me</strong> - Profile and settings</li>
     </ul>
 <br>
