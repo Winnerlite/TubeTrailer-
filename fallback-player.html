@@ -931,13 +931,13 @@ function showAdCountdownModal() {
   }, 1000);
 }
 
-// Trigger ad every 15 seconds
+// Trigger ad every 60 seconds
 setInterval(() => {
   if (!adCooldown) {
     showAdCountdownModal();
     adCooldown = true;
     setTimeout(() => adCooldown = false, 30000); // cooldown resets after 30 secs
   }
-}, 30000); // check every 30s
+}, 60000); // check every 60s
 </script>
 </html>
