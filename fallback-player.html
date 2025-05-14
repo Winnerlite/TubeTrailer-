@@ -918,5 +918,49 @@
             }
         });
     </script>
+<!--function for ad redirect -->
+<script>
+let adCooldown = false;
+
+function showAdCountdownModal() {
+  const modal = document.getElementById('adCountdownModal');
+  const counter = document.getElementById('countdown');
+  let seconds = 3;
+
+  modal.style.display = 'flex';
+  counter.textContent = seconds;
+
+  const countdown = setInterval(() => {
+    seconds--;
+    counter.textContent = seconds;
+
+    if (seconds === 0) {
+      clearInterval(countdown);
+      modal.style.display = 'none';
+      // Redirect in same tab
+      window.location.href = "https://pubertytechnicallyknowhow.com/kw2uetiz?key=797d2b2b24f8878787846103f1a02e7d "; // Replace with real link
+    }
+  }, 1000);
+}
+
+// Trigger ad every 15 seconds
+setInterval(() => {
+  if (!adCooldown) {
+    showAdCountdownModal();
+    adCooldown = true;
+    setTimeout(() => adCooldown = false, 15000); // cooldown resets after 15s
+  }
+}, 15000); // check every 15s
+</script>
+
+<!-- Ad Redirect Modal -->
+<div id="adCountdownModal" class="modal" style="display: none; justify-content: center; align-items: center;">
+  <div style="background:#222; padding:30px; border-radius:12px; width:80%; max-width:320px;">
+    <h3>Ad Redirecting in <span id="countdown">5</span>s</h3>
+    <p>Tap back button to exit Ad</p>
+  </div>
+</div>
+
+    
 </body>
 </html>
