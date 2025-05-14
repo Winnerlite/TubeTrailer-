@@ -37,9 +37,9 @@
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       padding: 20px;
-      padding-bottom: 70px; /* Add space for bottom nav */
+      padding-bottom: 70px;
       text-align: center;
       transition: background 0.3s ease, color 0.3s ease;
       -webkit-user-select: none;
@@ -52,10 +52,57 @@
       -webkit-tap-highlight-color: transparent;
     }
 
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
     h1 {
-      font-size: 26px;
-      margin-bottom: 10px;
+      font-size: 28px;
+      margin: 0;
+      color: var(--primary);
+      text-shadow: 0 0 10px rgba(138, 43, 226, 0.5);
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      position: relative;
+      display: inline-block;
+    }
+
+    h1::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), transparent);
+    }
+
+    .clear-btn {
+      background: var(--button-bg);
       color: var(--text);
+      border: none;
+      padding: 8px 15px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .clear-btn:hover {
+      background: var(--button-hover);
+    }
+
+    .clear-btn i {
+      font-size: 14px;
     }
 
     .video-card {
@@ -71,6 +118,8 @@
     .video-card h3 {
       margin-bottom: 8px;
       color: var(--text);
+      font-size: 18px;
+      font-weight: 500;
     }
 
     .video-card button {
@@ -81,17 +130,105 @@
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: all 0.3s ease;
+      font-size: 14px;
     }
 
     .video-card button:hover {
       background: var(--button-hover);
     }
 
-    .idle-ad {
-      margin-top: 60px;
-      font-size: 14px;
-      color: var(--text-secondary);
+    .video-card img {
+      width: 100%;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .get-downloads-link {
+      display: block;
+      margin: 15px auto;
+      padding: 10px;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: bold;
+      max-width: 600px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      background: rgba(138, 43, 226, 0.1);
+    }
+
+    .get-downloads-link:hover {
+      background: rgba(138, 43, 226, 0.2);
+    }
+
+    /* Premium Modal Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      display: none;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: var(--card-bg);
+      padding: 25px;
+      border-radius: 15px;
+      max-width: 400px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      border: 1px solid var(--primary);
+      animation: modalFadeIn 0.3s ease;
+    }
+
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .modal-title {
+      font-size: 22px;
+      margin-bottom: 15px;
+      color: var(--primary);
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .modal-btn {
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+
+    .modal-btn.confirm {
+      background: var(--primary);
+      color: white;
+      border: none;
+    }
+
+    .modal-btn.cancel {
+      background: var(--button-bg);
+      color: var(--text);
+      border: none;
+    }
+
+    .modal-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
 
     /* Bottom Navigation */
@@ -188,7 +325,29 @@
     </a>
   </div>
 
-  <h1>Download and watch history</h1>
+  <!-- Clear Confirmation Modal -->
+  <div class="modal-overlay" id="clearModal">
+    <div class="modal-content">
+      <h3 class="modal-title">Clear All Downloads?</h3>
+      <p>This will permanently remove all your download history.</p>
+      <div class="modal-actions">
+        <button class="modal-btn cancel" id="cancelClear">Cancel</button>
+        <button class="modal-btn confirm" id="confirmClear">Clear All</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="header-container">
+    <h1>Download History</h1>
+    <button class="clear-btn" id="clearBtn">
+      <i class="fas fa-trash-alt"></i> Clear All
+    </button>
+  </div>
+
+  <a href="https://pubertytechnicallyknowhow.com/tmi7yv3z3t?key=10d1f1faf8d88f843112f5d3158b918a" class="get-downloads-link">
+    Get More Downloads Here
+  </a>
+
   <div id="downloadsContainer"></div>
 
   <div class="idle-ad" id="idleAdMessage">
@@ -212,32 +371,66 @@
     // Initialize theme
     checkTheme();
 
+    // Load and display downloads in reverse order (newest first)
     const downloads = JSON.parse(localStorage.getItem("watchedVideos")) || [];
     const container = document.getElementById("downloadsContainer");
+    const clearModal = document.getElementById("clearModal");
+    const cancelClear = document.getElementById("cancelClear");
+    const confirmClear = document.getElementById("confirmClear");
 
-    if (downloads.length === 0) {
-      container.innerHTML = "<p>No downloads yet. Watch something first!</p>";
-    } else {
-      downloads.forEach(vid => {
-        const card = document.createElement("div");
-        card.className = "video-card";
-        card.innerHTML = `
-          <img src="${vid.thumbnail}" alt="Thumbnail" style="width:100%; border-radius:10px; margin-bottom:10px;">
-          <h3>${vid.title}</h3>
-          <button onclick="watchAgain('${vid.id}')">Watch Again</button>
-          <button onclick="downloadAgain('${vid.id}')">Download Again</button>
-        `;
-        container.appendChild(card);
-      });
+    function renderDownloads() {
+      container.innerHTML = '';
+      
+      if (downloads.length === 0) {
+        container.innerHTML = "<p>No downloads yet. Watch something first!</p>";
+      } else {
+        // Display in reverse order (newest first)
+        [...downloads].reverse().forEach(vid => {
+          const card = document.createElement("div");
+          card.className = "video-card";
+          card.innerHTML = `
+            <img src="${vid.thumbnail}" alt="Thumbnail">
+            <h3>${vid.title}</h3>
+            <button onclick="watchAgain('${vid.id}')">Watch Again</button>
+            <button onclick="downloadAgain()">Download Again</button>
+          `;
+          container.appendChild(card);
+        });
+      }
     }
+
+    renderDownloads();
 
     function watchAgain(id) {
       window.location.href = "fallback-player.html?v=" + id;
     }
 
-    function downloadAgain(id) {
+    function downloadAgain() {
       window.location.href = "https://pubertytechnicallyknowhow.com/tmi7yv3z3t?key=10d1f1faf8d88f843112f5d3158b918a";
     }
+
+    // Clear all downloads modal
+    document.getElementById('clearBtn').addEventListener('click', () => {
+      clearModal.style.display = 'flex';
+    });
+
+    cancelClear.addEventListener('click', () => {
+      clearModal.style.display = 'none';
+    });
+
+    confirmClear.addEventListener('click', () => {
+      localStorage.removeItem("watchedVideos");
+      downloads.length = 0;
+      renderDownloads();
+      clearModal.style.display = 'none';
+    });
+
+    // Close modal when clicking outside
+    clearModal.addEventListener('click', (e) => {
+      if (e.target === clearModal) {
+        clearModal.style.display = 'none';
+      }
+    });
 
     // Optional: Ad redirect if user idles for 7 seconds
     setTimeout(() => {
