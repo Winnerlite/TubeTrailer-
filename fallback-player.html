@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
+    <!-- 100% privacy-first analytics -->
+<script data-collect-dnt="true" async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+<noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif?collect-dnt=true" alt="" referrerpolicy="no-referrer-when-downgrade"/></noscript>
+     
     <!-- Put the Library in your tag --> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.9/iframeResizer.min.js"></script> 
     
@@ -27,53 +30,75 @@
     <title>Custom Video Player</title>
     <style>
         /* Nav Bar Styles */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 0;
-            z-index: 1000;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            transition: background 0.3s ease;
-        }
+          .bottom-nav {
+      position: fixed;
+      bottom: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90%;
+      max-width: 400px;
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 5px;
+      z-index: 1000;
+      border-radius: 30px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
 
-        .light-mode .bottom-nav {
-            background: rgba(255, 255, 255, 0.95);
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
-        }
+    body.light-mode .bottom-nav {
+      background: rgba(255, 255, 255, 0.85);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
 
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            color: #b0b0b0;
-            text-decoration: none;
-            font-size: 12px;
-            transition: all 0.3s;
-            padding: 5px 10px;
-            border-radius: 8px;
-        }
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 12px;
+      transition: all 0.3s;
+      padding: 8px 12px;
+      border-radius: 20px;
+      position: relative;
+    }
 
-        .nav-item i {
-            font-size: 20px;
-            margin-bottom: 3px;
-        }
+    .nav-item i {
+      font-size: 18px;
+      margin-bottom: 3px;
+      transition: all 0.3s;
+    }
 
-        .nav-item.active {
-            color: #8a2be2;
-        }
+    .nav-item.active {
+      color: var(--primary);
+      background: rgba(138, 43, 226, 0.2);
+    }
 
-        .nav-item.anime.active {
-            color: #e91e63;
-        }
+    .nav-item:hover:not(.active) {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.1);
+    }
 
-        .nav-item:hover {
-            color: #8a2be2;
-        }
+    body.light-mode .nav-item:hover:not(.active) {
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    .nav-item.active::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 5px;
+      height: 5px;
+      background: var(--primary);
+      border-radius: 50%;
+    }
         
         /* Main Content Styles */
         body {
@@ -552,6 +577,11 @@
         .download-iframe-container.expanded {
             max-height: 5000px;
         }
+        
+        .nav-item {
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -619,28 +649,24 @@
     </div>
 
     <!-- Navigation Bar -->
-    <div class="bottom-nav">
-        <a href="index.html" class="nav-item">
-            <i class="fas fa-film"></i>
-            <span>Trailers</span>
-        </a>
-        <a href="index.html#moviesPage" class="nav-item">
-            <i class="fas fa-video"></i>
-            <span>Movies</span>
-        </a>
-        <a href="index.html#animePage" class="nav-item">
-            <i class="fas fa-dragon"></i>
-            <span>Anime</span>
-        </a>
-        <a href="downloads.html" class="nav-item">
-            <i class="fas fa-download"></i>
-            <span>Download</span>
-        </a>
-        <a href="index.html#mePage" class="nav-item">
-            <i class="fas fa-user"></i>
-            <span>Me</span>
-        </a>
-    </div>
+   <div class="bottom-nav">
+  <a href="index.html#shortsPage" class="nav-item">
+    <i class="fas fa-bolt"></i>
+    <span>Shorts</span>
+  </a>
+  <a href="index.html#explorePage" class="nav-item">
+    <i class="fas fa-compass"></i>
+    <span>Explore</span>
+  </a>
+  <a href="index.html#downloadsPage" class="nav-item">
+    <i class="fas fa-download"></i>
+    <span>Download</span>
+  </a>
+  <a href="index.html#mePage" class="nav-item">
+    <i class="fas fa-user"></i>
+    <span>Me</span>
+  </a>
+</div>
 
     <!-- Modal for How to Download -->
     <div class="modal-overlay" id="downloadModal">
@@ -869,7 +895,7 @@
             });
         }
 
-        // Aspect ratio control
+        /* Aspect ratio control
         document.getElementById('ratio-select').addEventListener('change', function() {
             const aspect = this.value;
             let heightRatio;
@@ -882,7 +908,7 @@
             }
             yt.style.height = `calc(100vw * ${heightRatio})`;
         });
-
+*/
         // Modal functionality for how to download
         const howToDownload = document.getElementById('howToDownload');
         const downloadModal = document.getElementById('downloadModal');
