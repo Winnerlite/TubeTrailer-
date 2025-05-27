@@ -1769,6 +1769,233 @@ body.light-mode .auth-cta h3 {
 body.light-mode .auth-cta p {
     color: var(--text-secondary);
 }
+
+
+/* Downloads Page Styles */
+.download-list {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 0;
+    list-style: none;
+}
+
+.download-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    background: var(--card-bg);
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.download-thumbnail {
+    width: 60px;
+    height: 45px;
+    border-radius: 6px;
+    object-fit: cover;
+    margin-right: 15px;
+}
+
+.download-info {
+    flex: 1;
+    text-align: left;
+    overflow: hidden;
+}
+
+.download-title {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.download-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.action-btn {
+    background: var(--button-bg);
+    color: var(--text);
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.action-btn:hover {
+    background: var(--button-hover);
+}
+
+.empty-message {
+    color: var(--text-secondary);
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.idle-ad {
+    text-align: center;
+    padding: 15px;
+    color: var(--text-secondary);
+}
+
+.dots::after {
+    content: "...";
+    animation: blink 1.2s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+}
+
+
+/* Clear Button */
+.clear-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 15px auto;
+    box-shadow: 0 0 10px var(--glow);
+}
+
+.clear-btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px var(--glow);
+}
+
+.clear-btn i {
+    font-size: 14px;
+}
+
+/* Clear Confirmation Modal */
+.clear-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.clear-modal.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.clear-modal-content {
+    background: var(--card-bg);
+    padding: 25px;
+    border-radius: 15px;
+    max-width: 350px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--primary);
+    transform: translateY(20px);
+    transition: transform 0.3s ease;
+}
+
+.clear-modal.active .clear-modal-content {
+    transform: translateY(0);
+}
+
+.clear-modal-title {
+    font-size: 20px;
+    margin-bottom: 15px;
+    color: var(--text);
+}
+
+.clear-modal-message {
+    margin-bottom: 25px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+}
+
+.clear-modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.clear-modal-btn {
+    padding: 10px 25px;
+    border-radius: 25px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: var(--transition);
+    border: none;
+}
+
+.clear-modal-confirm {
+    background: var(--primary);
+    color: white;
+}
+
+.clear-modal-confirm:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 0 10px var(--glow);
+}
+
+.clear-modal-cancel {
+    background: var(--button-bg);
+    color: var(--text);
+}
+
+.clear-modal-cancel:hover {
+    background: var(--button-hover);
+    transform: translateY(-2px);
+}
+
+.clear-modal {
+    display: none;
+    /* your existing modal styles */
+}
+
+.clear-modal.active {
+    display: flex;
+}
+.toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 25px;
+    z-index: 1001;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.toast.show {
+    opacity: 1;
+}
     </style>
 </head>
 <body>
@@ -1822,6 +2049,38 @@ body.light-mode .auth-cta p {
         <div class="shorts-container" id="shortsResults"></div>
     </div>
 </div>
+
+
+<!-- Add this with your other page divs (where you have explorePage, shortsPage, mePage) -->
+<div id="downloadsPage" class="page">
+    <div class="content">
+        <div class="header-container">
+            <button class="clear-btn" id="clearBtn">
+                <i class="fas fa-trash-alt"></i> Clear All
+            </button>
+        </div>
+
+        <div id="downloadsContainer" class="download-list"></div>
+
+        <div class="idle-ad" id="idleAdMessage">
+            <span id="loadingText">Looking for more downloads</span>
+            <span class="dots">...</span>
+        </div>
+        
+        <!-- Add this modal HTML right here -->
+        <div class="clear-modal">
+            <div class="clear-modal-content">
+                <h3 class="clear-modal-title">Clear All Downloads?</h3>
+                <p class="clear-modal-message">This will permanently remove all download history.</p>
+                <div class="clear-modal-actions">
+                    <button class="clear-modal-btn clear-modal-cancel">Cancel</button>
+                    <button class="clear-modal-btn clear-modal-confirm">Clear All</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
  <!-- Me Page -->
 <div id="mePage" class="page">
@@ -1892,10 +2151,11 @@ body.light-mode .auth-cta p {
         <i class="fas fa-compass"></i>
         <span>Explore</span>
     </a>
-    <a href="downloads.html" class="nav-item">
-        <i class="fas fa-download"></i>
-        <span>Download</span>
-    </a>
+  <a href="#downloadsPage" class="nav-item" data-page="downloadsPage">
+    <i class="fas fa-download"></i>
+    <span>Download</span>
+</a>
+
     <a href="#" class="nav-item" data-page="mePage">
         <i class="fas fa-user"></i>
         <span>Me</span>
@@ -1909,12 +2169,16 @@ body.light-mode .auth-cta p {
 
     <div class="error-message" id="errorMessage"></div>
 
+
+
    <!-- Auth Modal -->
 <div id="authModal" class="modal">
     <div class="modal-content">
         <div class="auth-cta">
             <h3 id="authModalTitle">Join TUBE TRAILER </h3>
-            <p id="authModalBlurb">Unlock personalized content and premium features just for you </p>
+            <p id="authModalBlurb"> Sign in to unlock personalized trailers, anime alerts, and early downloads.</p>
+<p style="opacity: 0.7; font-size: 13px;">Tap anywhere to continue without signing in</p>
+
         </div>
         <form id="authForm">
             <input type="email" class="modal-input" id="authEmail" placeholder="Email" required>
@@ -2192,7 +2456,164 @@ function loadFromCache(key, maxAgeHours = 24) {
         if (item.getAttribute('data-page') === pageId) {
             item.classList.add('active');
         }
+        
+        // Downloads functionality
+const downloadsContainer = document.getElementById('downloadsContainer');
+const clearBtn = document.getElementById('clearBtn');
+
+function renderDownloads() {
+    const downloadsContainer = document.getElementById('downloadsContainer');
+    const downloads = JSON.parse(localStorage.getItem("watchedVideos")) || [];
+    
+    downloadsContainer.innerHTML = '';
+    
+    if (downloads.length === 0) {
+        downloadsContainer.innerHTML = `
+            <div class="empty-message">
+                <i class="fas fa-download"></i>
+                <p>No downloads yet. Watch something first!</p>
+            </div>
+        `;
+    } else {
+        // Display in reverse order (newest first)
+        [...downloads].reverse().forEach(vid => {
+            const item = document.createElement("div");
+            item.className = "download-item";
+            item.innerHTML = `
+                <img src="${vid.thumbnail}" alt="Thumbnail" class="download-thumbnail">
+                <div class="download-info">
+                    <div class="download-title">${vid.title}</div>
+                </div>
+                <div class="download-actions">
+                    <button onclick="watchAgain('${vid.id}')" class="action-btn">Watch</button>
+                    <button onclick="downloadAgain('${vid.id}')" class="action-btn">Download</button>
+                </div>
+            `;
+            downloadsContainer.appendChild(item);
+        });
+    }
+}
+
     });
+
+
+
+// Clear button event listener
+// Replace your current clear button event listener with this:
+document.getElementById('clearBtn').addEventListener('click', (e) => {
+    e.preventDefault(); // Prevent default form submission behavior
+    e.stopPropagation(); // Stop event bubbling
+    clearModal.classList.add('active');
+});
+
+// Modal button events
+// Create modal (only once)
+if (!document.querySelector('.clear-modal')) {
+    const clearModal = document.createElement('div');
+    clearModal.className = 'clear-modal';
+    clearModal.innerHTML = `
+        <div class="clear-modal-content">
+            <h3 class="clear-modal-title">Clear All Downloads?</h3>
+            <p class="clear-modal-message">This will permanently remove all download history.</p>
+            <div class="clear-modal-actions">
+                <button class="clear-modal-btn clear-modal-cancel">Cancel</button>
+                <button class="clear-modal-btn clear-modal-confirm">Clear All</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(clearModal);
+}
+
+// Get modal reference
+const clearModal = document.querySelector('.clear-modal');
+
+// Clear button click handler
+// Clear button event listener
+document.getElementById('clearBtn')?.addEventListener('click', function(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    document.querySelector('.clear-modal').classList.add('active');
+});
+
+// Modal button handlers
+document.querySelector('.clear-modal-cancel')?.addEventListener('click', function() {
+    document.querySelector('.clear-modal').classList.remove('active');
+});
+
+document.querySelector('.clear-modal-confirm')?.addEventListener('click', function() {
+    try {
+        localStorage.removeItem("watchedVideos");
+        
+        // Check if renderDownloads exists before calling it
+        if (typeof renderDownloads === 'function') {
+            renderDownloads();
+        } else {
+            console.warn('renderDownloads function not defined');
+            // Fallback behavior
+            document.getElementById('downloadsContainer').innerHTML = `
+                <div class="empty-message">
+                    <i class="fas fa-download"></i>
+                    <p>No downloads found</p>
+                </div>
+            `;
+        }
+        
+        document.querySelector('.clear-modal').classList.remove('active');
+        showToast('Downloads cleared successfully');
+    } catch (error) {
+        console.error('Error clearing downloads:', error);
+        showToast('Error clearing downloads');
+    }
+});
+
+
+// Toast notification function (if you don't have it already)
+function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 10);
+    
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            document.body.removeChild(toast);
+        }, 300);
+    }, 3000);
+}
+
+
+function watchAgain(id) {
+    window.open(`fallback-player.html?v=${id}`, '_blank');
+}
+
+function downloadAgain(id) {
+    // Replace with your actual download logic
+    window.open(`https://your-download-endpoint?id=${id}`, '_blank');
+}
+
+function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    
+    setTimeout(() => {
+        toast.classList.add('show');
+    }, 10);
+    
+    setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+            document.body.removeChild(toast);
+        }, 300);
+    }, 3000);
+}
+
 
     // Hide search bar on Me & Shorts pages
     const searchBar = document.querySelector('.search-container');
@@ -3390,31 +3811,68 @@ function showToast(message) {
   });
 </script>
 <script>
+     //Uncaught SyntaxError: Unexpected token < this error is valid i don't need to remove the search bar in download if i did thr is a malfrmtion in the me page fix later
+  <script>
   function handlePageVisibility() {
     const hash = window.location.hash || '#explorePage';
     const searchBar = document.querySelector('.search-container');
-    const mePageActive = hash === '#mePage';
+    const hiddenOn = ['#mePage', '#downloadsPage'];
 
     if (searchBar) {
-      searchBar.style.display = mePageActive ? 'none' : 'flex';
+      searchBar.style.display = hiddenOn.includes(hash) ? 'none' : 'flex';
     }
 
-    // Optional: Update active page class
     document.querySelectorAll('.page').forEach(page => {
       page.classList.toggle('active', '#' + page.id === hash);
     });
 
-    // Optional: Update nav highlight
     document.querySelectorAll('.nav-item').forEach(link => {
       link.classList.toggle('active', link.getAttribute('href') === hash);
     });
   }
 
-  // Run on load
   window.addEventListener('DOMContentLoaded', handlePageVisibility);
-
-  // Run on hash change
   window.addEventListener('hashchange', handlePageVisibility);
+</script>
+</script>
+
+
+<script>
+  let interactionCount = 0;
+  const maxInteractions = 3; // Show modal after 3 interactions
+  let modalShown = false;
+
+  function showAuthModal() {
+    if (!modalShown) {
+      document.getElementById('authModal').style.display = 'flex';
+      modalShown = true;
+    }
+  }
+
+  function trackInteraction() {
+    interactionCount++;
+    if (interactionCount >= maxInteractions && !modalShown) {
+      showAuthModal();
+    }
+  }
+
+  // Track taps/clicks on nav items
+  document.querySelectorAll('.nav-item').forEach(nav => {
+    nav.addEventListener('click', trackInteraction);
+  });
+
+  // Track scroll (only once)
+  window.addEventListener('scroll', function onceScroll() {
+    trackInteraction();
+    window.removeEventListener('scroll', onceScroll);
+  });
+
+  // Optional: close modal when tapping background
+  document.getElementById('authModal').addEventListener('click', (e) => {
+    if (e.target.id === 'authModal') {
+      document.getElementById('authModal').style.display = 'none';
+    }
+  });
 </script>
 
 <!-- Default Statcounter code for TubeTrailer http://tubetrailer.vercel.app -->
