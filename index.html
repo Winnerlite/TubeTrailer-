@@ -2,17 +2,6 @@
 <html lang="en">
 <head>
      
-     <script>
-  (function() {
-    const userTheme = localStorage.getItem('theme');
-    if (userTheme === 'dark') {
-      document.documentElement.classList.add('dark-mode');
-    } else if (userTheme === 'light') {
-      document.documentElement.classList.remove('dark-mode');
-    }
-  })();
-</script>
-
 
      <!-- 100% privacy-first analytics -->
 <script data-collect-dnt="true" async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
@@ -1008,7 +997,7 @@ body.light-mode .profile-banner {
     align-self: center;
 }
 /* Theme Variables (ensure these are defined) */
-:root {
+body.light-mode {
     --primary: #6200ea;
     --secondary: #e0e0e0;
     --card-bg: #ffffff;
@@ -1018,7 +1007,6 @@ body.light-mode .profile-banner {
     --input-bg: #f5f5f5;
     --hover-bg: #f0f0f0;
 }
-
 .dark-mode {
     --primary: #d81b60;
     --primary-dark: #ad1457;
