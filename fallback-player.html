@@ -145,27 +145,56 @@
             animation: fadeIn 0.5s ease-out;
         }
         
-        .video-url {
-            flex: 1;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            color: var(--text);
-            font-size: 14px;
-            padding-right: 10px;
-        }
-        
-        .copy-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-        
+        .video-url-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-top: 15px;
+    gap: 10px;
+    overflow: hidden;
+    flex-wrap: nowrap;
+}
+
+.video-url {
+    flex: 1;
+    font-size: 14px;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.copy-btn {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+@media (max-width: 480px) {
+    .video-url-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .video-url {
+        white-space: normal;
+        text-overflow: unset;
+        overflow: visible;
+    }
+
+    .copy-btn {
+        width: 100%;
+        margin-top: 8px;
+    }
+}
         .copy-btn:hover {
             background: var(--button-hover);
         }
