@@ -4,6 +4,7 @@
      
 
      <!-- 100% privacy-first analytics -->
+     
 <script data-collect-dnt="true" async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
 <noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif?collect-dnt=true" alt="" referrerpolicy="no-referrer-when-downgrade"/></noscript>
 
@@ -172,6 +173,7 @@
 .carousel-nav:hover {
     background: var(--primary);
     box-shadow: 0 0 10px var(--glow);
+    
 }
 
 /* Favorite button */
@@ -384,14 +386,11 @@
             color: var(--text);
         }
 
-        .results-container {
-            padding: 20px;
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            margin-bottom: 20px;
-            animation: fadeIn 0.8s ease;
-        }
+      .results-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+}
 
         @media (min-width: 768px) {
             .results-container {
@@ -2068,6 +2067,35 @@ body.light-mode .auth-cta p {
     font-size: 12px;
   }
 }
+
+//Cards Responsive for the home
+@media (max-width: 767px) {
+  .results-container {
+    grid-template-columns: repeat(1, 1fr); /* Full width per card */
+    gap: 16px;
+    padding: 12px;
+  }
+
+  .thumbnail {
+    height: 160px;
+  }
+
+  .video-title {
+    font-size: 14px;
+  }
+
+  .channel {
+    font-size: 12px;
+  }
+
+  .card-content {
+    padding: 10px;
+  }
+
+  .card {
+    border-radius: 10px;
+  }
+}
     </style>
 </head>
 <body>
@@ -2124,15 +2152,21 @@ body.light-mode .auth-cta p {
 
 
 <!-- Add this with your other page divs (where you have explorePage, shortsPage, mePage) -->
-<div id="downloadsPage" class="page">
-    <div class="content">
-        <div class="header-container">
-            <button class="clear-btn" id="clearBtn">
-                <i class="fas fa-trash-alt"></i> Clear All
-            </button>
-        </div>
 
+<div id="downloadsPage" class="page">
+  <!-- Watched video list from localStorage -->
+  <ul class="download-list" id="watchedList"></ul>
+
+  <!-- Original content below 
+  <div class="content">
+    <div class="header-container">
+      <button class="clear-btn" id="clearBtn">
+        <i class="fas fa-trash-alt"></i> Clear All
+      </button>
+    </div>
+-->
         <div id="downloadsContainer" class="download-list"></div>
+        
 
         <div class="idle-ad" id="idleAdMessage">
             <span id="loadingText">Looking for more downloads</span>
@@ -2551,40 +2585,41 @@ const downloadsContainer = document.getElementById('downloadsContainer');
 const clearBtn = document.getElementById('clearBtn');
 
 function renderDownloads() {
-    const downloadsContainer = document.getElementById('downloadsContainer');
-    const downloads = JSON.parse(localStorage.getItem("watchedVideos")) || [];
-    
-    downloadsContainer.innerHTML = '';
-    
-    if (downloads.length === 0) {
-        downloadsContainer.innerHTML = `
-            <div class="empty-message">
-                <i class="fas fa-download"></i>
-                <p>No downloads yet. Watch something first!</p>
-            </div>
-        `;
-    } else {
-        // Display in reverse order (newest first)
-        [...downloads].reverse().forEach(vid => {
-            const item = document.createElement("div");
-            item.className = "download-item";
-            item.innerHTML = `
-                <img src="${vid.thumbnail}" alt="Thumbnail" class="download-thumbnail">
-                <div class="download-info">
-                    <div class="download-title">${vid.title}</div>
-                </div>
-                <div class="download-actions">
-                    <button onclick="watchAgain('${vid.id}')" class="action-btn">Watch</button>
-                    <button onclick="downloadAgain('${vid.id}')" class="action-btn">Download</button>
-                </div>
-            `;
-            downloadsContainer.appendChild(item);
-        });
-    }
-}
+  const downloadsContainer = document.getElementById('downloadsContainer');
+  const downloads = JSON.parse(localStorage.getItem("watchedVideos")) || [];
 
+  downloadsContainer.innerHTML = '';
+
+  if (downloads.length === 0) {
+    downloadsContainer.innerHTML = `
+      <div class="empty-message">
+        <i class="fas fa-download"></i>
+        <p>No downloads yet. Watch something first!</p>
+      </div>
+    `;
+  } else {
+    [...downloads].reverse().forEach(vid => {
+      // Skip broken entries
+      if (!vid.title || !vid.url || !vid.thumbnail) return;
+
+      const item = document.createElement("div");
+      item.className = "download-item";
+      item.innerHTML = `
+        <img src="${vid.thumbnail}" alt="Thumbnail" class="download-thumbnail">
+        <div class="download-info">
+          <div class="download-title">${vid.title}</div>
+        </div>
+        <div class="download-actions">
+          <a href="${vid.url}" target="_blank" class="action-btn">Watch</a>
+          <a href="${vid.url}" download class="action-btn">Download</a>
+        </div>
+      `;
+      downloadsContainer.appendChild(item);
     });
-
+  }
+}
+    });
+  
 
 
 // Clear button event listener
@@ -2706,11 +2741,11 @@ function showToast(message) {
 
     // Hide search bar on Me & Shorts pages
     const searchBar = document.querySelector('.search-container');
-    if (pageId === 'mePage' || pageId === 'shortsPage') {
-        searchBar.style.display = 'none';
-    } else {
-        searchBar.style.display = 'flex';
-    }
+    if (pageId === 'mePage' || pageId === 'shortsPage' || pageId === 'downloadsPage') {
+    searchBar.style.display = 'none';
+} else {
+    searchBar.style.display = 'flex';
+}
 
     // Load content when switching tabs
     if (pageId === 'explorePage') {
@@ -2822,52 +2857,58 @@ function showToast(message) {
     }
 
     function createCarousel(containerId, items) {
-        const container = document.getElementById(containerId);
-        if (!container || !items || items.length === 0) return;
+    const container = document.getElementById(containerId);
+    if (!container || !items || items.length === 0) return;
 
-        container.innerHTML = `
-            <div class="carousel-container">
-                <div class="carousel-track" id="${containerId}-track"></div>
-                <div class="carousel-nav carousel-prev" onclick="moveCarousel('${containerId}', -1)">
-                    <i class="fas fa-chevron-left"></i>
-                </div>
-                <div class="carousel-nav carousel-next" onclick="moveCarousel('${containerId}', 1)">
-                    <i class="fas fa-chevron-right"></i>
+    container.innerHTML = `
+        <div class="carousel-container">
+            <div class="carousel-track" id="${containerId}-track"></div>
+            <div class="carousel-nav carousel-prev" onclick="moveCarousel('${containerId}', -1)">
+                <i class="fas fa-chevron-left"></i>
+            </div>
+            <div class="carousel-nav carousel-next" onclick="moveCarousel('${containerId}', 1)">
+                <i class="fas fa-chevron-right"></i>
+            </div>
+        </div>
+    `;
+
+    const track = document.getElementById(`${containerId}-track`);
+    items.forEach(item => {
+        const carouselItem = document.createElement('div');
+        carouselItem.className = 'carousel-item';
+        carouselItem.innerHTML = `
+            <div class="card">
+                <img src="${item.snippet.thumbnails.medium.url}" class="thumbnail"
+                     data-video-id="${item.id.videoId}"
+                     data-title="${escapeHtml(item.snippet.title)}"
+                     data-thumbnail="${item.snippet.thumbnails.medium.url}">
+                <div class="carousel-overlay">
+                    <h3>${escapeHtml(item.snippet.title)}</h3>
+                    <p>${escapeHtml(item.snippet.channelTitle)}</p>
                 </div>
             </div>
         `;
+        track.appendChild(carouselItem);
+    });
 
-        const track = document.getElementById(`${containerId}-track`);
-        items.forEach(item => {
-            const carouselItem = document.createElement('div');
-            carouselItem.className = 'carousel-item';
-            carouselItem.innerHTML = `
-                <div class="card">
-                    <img src="${item.snippet.thumbnails.medium.url}" class="thumbnail"
-                         data-video-id="${item.id.videoId}"
-                         data-title="${escapeHtml(item.snippet.title)}"
-                         data-thumbnail="${item.snippet.thumbnails.medium.url}">
-                    <div class="carousel-overlay">
-                        <h3>${escapeHtml(item.snippet.title)}</h3>
-                        <p>${escapeHtml(item.snippet.channelTitle)}</p>
-                    </div>
-                </div>
-            `;
-            track.appendChild(carouselItem);
-        });
+    // Attach click event to thumbnails
+    track.querySelectorAll('.carousel-item').forEach(item => {
+  const thumb = item.querySelector('.thumbnail');
+  const videoId = thumb?.getAttribute('data-video-id');
 
-        track.querySelectorAll('.thumbnail').forEach(thumbnail => {
-            thumbnail.addEventListener('click', () => {
-                const videoId = thumbnail.dataset.videoId;
-                const title = thumbnail.dataset.title;
-                const thumbnailUrl = thumbnail.dataset.thumbnail;
-                playVideo(videoId, title, thumbnailUrl);
-            });
-        });
-
-        startAutoScroll(containerId);
+  item.addEventListener('click', () => {
+    console.log('Item clicked, videoId:', videoId);
+    if (videoId) {
+      window.location.href = `fallback-player.html?v=${videoId}`;
+    } else {
+      console.error('Still no videoId. At this point, question your life choices.');
     }
+  });
+});
+    
 
+    startAutoScroll(containerId);
+}
     let carouselIntervals = {};
 
     function startAutoScroll(containerId) {
@@ -3528,6 +3569,14 @@ document.getElementById('editProfileBtn').addEventListener('click', () => {
         }
     }
 
+
+function saveDownloadHistory(video) {
+    let history = JSON.parse(localStorage.getItem("downloadHistory")) || [];
+    history.unshift(video); // Add to the beginning
+    localStorage.setItem("downloadHistory", JSON.stringify(history));
+}
+
+
     function toggleTheme() {
         const isLight = document.body.classList.contains('light-mode');
         setTheme(isLight ? 'dark' : 'light');
@@ -3956,6 +4005,36 @@ function showToast(message) {
       }
     });
   });
+  
+  
+
+  function loadWatchedVideos() {
+    const watched = JSON.parse(localStorage.getItem('watchedVideos') || '[]');
+    const list = document.getElementById('watchedList');
+
+    if (watched.length === 0) {
+      list.innerHTML = `<li class="empty-state">No videos watched yet.</li>`;
+      return;
+    }
+
+    watched.forEach(video => {
+      const item = document.createElement('li');
+      item.className = 'download-item';
+      item.innerHTML = `
+        <img class="download-thumbnail" src="${video.thumbnail}" alt="${video.title}">
+        <div class="download-info">
+          <p class="download-title">${video.title}</p>
+        </div>
+        <div class="download-actions">
+          <a href="${video.url}" class="action-btn" target="_blank">Open</a>
+        </div>
+      `;
+      list.appendChild(item);
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", loadWatchedVideos);
+ 
 </script>
 <script>
      //Uncaught SyntaxError: Unexpected token < this error is valid i don't need to remove the search bar in download if i did thr is a malfrmtion in the me page fix later
@@ -3978,6 +4057,7 @@ function showToast(message) {
     });
   }
 
+
   window.addEventListener('DOMContentLoaded', handlePageVisibility);
   window.addEventListener('hashchange', handlePageVisibility);
 </script>
@@ -3997,6 +4077,7 @@ class="statcounter" src="https://c.statcounter.com/13118904/0/0bf9b7d3/1/"
 alt="Web Analytics Made Easy - Statcounter"
 referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
 <!-- End of Statcounter Code -->
+
 
 <!-- Remove sign in modal whrn check-->
 <script>
@@ -4019,6 +4100,8 @@ document.addEventListener('DOMContentLoaded', function () {
         authModal.remove();
     });
 });
+
+
 </script>
 </body>
 </html>
