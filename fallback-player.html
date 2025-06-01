@@ -705,7 +705,7 @@ body.light-mode .video-url-container {
     cursor: pointer;
     font-weight: bold;
   ">
-    📋 Copy Video Link
+    Copy Video Link
   </button>
 
   <!-- Show Related Videos Button -->
@@ -718,7 +718,7 @@ body.light-mode .video-url-container {
     cursor: pointer;
     font-weight: bold;
   ">
-    🎞️ Show Related Videos
+    Show Related Videos
   </button>
 </div>
 
@@ -888,7 +888,7 @@ function showCopyToast() {
         // Theme management
         function checkTheme() {
             const theme = localStorage.getItem('themePreference') || 'dark';
-            document.documentElement.className = theme === 'light' ? 'light-mode' : 'dark-mode';
+            document.documentElemenet.className = theme === 'light' ? 'light-mode' : 'dark-mode';
         }
         window.addEventListener('storage', function(event) {
             if (event.key === 'themePreference') {
@@ -896,14 +896,34 @@ function showCopyToast() {
             }
         });
 
+
+function getRandomApiKey() {
+  const key = API_KEYS[Math.floor(Math.random() * API_KEYS.length)];
+  console.log('[🔑 API] Using key:', key);
+  return key;
+}
+
         // YouTube API Keys
         const API_KEYS = [
-            'AIzaSyC_syRSRRxQR1DbtHZzMw9glxcR7My8ly4',
-            'AIzaSyABi7KdpAijF9gu09dSefpXJyhjIRY66Eg',
-            'AIzaSyAqLty-6vku33b3bpdG5oLkyoimdw8TU',
-            'AIzaSyBYixFCdGHJ2P512iW010glQRvd93EB6O8',
-            'AIzaSyDLW2mkmVVgQcoUpM86VFtOaCegFvyVk_g',
-            'AIzaSyDe7rOrqZFH3vIqP9zBtNkQ0Lqz4mBz9BI'
+            
+  'AIzaSyC_syRSRRxQR1DbtHZzMw9glxcR7My8ly4',
+  'AIzaSyABi7KdpAijF9gu09dSefpXJyhjIRY66Eg',
+  'AIzaSyAqLty-6vku33b3bpdG5S4oLkyoimdw8TU',
+  'AIzaSyBYixFCdGHJ2P512iW010glQRvd93EB6O8',
+  'AIzaSyDLW2mkmVVgQcoUpM86VFtOaCegFvyVk_g',
+  'AIzaSyDe7rOrqZFH3vIqP9zBtNkQ0Lqz4mBz9BI',
+  'AIzaSyDFH66idOZwfx-PfO1AXdsUeCa2gV1kCk4',
+  'AIzaSyAlbWmxyzhL2RaNPNlPsANzY7R0JZUj_TU',
+  'AIzaSyC4WKW6-m7RlZyu6EctRsN9XjiOz5Z7GWk',
+  'AIzaSyDSBtLwMoliYaFW09BnVyzTQADrGABHzKw',
+  'AIzaSyCME7E2t1cd8JTwpXIgDSyAwVMja2QHkL8',
+  'AIzaSyDdrHGuGB5IKzv6_h7Dkgc60magvKu7YRI',
+  'AIzaSyDKnfDW7ujsfEFFGV3kWxsmQg9DDtRAUTM',
+  'AIzaSyC7v1svD5oJFa9Sg4aXFvatOMiwKB2EG2A',
+  'AIzaSyBS1tt0v9_lLc5HAIAFMkTYbRzVUL27yI0',
+  'AIzaSyDRA0Fzdwg5oIIxBBt2NowcrdbeucEa6cc'
+
+
         ];
         let currentApiKeyIndex = 0;
 
@@ -945,10 +965,11 @@ function showCopyToast() {
                 const watched = JSON.parse(localStorage.getItem("watchedVideos")) || [];
                 if (!watched.some(v => v.id === videoId)) {
                     watched.push({
-                        id: videoId,
-                        title: data.title,
-                        thumbnail: `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
-                    });
+  id: videoId,
+  title: data.title,
+  thumbnail: `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
+  url: `fallback-player.html?v=${videoId}`
+});
                     localStorage.setItem("watchedVideos", JSON.stringify(watched));
                 }
             } catch (error) {
@@ -967,8 +988,8 @@ function showCopyToast() {
 
             try {
                 const response = await fetchWithRetry(
-                    `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=${encodeURIComponent(randomQuery)}&maxResults=20&key=${API_KEYS[currentApiKeyIndex]}`
-                );
+  `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=${encodeURIComponent(randomQuery)}&maxResults=20&key=${getRandomApiKey()}`
+);
 
                 if (response.items && response.items.length > 0) {
                     displayRelatedVideos(response.items);
@@ -1071,6 +1092,41 @@ function showCopyToast() {
                 }, 1000);
             }
         });
+        
+        
+        
+  // Example: Call this when a video is played
+  function logWatchedVideo(title, thumbnail, url) {
+    const watched = JSON.parse(localStorage.getItem('watchedVideos') || '[]');
+    watched.unshift({ title, thumbnail, url }); // Add to front
+    localStorage.setItem('watchedVideos', JSON.stringify(watched.slice(0, 20))); // keep latest 20
+  }
+
+  // Call this when your video loads
+  const videoTitle = document.querySelector('.player-title')?.textContent || "Untitled";
+  const videoUrl = window.location.href;
+  const thumbnailUrl = 'https://img.youtube.com/vi/' + getYouTubeVideoID(videoUrl) + '/mqdefault.jpg'; // or your own
+
+  
+  function getYouTubeVideoID() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get("v") || '';
+}
+
+  function logWatchedVideo() {
+  const title = document.querySelector('.player-title')?.textContent?.trim();
+  const videoId = getYouTubeVideoID();
+  const thumbnail = videoId ? `https://img.youtube.com/vi/${videoId}/mqdefault.jpg` : '';
+
+  if (!title || !videoId) return;
+
+  const fallbackLink = `fallback-player.html?v=${videoId}`;
+  const newVideo = { title, url: fallbackLink, thumbnail };
+
+  const watched = JSON.parse(localStorage.getItem('watchedVideos') || '[]');
+  watched.unshift(newVideo);
+  localStorage.setItem('watchedVideos', JSON.stringify(watched.slice(0, 20)));
+}
     </script>
     
     
@@ -1125,18 +1181,20 @@ function showCopyToast() {
 
 
     <!-- Statcounter -->
-    <script type="text/javascript">
-        var sc_project=13118904;
-        var sc_invisible=1;
-        var sc_security="0bf9b7d3";
-    </script>
-    <script type="text/javascript"
-        src="https://www.statcounter.com/counter/counter.js" async></script>
-    <noscript><div class="statcounter"><a title="Web Analytics Made Easy -
-        Statcounter" href="https://statcounter.com/" target="_blank"><img
-        class="statcounter" src="https://c.statcounter.com/13118904/0/0bf9b7d3/1/"
-        alt="Web Analytics Made Easy - Statcounter"
-        referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
-        
+<!-- Default Statcounter code for TubeTrailer http://tubetrailer.vercel.app-->
+<script type="text/javascript">
+var sc_project=13118904;
+var sc_invisible=1;
+var sc_security="0bf9b7d3";
+</script>
+<script type="text/javascript"
+src="https://www.statcounter.com/counter/counter.js" async></script>
+<noscript><div class="statcounter"><a title="Web Analytics Made Easy -
+Statcounter" href="https://statcounter.com/" target="_blank"><img
+class="statcounter" src="https://c.statcounter.com/13118904/0/0bf9b7d3/1/"
+alt="Web Analytics Made Easy - Statcounter"
+referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
+<!-- End of Statcounter Code -->
+	    
 </body>
 </html>
