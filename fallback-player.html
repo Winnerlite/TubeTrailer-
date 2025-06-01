@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6484107006124965"
-     crossorigin="anonymous"></script>
+    
     
     <!-- 100% privacy-first analytics -->
+    
     <script data-collect-dnt="true" async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
     <noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif?collect-dnt=true" alt="" referrerpolicy="no-referrer-when-downgrade"/></noscript>
      
@@ -149,64 +149,65 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    padding: 10px 14px;
-    margin-top: 15px;
-    gap: 10px;
-    overflow: hidden;
+    background: var(--card-bg); /* Keep existing card background */
+    border: 1px solid var(--border-color); /* Subtle border */
+    border-radius: 10px; /* Rounded like downloadBtn */
+    padding: 14px 18px; /* Spacious padding */
+    margin: 15px 0;
+    width: 100%; /* Full width of parent */
+    max-width: none; /* Remove max-width constraint */
+    gap: 14px; /* Clean spacing */
     flex-wrap: nowrap;
+    box-sizing: border-box;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Subtle shadow for premium feel */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover */
+}
+
+body.light-mode .video-url-container {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Lighter shadow for light mode */
+}
+
+.video-url-container:hover {
+    transform: translateY(-3px); /* Lift effect on hover */
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2); /* Stronger shadow */
 }
 
 .video-url {
     flex: 1;
-    font-size: 14px;
+    font-size: 15px; /* Slightly larger for prominence */
+    font-weight: 500; /* Bold for premium look */
     color: var(--text);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    letter-spacing: 0.3px; /* Subtle spacing */
+    padding-right: 10px;
 }
 
-.copy-btn {
-    background: var(--primary);
-    color: #fff;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
-    font-size: 13px;
-    cursor: pointer;
-    flex-shrink: 0;
-}
+
+
+
 @media (max-width: 480px) {
     .video-url-container {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: stretch; /* Stretch contents */
+        padding: 12px;
+        margin: 15px 0;
+        border-radius: 8px; /* Slightly smaller for mobile */
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1); /* Lighter shadow */
     }
 
     .video-url {
         white-space: normal;
         text-overflow: unset;
         overflow: visible;
+        font-size: 14px; /* Adjusted for mobile */
+        font-weight: 500;
+        margin-bottom: 12px; /* Space between URL and button */
+        letter-spacing: 0.2px;
     }
 
-    .copy-btn {
-        width: 100%;
-        margin-top: 8px;
-    }
-}
-        .copy-btn:hover {
-            background: var(--button-hover);
-        }
-        
-        .copy-btn.copied {
-            background: #4CAF50;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+   
         
         /* Theme variables */
         :root.dark-mode {
@@ -421,33 +422,7 @@
             outline: none;
         }
 
-        .how-to-download-btn {
-    background: var(--primary); /* #d81b60 */
-    color: #ffffff;
-    border: none;
-    border-radius: 8px;
-    padding: 10px 20px;
-    font-family: 'Roboto', sans-serif;
-    font-size: 14px;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.3s ease;
-    margin: 10px auto;
-    display: block;
-    text-align: center;
-    width: 200px; /* Match download-toggle width */
-}
-
-.how-to-download-btn:hover {
-    background: #b01550; /* Darker shade of #d81b60 */
-}
-
-.how-to-download-btn:focus,
-.how-to-download-btn:active {
-    outline: none;
-    -webkit-tap-highlight-color: transparent;
-}
-
+        
 
         .modal-overlay {
             position: fixed;
@@ -571,6 +546,134 @@
             from { transform: translateY(20px); opacity: 0; }
             to { transform: translateY(0); opacity: 1; }
         }
+        
+        /* Modal Overlay */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.95);
+  z-index: 9999;
+  overflow-y: auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Modal Content */
+.modal-content {
+  max-width: 900px;
+  margin: auto;
+  background: #1e1e1e;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  color: white;
+}
+
+/* Title */
+.modal-title {
+  text-align: center;
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+/* Video Grid */
+.videos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+/* Video Card */
+.video-card {
+  background: #2d2d2d;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease;
+}
+
+.video-card:hover {
+  transform: translateY(-4px);
+}
+
+.video-thumbnail {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+}
+
+.video-info {
+  padding: 12px;
+}
+
+.video-title {
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.video-channel {
+  font-size: 12px;
+  color: #aaa;
+}
+
+/* Close Button */
+.close-btn {
+  background: #444;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  margin: 20px auto 0;
+  display: block;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Media Queries */
+@media (max-width: 600px) {
+  .video-thumbnail {
+    height: 140px;
+  }
+
+  .modal-content {
+    padding: 16px;
+  }
+
+  .modal-title {
+    font-size: 18px;
+  }
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltip-text {
+  visibility: hidden;
+  background-color: #222;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 12px;
+  position: absolute;
+  z-index: 1000;
+  bottom: 125%; /* above the icon */
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  white-space: nowrap;
+}
+
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
@@ -585,17 +688,52 @@
         </div>
         <div class="player-title"></div>
         
-        <!-- YouTube URL Display Box -->
-        <div class="video-url-container" id="videoUrlContainer" style="display: none;">
-            <div class="video-url" id="videoUrlText"></div>
-            <button class="copy-btn" id="copyUrlBtn">Copy</button>
-        </div>
+        <div style="
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px 0;
+">
+  <!-- Copy Button -->
+  <button id="copyBtn" style="
+    background: #444;
+    color: #fff;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+  ">
+    📋 Copy Video Link
+  </button>
 
+  <!-- Show Related Videos Button -->
+  <button id="openRelatedBtn" style="
+    background: linear-gradient(45deg, #ff4d7d, #6a5acd);
+    color: white;
+    padding: 10px 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+  ">
+    🎞️ Show Related Videos
+  </button>
+</div>
+
+<span class="tooltip" style="font-size: 18px; cursor: help;">❓
+  <span class="tooltip-text">Tap the copy button<p>then press the download button below to save it.</p></span>
+</span>
+        <script type="text/javascript"> 	atOptions = { 		'key' : '08b9d7c8a26ce41c5578b3a87fca2497', 		'format' : 'iframe', 		'height' : 50, 		'width' : 320, 		'params' : {} 	}; </script> <script type="text/javascript" src="//pubertytechnicallyknowhow.com/08b9d7c8a26ce41c5578b3a87fca2497/invoke.js"></script>
+        
+        
+       
         <!-- Download Section -->
         <button class="download-toggle collapsed" id="downloadToggle">
             Show Download Options <i>▼</i>
         </button>
-
+        
         <div class="download-iframe-container" id="iframeContainer">
             <iframe id="widgetApiIframe" width="100%" height="400px" allowtransparency="true" 
                     scrolling="no" style="border: none"></iframe>
@@ -608,16 +746,30 @@
             </script>
         </div>
 
-        <button class="how-to-download-btn" id="howToDownload">How to Download</button>
 
-    <!-- Related Videos Section -->
-    <div class="related-videos">
-        <h2>Related Videos</h2>
-        <div class="related-videos-container" id="relatedVideos">
-            <div class="loading-spinner"></div>
-        </div>
-    </div>
+    <!-- related videos modal-->
+    <div id="relatedModal" class="modal-overlay">
+  <div class="modal-content">
+    <h2 class="modal-title">🎬 Related Videos</h2>
+    <div id="modalVideosGrid" class="videos-grid"></div>
+    <button onclick="document.getElementById('relatedModal').style.display='none'" class="close-btn">Close</button>
+  </div>
+</div>
 
+
+<script async="async" data-cfasync="false" src="//pubertytechnicallyknowhow.com/6b9fb067757d06d116dfd73f0fc35f6a/invoke.js"></script>
+<div id="container-6b9fb067757d06d116dfd73f0fc35f6a"></div>
+
+<script type="text/javascript">
+	atOptions = {
+		'key' : '08b9d7c8a26ce41c5578b3a87fca2497',
+		'format' : 'iframe',
+		'height' : 50,
+		'width' : 320,
+		'params' : {}
+	};
+</script>
+<script type="text/javascript" src="//pubertytechnicallyknowhow.com/08b9d7c8a26ce41c5578b3a87fca2497/invoke.js"></script>
     <!-- Navigation Bar -->
     <div class="bottom-nav">
         <a href="index.html#shortsPage" class="nav-item">
@@ -682,6 +834,34 @@
 -->
 
     <script>
+         
+     //Copybtn event listener
+      document.getElementById("copyBtn").addEventListener("click", () => {
+  const videoId = new URLSearchParams(window.location.search).get("v");
+  if (!videoId) return;
+
+  const videoURL = `https://www.youtube.com/watch?v=${videoId}`;
+  navigator.clipboard.writeText(videoURL).then(() => {
+    showCopyToast();
+  }).catch(() => {
+    alert("❌ Failed to copy. Try again.");
+  });
+});
+
+function showCopyToast() {
+  const toast = document.getElementById("copyToast");
+  toast.style.display = "block";
+  toast.style.opacity = 1;
+
+  setTimeout(() => {
+    toast.style.opacity = 0;
+    setTimeout(() => {
+      toast.style.display = "none";
+    }, 400);
+  }, 7000);
+}
+
+
         // Toggle download iframe visibility
         const downloadToggle = document.getElementById('downloadToggle');
         const iframeContainer = document.getElementById('iframeContainer');
@@ -747,25 +927,7 @@
                 spinner.style.display = 'none';
             };
             
-            // Show YouTube URL with copy button
-            const youtubeUrl = `https://www.youtube.com/watch?v=${videoId}`;
-            videoUrlText.textContent = youtubeUrl;
-            videoUrlContainer.style.display = 'flex';
-            
-            // Setup copy button
-            copyUrlBtn.addEventListener('click', () => {
-                navigator.clipboard.writeText(youtubeUrl).then(() => {
-                    copyUrlBtn.textContent = 'Copied!';
-                    copyUrlBtn.classList.add('copied');
-                    setTimeout(() => {
-                        copyUrlBtn.textContent = 'Copy';
-                        copyUrlBtn.classList.remove('copied');
-                    }, 2000);
-                }).catch(err => {
-                    console.error('Failed to copy: ', err);
-                });
-            });
-            
+          
             // Fetch video info for title and watch history
             fetchVideoInfo(videoId);
 
@@ -853,41 +1015,30 @@
         }
 
         function displayRelatedVideos(videos) {
-            relatedVideosContainer.innerHTML = '';
-            const uniqueVideos = [...new Map(videos.map(item => [item.id.videoId, item])).values()];
+    const modalGrid = document.getElementById('modalVideosGrid');
+    modalGrid.innerHTML = ''; // Clear existing content
 
-            uniqueVideos.slice(0, 10).forEach(video => {
-                const videoId = video.id.videoId || video.id;
-                const videoCard = document.createElement('div');
-                videoCard.className = 'video-card';
-                videoCard.onclick = () => {
-                    window.location.href = `fallback-player.html?v=${videoId}`;
-                };
-                videoCard.innerHTML = `
-                    <img src="${video.snippet.thumbnails.medium.url}" class="video-thumbnail" alt="${video.snippet.title}">
-                    <div class="video-info">
-                        <div class="video-title">${video.snippet.title}</div>
-                        <div class="video-channel">${video.snippet.channelTitle}</div>
-                    </div>
-                `;
-                relatedVideosContainer.appendChild(videoCard);
-            });
-        }
+    const uniqueVideos = [...new Map(videos.map(item => [item.id.videoId, item])).values()];
 
-        // Modal functionality for how to download
-        const howToDownload = document.getElementById('howToDownload');
-        const downloadModal = document.getElementById('downloadModal');
-        const modalClose = document.getElementById('modalClose');
+    uniqueVideos.slice(0, 10).forEach(video => {
+        const videoId = video.id.videoId || video.id;
+        const videoCard = document.createElement('div');
+        videoCard.className = 'video-card';
+        videoCard.onclick = () => {
+            window.location.href = `fallback-player.html?v=${videoId}`;
+        };
+        videoCard.innerHTML = `
+            <img src="${video.snippet.thumbnails.medium.url}" class="video-thumbnail" alt="${video.snippet.title}">
+            <div class="video-info">
+                <div class="video-title">${video.snippet.title}</div>
+                <div class="video-channel">${video.snippet.channelTitle}</div>
+            </div>
+        `;
+        modalGrid.appendChild(videoCard);
+    });
+}
 
-        howToDownload.addEventListener('click', () => {
-            downloadModal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        });
-
-        modalClose.addEventListener('click', () => {
-            downloadModal.style.display = 'none';
-            document.body.style.overflow = 'auto';
-        });
+        
 
         downloadModal.addEventListener('click', (e) => {
             if (e.target === downloadModal) {
@@ -896,7 +1047,12 @@
             }
         });
 
-        document.addEventListener('keydown', (e) => {
+       
+    <!-- related videos-->
+    document.getElementById("openRelatedBtn").addEventListener("click", () => {
+    document.getElementById("relatedModal").style.display = "block";
+});
+ document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && downloadModal.style.display === 'flex') {
                 downloadModal.style.display = 'none';
                 document.body.style.overflow = 'auto';
@@ -917,6 +1073,57 @@
         });
     </script>
     
+    
+    <div id="relatedModal" style="
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.9);
+  color: white;
+  z-index: 9999;
+  overflow-y: auto;
+  padding: 20px;
+">
+  <div style="max-width: 900px; margin: auto;">
+    <h2 style="text-align:center;">🎬 Related Videos</h2>
+    <div id="modalVideosGrid" class="videos-grid"></div>
+    <button onclick="document.getElementById('relatedModal').style.display='none'" style="
+      margin: 20px auto;
+      display: block;
+      padding: 10px 20px;
+      background: #444;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    ">
+      Close
+    </button>
+  </div>
+</div>
+
+
+<div id="copyToast" style="
+  display: none;
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  z-index: 9999;
+  font-size: 14px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+">
+  ✅ Copied to clipboard! Now Paste it in the download section to download this video
+</div>
+
+
+
     <!-- Statcounter -->
     <script type="text/javascript">
         var sc_project=13118904;
@@ -930,5 +1137,6 @@
         class="statcounter" src="https://c.statcounter.com/13118904/0/0bf9b7d3/1/"
         alt="Web Analytics Made Easy - Statcounter"
         referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
+        
 </body>
 </html>
