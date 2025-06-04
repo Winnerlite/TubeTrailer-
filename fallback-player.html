@@ -1,47 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
-    
-    <!-- 100% privacy-first analytics -->
-    
-    <script data-collect-dnt="true" async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
-    <noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif?collect-dnt=true" alt="" referrerpolicy="no-referrer-when-downgrade"/></noscript>
-     
-    <!-- iframe-resizer -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/4.3.9/iframeResizer.min.js"></script> 
-    
-    <!-- Clarity -->
-    <script type="text/javascript">
-        (function(c,l,a,r,i,t,y){
-            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-        })(window, document, "clarity", "script", "r4ikpxyih2");
-    </script>
-        
-    <script>
-        // Immediately set theme class before rendering
-        (function() {
-            const savedTheme = localStorage.getItem('themePreference') || 'dark';
-            document.documentElement.className = savedTheme === 'light' ? 'light-mode' : 'dark-mode';
-        })();
-    </script>
     <meta charset="UTF-8" />
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+ <!-- 100% privacy-first analytics -->
+     
+<script data-collect-dnt="true" async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+<noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif?collect-dnt=true" alt="" referrerpolicy="no-referrer-when-downgrade"/></noscript>
+
+
+ <!-- clarity -->
+     <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "r4ikpxyih2");
+</script>
+
     <title>Custom Video Player</title>
     <style>
-         
-         html, body {
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden; /* 💥 prevents horizontal scroll */
-  max-width: 100vw;    /* 💪 ensures no over-expansion */
+         body, html {
+  overflow-y: auto;
 }
-* {
-  box-sizing: border-box;
-}
-        /* Nav Bar Styles */
+        /* Nav Bar Styles (Kept from original) */
         .bottom-nav {
             position: fixed;
             bottom: 15px;
@@ -116,109 +100,24 @@
         
         /* Main Content Styles */
         body {
-    overflow-y: scroll;
-    min-height: 100vh;
-    padding-bottom: 80px; /* Space for nav bar */
-    margin: 0;
-    background: var(--bg);
-    font-family: 'Roboto', sans-serif;
-    color: var(--text);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0 px; /* Keep padding for other sections */
-    transition: background 0.3s ease, color 0.3s ease;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-}
-
-        .player-container, 
-        .related-videos {
-            max-width: 900px;
-            width: 100%;
-            margin: 0 auto;
-            padding-bottom: 20px;
-        }
-       
-        /* Video URL styles */
-        .video-url-container {
-            margin-top: 15px;
-            padding: 15px;
-            background: var(--card-bg);
-            border-radius: 8px;
+            overflow-y: scroll;
+            min-height: 100vh;
+            padding-bottom: 80px; /* Space for nav bar */
+            margin: 0;
+            background: var(--bg);
+            font-family: 'Roboto', sans-serif;
+            color: var(--text);
             display: flex;
+            flex-direction: column;
             align-items: center;
-            justify-content: space-between;
-            border: 1px solid var(--border-color);
-            animation: fadeIn 0.5s ease-out;
+            padding: 0;
+            transition: background 0.3s ease, color 0.3s ease;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
-        
-        .video-url-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: var(--card-bg); /* Keep existing card background */
-    border: 1px solid var(--border-color); /* Subtle border */
-    border-radius: 10px; /* Rounded like downloadBtn */
-    padding: 14px 18px; /* Spacious padding */
-    margin: 15px 0;
-    width: 100%; /* Full width of parent */
-    max-width: none; /* Remove max-width constraint */
-    gap: 14px; /* Clean spacing */
-    flex-wrap: nowrap;
-    box-sizing: border-box;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Subtle shadow for premium feel */
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth hover */
-}
 
-body.light-mode .video-url-container {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Lighter shadow for light mode */
-}
-
-.video-url-container:hover {
-    transform: translateY(-3px); /* Lift effect on hover */
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2); /* Stronger shadow */
-}
-
-.video-url {
-    flex: 1;
-    font-size: 15px; /* Slightly larger for prominence */
-    font-weight: 500; /* Bold for premium look */
-    color: var(--text);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    letter-spacing: 0.3px; /* Subtle spacing */
-    padding-right: 10px;
-}
-
-
-
-
-@media (max-width: 480px) {
-    .video-url-container {
-        flex-direction: column;
-        align-items: stretch; /* Stretch contents */
-        padding: 12px;
-        margin: 15px 0;
-        border-radius: 8px; /* Slightly smaller for mobile */
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1); /* Lighter shadow */
-    }
-
-    .video-url {
-        white-space: normal;
-        text-overflow: unset;
-        overflow: visible;
-        font-size: 14px; /* Adjusted for mobile */
-        font-weight: 500;
-        margin-bottom: 12px; /* Space between URL and button */
-        letter-spacing: 0.2px;
-    }
-
-   
-        
         /* Theme variables */
         :root.dark-mode {
             --primary: #d81b60;
@@ -242,139 +141,194 @@ body.light-mode .video-url-container {
         }
         
         /* Player Styles */
-       /* Player Styles */
-.player-container {
-  max-width: 900px;
+     /* Fixed player container */
+.fixed-player {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
-  margin: 0 auto;
-  padding: 0 16px;
+  height: 230px; /* Match your player height */
+  background: var(--bg);
+  z-index: 1000;
+}
+
+/* Make iframe fill the player */
+.player-wrapper iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+/* Scrollable area beneath fixed player */
+.scrollable-content {
+  margin-top: 230px; /* match fixed player height */
+  padding: 15px;
   box-sizing: border-box;
-}
-
-.player-wrapper {
-    width: 100%;
-    max-width: none;
-    border-radius: 0;
-    border: none;
-    box-shadow: none;
-}
-
-#ytplayer {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 16 / 9;
-    display: block;
-    border: none;
-}
-
-.player-title {
-    font-size: 16px;
-    font-weight: 500;
-    color: var(--text);
-    margin: 10px 0;
-    text-align: left;
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  width: 100%;
+  max-width: 100%; /* ✅ ensures it doesn't shrink */
 }
 
 
+        #ytplayer {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 16 / 9;
+            display: block;
+            border: none;
+        }
 
-        /* Download Section */
-        .download-section {
-            margin-top: 15px;
-            text-align: center;
+        /* New Video Info Styles */
+        .video-info-container {
+
+            width: 100%;
+            max-width: 900px;
+            padding: 15px;
+            box-sizing: border-box; 
+
+        }
+
+        .video-title {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--text);
+            margin: 10px 0 5px 0;
+        }
+
+        .video-stats {
+            display: flex;
+            align-items: center;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            margin-bottom: 15px;
+        }
+
+        .video-stats span {
+            margin-right: 10px;
+        }
+
+        .video-actions {
+            display: flex;
+            justify-content: space-around;
+            margin: 15px 0;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 15px;
+        }
+
+        .action-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-secondary);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.75rem;
+            transition: color 0.3s;
+        }
+
+        .action-button i {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .action-button.like {
+            color: var(--primary);
+        }
+
+        .action-button:hover {
+            color: var(--text);
+        }
+
+        /* Channel Info Styles */
+        .channel-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             padding: 15px 0;
             border-bottom: 1px solid var(--border-color);
         }
-        
-        .download-toggle {
-            background: var(--button-bg);
+
+        .channel-details {
+            display: flex;
+            align-items: center;
+        }
+
+        .channel-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            object-fit: cover;
+        }
+
+        .channel-name {
+            font-weight: 500;
             color: var(--text);
-            border: 1px solid var(--border-color);
-            padding: 10px 15px;
-            border-radius: 8px;
-            margin: 15px auto;
-            display: block;
+            margin-bottom: 3px;
+        }
+
+        .channel-subs {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .subscribe-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-            width: 200px;
+            font-size: 0.875rem;
         }
 
-        .download-toggle:hover {
-            background: var(--button-hover);
+        /* Related Videos Styles */
+        .related-videos {
+            width: 100%;
+            max-width: 900px;
+            padding: 15px;
+            box-sizing: border-box;
         }
 
-        .download-toggle i {
-            margin-left: 8px;
-            transition: transform 0.3s ease;
-        }
-
-        .download-toggle.collapsed i {
-            transform: rotate(-90deg);
-        }
-
-        .download-iframe-container {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.5s ease;
-        }
-
-        .download-iframe-container.expanded {
-            max-height: 5000px;
-        }
-        
-        /* Related Videos */
-     
-.related-videos {
-    max-width: 900px;
-    width: 100%;
-    margin: 20px auto;
-    padding-bottom: 20px;
-}
-
-        
-        .related-videos h2 {
-            font-size: 20px;
-            margin-bottom: 15px;
+        .related-title {
+            font-size: 1.125rem;
+            font-weight: 500;
             color: var(--text);
-            border-bottom: 2px solid var(--primary);
-            padding-bottom: 5px;
+            margin-bottom: 15px;
         }
-        
-        .related-videos-container {
+
+        .video-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 15px;
         }
-        
+
         .video-card {
             background: var(--card-bg);
             border-radius: 8px;
-            border: 1px solid var(--border-color);
             overflow: hidden;
             cursor: pointer;
             transition: transform 0.2s;
         }
-        
+
         .video-card:hover {
             transform: translateY(-5px);
         }
-        
+
         .video-thumbnail {
             width: 100%;
-            height: 120px;
+            height: 140px;
             object-fit: cover;
         }
-        
-        .video-info {
+
+        .video-details {
             padding: 10px;
         }
-        
-        .video-title {
-            font-size: 14px;
+
+        .video-card-title {
+            font-size: 0.875rem;
             font-weight: 500;
             color: var(--text);
             margin-bottom: 5px;
@@ -383,12 +337,13 @@ body.light-mode .video-url-container {
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-        
-        .video-channel {
-            font-size: 12px;
+
+        .video-card-channel {
+            font-size: 0.75rem;
             color: var(--text-secondary);
         }
-        
+
+        /* Loading Spinner */
         .loading-spinner {
             display: inline-block;
             width: 20px;
@@ -402,382 +357,224 @@ body.light-mode .video-url-container {
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
-        
-        button, button:focus, button:active {
-            outline: none;
-            -webkit-tap-highlight-color: transparent;
-        }
-        
+
+        /* Responsive Styles */
         @media (max-width: 600px) {
-            .player-container {
-                top: 10px;
-            }
-            .related-videos-container {
+            .video-grid {
                 grid-template-columns: 1fr;
             }
-            .player-title {
-                font-size: 14px;
+            
+            .video-title {
+                font-size: 1rem;
+            }
+            
+            .video-actions {
+                justify-content: space-between;
+                padding: 0 10px;
             }
         }
-
-        .video-card:focus {
-            outline: none;
-        }
-
         
-
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.7);
-            z-index: 1000;
-            display: none;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background-color: var(--card-bg);
-            padding: 20px;
-            border-radius: 10px;
-            max-width: 600px;
-            width: 90%;
-            max-height: 80vh;
-            overflow-y: auto;
-            position: relative;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: var(--button-bg);
-            border: none;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: var(--text);
-        }
-
-        .modal-close:hover {
-            background: var(--button-hover);
-        }
-
-        .modal-title {
-            font-size: 20px;
-            margin-bottom: 15px;
+         // Add to CSS for dislike state
+        .action-button.dislike {
             color: var(--primary);
-            text-align: center;
-        }
-
-        .modal-step {
-            margin-bottom: 20px;
-            display: flex;
-            align-items: flex-start;
-        }
-
-        .step-number {
-            background-color: var(--primary);
-            color: white;
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-right: 10px;
-            flex-shrink: 0;
-        }
-
-        .step-content {
-            flex: 1;
-        }
-
-        .step-image {
-            max-width: 100%;
-            border-radius: 8px;
-            margin-top: 10px;
-            border: 1px solid var(--border-color);
-        }
-
-        .download-ready-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0,0,0,0.7);
-            z-index: 9998;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .download-ready-modal.show {
-            display: flex;
-            opacity: 1;
-        }
-
-        .download-ready-modal .modal-content {
-            background-color: var(--card-bg);
-            padding: 25px;
-            border-radius: 10px;
-            text-align: center;
-            max-width: 300px;
-            animation: modalFadeIn 0.3s ease;
-        }
-
-        .download-ready-modal i {
-            font-size: 40px;
-            color: var(--primary);
-            margin-bottom: 15px;
-            display: block;
-        }
-
-        @keyframes modalFadeIn {
-            from { transform: translateY(20px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
+            }
         
-        /* Modal Overlay */
-.modal-overlay {
-  display: none;
+        
+        .toast {
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.95);
-  z-index: 9999;
-  overflow-y: auto;
-  padding: 20px;
-  box-sizing: border-box;
-}
-
-/* Modal Content */
-.modal-content {
-  max-width: 900px;
-  margin: auto;
-  background: #1e1e1e;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.3);
-  color: white;
-}
-
-/* Title */
-.modal-title {
-  text-align: center;
-  font-size: 22px;
-  margin-bottom: 20px;
-}
-
-/* Video Grid */
-.videos-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 16px;
-}
-
-/* Video Card */
-.video-card {
-  background: #2d2d2d;
-  border-radius: 10px;
-  overflow: hidden;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  transition: transform 0.2s ease;
-}
-
-.video-card:hover {
-  transform: translateY(-4px);
-}
-
-.video-thumbnail {
-  width: 100%;
-  height: 160px;
-  object-fit: cover;
-  display: block;
-}
-
-.video-info {
-  padding: 12px;
-}
-
-.video-title {
-  font-weight: bold;
-  font-size: 14px;
-  margin-bottom: 5px;
-}
-
-.video-channel {
-  font-size: 12px;
-  color: #aaa;
-}
-
-/* Close Button */
-.close-btn {
-  background: #444;
-  color: white;
-  border: none;
-  padding: 10px 16px;
-  margin: 20px auto 0;
-  display: block;
-  border-radius: 6px;
-  cursor: pointer;
-}
-
-/* Media Queries */
-@media (max-width: 600px) {
-  .video-thumbnail {
-    height: 140px;
-  }
-
-  .modal-content {
-    padding: 16px;
-  }
-
-  .modal-title {
-    font-size: 18px;
-  }
-}
-
-.tooltip {
-  position: relative;
-  display: inline-block;
-}
-
-.tooltip .tooltip-text {
-  visibility: hidden;
-  background-color: #222;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 8px 12px;
-  position: absolute;
-  z-index: 1000;
-  bottom: 125%; /* above the icon */
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
+  background: #222;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 14px;
   opacity: 0;
-  transition: opacity 0.3s;
-  white-space: nowrap;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 9999;
 }
 
-.tooltip:hover .tooltip-text {
-  visibility: visible;
+.toast.show {
   opacity: 1;
 }
 
+.ad-dropdown {
+  background: #fff;
+  border-radius: 10px;
+  margin: 12px auto;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 390px;
+  padding: 10px 12px;
+  position: relative;
+}
+
+.ad-dropdown.closed {
+  display: none !important;
+}
+
+.toggle-ad-btn {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: #333;
+}
 
 
+@media (max-width: 768px) {
+  /* Make player use full width and height */
+  .fixed-player {
+    height: 200px;
+  }
+
+  .player-wrapper iframe {
+    height: 100%;
+    width: 100%;
+  }
+
+  /* Space below fixed player */
+  .scrollable-content {
+    margin-top: 200px;
+    padding: 12px;
+  }
+
+  /* Video info layout */
+  .video-info-container {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .video-title {
+    font-size: 16px;
+    line-height: 1.4;
+  }
+
+  .channel-details,
+  .video-meta,
+  .action-buttons {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .action-buttons button {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  /* Related videos */
+  .related-video {
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .related-video img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  .related-info {
+    font-size: 13px;
+  }
+
+  /* Hide large-only elements if any */
+  .desktop-only {
+    display: none;
+  }
+}
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Fixed Player Container -->
-    <div class="player-container">
-        <!-- YouTube Video Wrapper -->
-        <div class="player-wrapper">
-            <iframe id="ytplayer" allowfullscreen></iframe>
-            <div class="player-loading-spinner"></div>
-        </div>
-        <div class="player-title"></div>
-        
-        <div style="
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin: 20px 0;
-">
-  <!-- Copy Button -->
-  <button id="copyBtn" style="
-    background: #444;
-    color: #fff;
-    padding: 10px 16px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-  ">
-    Copy Video Link
-  </button>
-
-  <!-- Show Related Videos Button -->
-  <button id="openRelatedBtn" style="
-    background: linear-gradient(45deg, #ff4d7d, #6a5acd);
-    color: white;
-    padding: 10px 16px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-  ">
-    Show Related Videos
-  </button>
+    
+   <!-- ✅ NEW: Fixed Player Wrapper -->
+<div class="fixed-player">
+  <div class="player-container">
+    <div class="player-wrapper">
+      <iframe id="ytplayer" allowfullscreen></iframe>
+    </div>
+  </div>
 </div>
-
-<!--
-<span class="tooltip" style="font-size: 18px; cursor: help;">❓
-  <span class="tooltip-text">Tap the copy button<p>then press the download button below to save it.</p></span>
-</span>
--->
-        <script type="text/javascript"> 	atOptions = { 		'key' : '08b9d7c8a26ce41c5578b3a87fca2497', 		'format' : 'iframe', 		'height' : 50, 		'width' : 390, 		'params' : {} 	}; </script> <script type="text/javascript" src="//pubertytechnicallyknowhow.com/08b9d7c8a26ce41c5578b3a87fca2497/invoke.js"></script>
         
-        
-       
-        <!-- Download Section -->
-        <button class="download-toggle collapsed" id="downloadToggle">
-            Show Download Options <i>▼</i>
-        </button>
-        
-        <div class="download-iframe-container" id="iframeContainer">
-            <iframe id="widgetApiIframe" width="100%" height="400px" allowtransparency="true" 
-                    scrolling="no" style="border: none"></iframe>
-            <script>
-                iFrameResize({
-                    log: false,
-                    checkOrigin: false,
-                    heightCalculationMethod: 'lowestElement'
-                }, "#widgetApiIframe");
-            </script>
-        </div>
+        <!-- Video Info Section -->
+        <div class="scrollable-content">
+        <div class="video-info-container">
+            <h1 class="video-title" id="videoTitle">Loading...</h1>
+            <div class="video-stats" id="videoStats">
+                <span id="viewCount">...</span>
+                <span>•</span>
+                <span id="uploadDate">...</span>
+            </div>
+            
+            <div class="video-actions">
+                <button class="action-button like" id="likeButton">
+                    <i class="fas fa-thumbs-up"></i>
+                    <span id="likeCount">...</span>
+                </button>
+                <button class="action-button" id="dislikeButton">
+                    <i class="fas fa-thumbs-down"></i>
+                    <span>Dislike</span>
+                </button>
+                <button class="action-button" id="shareButton">
+                    <i class="fas fa-share"></i>
+                    <span>Share</span>
+                </button>
+            </div>
+            
+            
+             <div id="adWrap" style="width: 100%; max-width: 390px; margin: 10px auto;">
+  <div id="adDropDown" style="position: relative; background: #1e1e1e; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.3); padding: 10px;">
+    <div id="container-157ab7f6897240672a9dfca48527370d"></div>
+  </div>
 
-
-    <!-- related videos modal-->
-    <div id="relatedModal" class="modal-overlay">
-  <div class="modal-content">
-    <h2 class="modal-title">🎬 Related Videos</h2>
-    <div id="modalVideosGrid" class="videos-grid"></div>
-    <button onclick="document.getElementById('relatedModal').style.display='none'" class="close-btn">Close</button>
+  <!-- Toggle stays outside -->
+  <div style="text-align: right; margin-top: 5px;">
+    <button id="toggleAd" style="border: none; background: transparent; font-size: 20px; cursor: pointer; color: #aaa;">
+      <i class="fas fa-chevron-up" id="toggleIcon"></i>
+    </button>
   </div>
 </div>
 
+<script async="async" data-cfasync="false" src="//pubertytechnicallyknowhow.com/157ab7f6897240672a9dfca48527370d/invoke.js"></script>
 
-<script async="async" data-cfasync="false" src="//pubertytechnicallyknowhow.com/6b9fb067757d06d116dfd73f0fc35f6a/invoke.js"></script>
-<div id="container-6b9fb067757d06d116dfd73f0fc35f6a"></div>
 
-<script type="text/javascript">
-	atOptions = {
-		'key' : '08b9d7c8a26ce41c5578b3a87fca2497',
-		'format' : 'iframe',
-		'height' : 50,
-		'width' : 320,
-		'params' : {}
-	};
-</script>
-<script type="text/javascript" src="//pubertytechnicallyknowhow.com/08b9d7c8a26ce41c5578b3a87fca2497/invoke.js"></script>
-    <!-- Navigation Bar -->
+            <div class="channel-info">
+                <div class="channel-details">
+                    <img class="channel-avatar" id="channelAvatar" src="" alt="Channel avatar">
+                    <div>
+                        <div class="channel-name" id="channelName">...</div>
+                        <div class="channel-subs" id="channelSubs">...</div>
+                    </div>
+                </div>
+                <button class="subscribe-btn">Subscribe</button>
+            </div>
+        </div>
+        
+        
+        
+        <!-- Related Videos Section -->
+        <div class="related-videos">
+            <h2 class="related-title">Related Videos</h2>
+            <div class="video-grid" id="relatedVideosGrid">
+                <!-- Related videos will be inserted here -->
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+    <!-- Navigation Bar (Kept from original) -->
     <div class="bottom-nav">
         <a href="index.html#shortsPage" class="nav-item">
             <i class="fas fa-bolt"></i>
@@ -797,409 +594,492 @@ body.light-mode .video-url-container {
         </a>
     </div>
 
-    <!-- Modal for How to Download -->
-    <div class="modal-overlay" id="downloadModal">
-        <div class="modal-content">
-            <button class="modal-close" id="modalClose">×</button>
-            <h3 class="modal-title">How to Download Videos</h3>
-
-            <div class="modal-step">
-                <div class="step-number">1</div>
-                <div class="step-content">
-                    <p>Copy the YouTube URL shown below the video and paste it into the downloader above</p>
-                    <ul style="margin-top: 5px; padding-left: 20px;">
-                        <li><strong>Step 1:</strong> Click the "Copy" button below the video</li>
-                        <li><strong>Step 2:</strong> Paste the URL into the downloader input field</li>
-                        <li><strong>Step 3:</strong> Select your preferred download option</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="modal-step">
-                <div class="step-number">2</div>
-                <div class="step-content">
-                    <p>Wait for the download to prepare. You'll see processing indicators while we handle your request.</p>
-                </div>
-            </div>
-
-            <div class="modal-step">
-                <div class="step-number">3</div>
-                <div class="step-content">
-                    <p>Follow the on-screen instructions to complete your download.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Download Ready Modal 
-    <div class="download-ready-modal" id="downloadReadyModal">
-        <div class="modal-content">
-            <i class="fas fa-check-circle"></i>
-            <p>Download options are available</p>
-        </div>
-    </div>
--->
-
     <script>
          
-     //Copybtn event listener
-      document.getElementById("copyBtn").addEventListener("click", () => {
-  const videoId = new URLSearchParams(window.location.search).get("v");
-  if (!videoId) return;
-
-  const videoURL = `https://www.youtube.com/watch?v=${videoId}`;
-  navigator.clipboard.writeText(videoURL).then(() => {
-    showCopyToast();
-  }).catch(() => {
-    alert("❌ Failed to copy. Try again.");
-  });
-});
-
-function showCopyToast() {
-  const toast = document.getElementById("copyToast");
-  toast.style.display = "block";
-  toast.style.opacity = 1;
-
-  setTimeout(() => {
-    toast.style.opacity = 0;
-    setTimeout(() => {
-      toast.style.display = "none";
-    }, 400);
-  }, 7000);
-}
-
-
-        // Toggle download iframe visibility
-        const downloadToggle = document.getElementById('downloadToggle');
-        const iframeContainer = document.getElementById('iframeContainer');
-
-        downloadToggle.addEventListener('click', () => {
-            iframeContainer.classList.toggle('expanded');
-            downloadToggle.classList.toggle('collapsed');
-            
-            if (iframeContainer.classList.contains('expanded')) {
-                setTimeout(() => {
-                    window.dispatchEvent(new Event('resize'));
-                }, 300);
-            }
-        });
-
-        iframeContainer.addEventListener('transitionend', () => {
-            if (iframeContainer.classList.contains('expanded') && 
-                !document.getElementById('widgetApiIframe').src) {
-                document.getElementById('widgetApiIframe').src = 
-                    `https://p.oceansaver.in/api/widget?adUrl=https://pubertytechnicallyknowhow.com/kw2uetiz?key=797d2b2b24f8878787846103f1a02e7d&url=https://www.youtube.com/watch?v=${videoId}`;
-            }
-        });
          
-        // Theme management
-        function checkTheme() {
-            const theme = localStorage.getItem('themePreference') || 'dark';
-            document.documentElemenet.className = theme === 'light' ? 'light-mode' : 'dark-mode';
-        }
-        window.addEventListener('storage', function(event) {
-            if (event.key === 'themePreference') {
-                checkTheme();
-            }
-        });
-
-
-function getRandomApiKey() {
-  const key = API_KEYS[Math.floor(Math.random() * API_KEYS.length)];
-  console.log('[🔑 API] Using key:', key);
-  return key;
-}
-
         // YouTube API Keys
         const API_KEYS = [
-            
-  'AIzaSyC_syRSRRxQR1DbtHZzMw9glxcR7My8ly4',
-  'AIzaSyABi7KdpAijF9gu09dSefpXJyhjIRY66Eg',
-  'AIzaSyAqLty-6vku33b3bpdG5S4oLkyoimdw8TU',
-  'AIzaSyBYixFCdGHJ2P512iW010glQRvd93EB6O8',
-  'AIzaSyDLW2mkmVVgQcoUpM86VFtOaCegFvyVk_g',
-  'AIzaSyDe7rOrqZFH3vIqP9zBtNkQ0Lqz4mBz9BI',
-  'AIzaSyDFH66idOZwfx-PfO1AXdsUeCa2gV1kCk4',
-  'AIzaSyAlbWmxyzhL2RaNPNlPsANzY7R0JZUj_TU',
-  'AIzaSyC4WKW6-m7RlZyu6EctRsN9XjiOz5Z7GWk',
-  'AIzaSyDSBtLwMoliYaFW09BnVyzTQADrGABHzKw',
-  'AIzaSyCME7E2t1cd8JTwpXIgDSyAwVMja2QHkL8',
-  'AIzaSyDdrHGuGB5IKzv6_h7Dkgc60magvKu7YRI',
-  'AIzaSyDKnfDW7ujsfEFFGV3kWxsmQg9DDtRAUTM',
-  'AIzaSyC7v1svD5oJFa9Sg4aXFvatOMiwKB2EG2A',
-  'AIzaSyBS1tt0v9_lLc5HAIAFMkTYbRzVUL27yI0',
-  'AIzaSyDRA0Fzdwg5oIIxBBt2NowcrdbeucEa6cc'
-
-
+            'AIzaSyC_syRSRRxQR1DbtHZzMw9glxcR7My8ly4',
+            'AIzaSyABi7KdpAijF9gu09dSefpXJyhjIRY66Eg',
+            'AIzaSyAqLty-6vku33b3bpdG5S4oLkyoimdw8TU',
+            'AIzaSyBYixFCdGHJ2P512iW010glQRvd93EB6O8',
+            'AIzaSyDLW2mkmVVgQcoUpM86VFtOaCegFvyVk_g',
+            'AIzaSyDe7rOrqZFH3vIqP9zBtNkQ0Lqz4mBz9BI',
+            'AIzaSyDFH66idOZwfx-PfO1AXdsUeCa2gV1kCk4',
+            'AIzaSyAlbWmxyzhL2RaNPNlPsANzY7R0JZUj_TU',
+            'AIzaSyC4WKW6-m7RlZyu6EctRsN9XjiOz5Z7GWk',
+            'AIzaSyDSBtLwMoliYaFW09BnVyzTQADrGABHzKw',
+            'AIzaSyCME7E2t1cd8JTwpXIgDSyAwVMja2QHkL8',
+            'AIzaSyDdrHGuGB5IKzv6_h7Dkgc60magvKu7YRI',
+            'AIzaSyDKnfDW7ujsfEFFGV3kWxsmQg9DDtRAUTM',
+            'AIzaSyC7v1svD5oJFa9Sg4aXFvatOMiwKB2EG2A',
+            'AIzaSyBS1tt0v9_lLc5HAIAFMkTYbRzVUL27yI0',
+            'AIzaSyDRA0Fzdwg5oIIxBBt2NowcrdbeucEa6cc'
         ];
         let currentApiKeyIndex = 0;
+            // New variables for like/dislike state
+        let isLiked = false;
+        let isDisliked = false;
+        let isSubscribed = true; // Always subscribed
+        
 
-        // Video player setup
+        // Get video ID from URL
         const query = new URLSearchParams(window.location.search);
         const videoId = query.get('v');
-        const yt = document.getElementById('ytplayer');
-        const spinner = document.querySelector('.player-loading-spinner');
-        const relatedVideosContainer = document.getElementById('relatedVideos');
-        const videoUrlContainer = document.getElementById('videoUrlContainer');
-        const videoUrlText = document.getElementById('videoUrlText');
-        const copyUrlBtn = document.getElementById('copyUrlBtn');
+        const ytPlayer = document.getElementById('ytplayer');
+
+        // DOM Elements
+        const videoTitle = document.getElementById('videoTitle');
+        const viewCount = document.getElementById('viewCount');
+        const uploadDate = document.getElementById('uploadDate');
+        const likeCount = document.getElementById('likeCount');
+        const channelAvatar = document.getElementById('channelAvatar');
+        const channelName = document.getElementById('channelName');
+        const channelSubs = document.getElementById('channelSubs');
+        const relatedVideosGrid = document.getElementById('relatedVideosGrid');
 
         if (videoId) {
-            // Show spinner
-            spinner.style.display = 'block';
-            
             // Load main video
-           yt.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&rel=0&modestbranding=1&controls=1&showinfo=0&playsinline=1`;
-            yt.onload = () => {
-                spinner.style.display = 'none';
-            };
+            ytPlayer.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&rel=0&modestbranding=1&controls=1&showinfo=0&playsinline=1`;
             
-          
-            // Fetch video info for title and watch history
-            fetchVideoInfo(videoId);
-
-            // Load related videos
-            fetchRandomizedRelatedVideos();
+             // Initialize buttons
+            initButtons();
+            
+            // Fetch video info
+            fetchVideoDetails(videoId);
+            
+            // Fetch related videos
+            fetchRelatedVideos(videoId);
         }
 
-        async function fetchVideoInfo(videoId) {
-            try {
-                const response = await fetch(`https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`);
-                const data = await response.json();
-                // Set video title
-                document.querySelector('.player-title').textContent = data.title;
-                // Save to watch history
-                const watched = JSON.parse(localStorage.getItem("watchedVideos")) || [];
-                if (!watched.some(v => v.id === videoId)) {
-                    watched.push({
-  id: videoId,
-  title: data.title,
-  thumbnail: `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`,
-  url: `fallback-player.html?v=${videoId}`
-});
-                    localStorage.setItem("watchedVideos", JSON.stringify(watched));
+        // Format numbers (1000 -> 1K, 1000000 -> 1M)
+        function formatNumber(num) {
+            if (num >= 1000000) {
+                return (num / 1000000).toFixed(1) + 'M';
+            }
+            if (num >= 1000) {
+                return (num / 1000).toFixed(1) + 'K';
+            }
+            return num.toString();
+        }
+
+        // Format date (ISO string -> "3 days ago")
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diffInDays = Math.floor((now - date) / (1000 * 60 * 60 * 24));
+            
+            if (diffInDays === 0) return 'Today';
+            if (diffInDays === 1) return 'Yesterday';
+            if (diffInDays < 7) return `${diffInDays} days ago`;
+            if (diffInDays < 30) return `${Math.floor(diffInDays / 7)} weeks ago`;
+            if (diffInDays < 365) return `${Math.floor(diffInDays / 30)} months ago`;
+            return `${Math.floor(diffInDays / 365)} years ago`;
+        }
+
+
+ // Button initialization
+        function initButtons() {
+            // Subscribe button always shows "Subscribed"
+            const subscribeBtn = document.querySelector('.subscribe-btn');
+            subscribeBtn.textContent = 'Subscribed';
+            subscribeBtn.style.backgroundColor = 'var(--button-bg)';
+            subscribeBtn.style.color = 'var(--text-secondary)';
+            
+            // Like/Dislike button event listeners
+            document.getElementById('likeButton').addEventListener('click', toggleLike);
+            document.getElementById('dislikeButton').addEventListener('click', toggleDislike);
+            document.getElementById('shareButton').addEventListener('click', fallbackShare);
+        }
+
+        // Toggle like function
+        function toggleLike() {
+            const likeBtn = document.getElementById('likeButton');
+            const dislikeBtn = document.getElementById('dislikeButton');
+            
+            if (isLiked) {
+                // Remove like
+                likeBtn.classList.remove('like');
+                isLiked = false;
+                // Update like count visually (decrement)
+                const currentLikes = parseInt(likeCount.textContent.replace(/[^0-9]/g, ''));
+                likeCount.textContent = formatNumber(currentLikes - 1);
+            } else {
+                // Add like
+                likeBtn.classList.add('like');
+                isLiked = true;
+                // Update like count visually (increment)
+                const currentLikes = parseInt(likeCount.textContent.replace(/[^0-9]/g, ''));
+                likeCount.textContent = formatNumber(currentLikes + 1);
+                
+                // If disliked, remove dislike
+                if (isDisliked) {
+                    dislikeBtn.classList.remove('dislike');
+                    isDisliked = false;
                 }
-            } catch (error) {
-                console.error("Error fetching video info:", error);
-                document.querySelector('.player-title').textContent = 'Video Title Unavailable';
             }
         }
 
-        async function fetchRandomizedRelatedVideos() {
-            const searchQueries = [
-                "full movie",
-                "anime movie",
-                "movie trailer"
-            ];
-            const randomQuery = searchQueries[Math.floor(Math.random() * searchQueries.length)];
-
+        // Toggle dislike function
+        function toggleDislike() {
+            const likeBtn = document.getElementById('likeButton');
+            const dislikeBtn = document.getElementById('dislikeButton');
+            
+            if (isDisliked) {
+                // Remove dislike
+                dislikeBtn.classList.remove('dislike');
+                isDisliked = false;
+            } else {
+                // Add dislike
+                dislikeBtn.classList.add('dislike');
+                isDisliked = true;
+                
+                // If liked, remove like
+                if (isLiked) {
+                    likeBtn.classList.remove('like');
+                    isLiked = false;
+                    // Update like count visually (decrement)
+                    const currentLikes = parseInt(likeCount.textContent.replace(/[^0-9]/g, ''));
+                    likeCount.textContent = formatNumber(currentLikes - 1);
+                }
+            }
+        }
+        
+        
+        // Fetch video details from YouTube API
+        async function fetchVideoDetails(videoId) {
             try {
-                const response = await fetchWithRetry(
-  `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&q=${encodeURIComponent(randomQuery)}&maxResults=20&key=${getRandomApiKey()}`
-);
+                const response = await fetchWithRotation(`https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&id=${videoId}&key={API_KEY}`);
+                
+                if (response.items && response.items.length > 0) {
+                    const video = response.items[0];
+                    const snippet = video.snippet;
+                    const stats = video.statistics;
+                    
+                    // Update video info
+                    videoTitle.textContent = snippet.title;
+                    viewCount.textContent = formatNumber(parseInt(stats.viewCount)) + ' views';
+                    uploadDate.textContent = formatDate(snippet.publishedAt);
+                    likeCount.textContent = formatNumber(parseInt(stats.likeCount));
+                    
+                    // Update channel info
+                    channelName.textContent = snippet.channelTitle;
+                    channelAvatar.src = `https://yt3.ggpht.com/ytc/${snippet.channelId}`; // Placeholder, will fetch actual avatar
+                    channelSubs.textContent = '... subscribers';
+                    
+                    // Fetch channel details for avatar and subscriber count
+                    fetchChannelDetails(snippet.channelId);
+                    
+                    // Save to watch history
+                    saveToWatchHistory(video);
+                }
+            } catch (error) {
+                console.error('Error fetching video details:', error);
+                videoTitle.textContent = 'Video Title Unavailable';
+            }
+        }
 
+        // Fetch channel details
+        async function fetchChannelDetails(channelId) {
+    try {
+        const response = await fetchWithRotation(`https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics&id=${channelId}&key={API_KEY}`);
+        
+        if (response.items && response.items.length > 0) {
+            const channel = response.items[0];
+            channelAvatar.src = channel.snippet.thumbnails.default.url;
+            channelSubs.textContent = formatNumber(parseInt(channel.statistics.subscriberCount)) + ' subscribers';
+        }
+    } catch (error) {
+        console.error('Error fetching channel details:', error);
+    }
+}
+        // Fetch related videos
+        async function fetchRelatedVideos(videoId) {
+        
+        if (!videoId || typeof videoId !== "string" || videoId.length < 5) {
+  console.error("Invalid videoId for related videos:", videoId);
+  return;
+}
+            try {
+                const response = await fetchWithRotation(
+  `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&relatedToVideoId=${videoId}&maxResults=10&key={API_KEY}`
+);
+                
                 if (response.items && response.items.length > 0) {
                     displayRelatedVideos(response.items);
                 } else {
-                    fallbackRelatedVideos();
+                    // Fallback to popular videos if no related videos found
+                    fetchPopularVideos();
                 }
             } catch (error) {
                 console.error('Error fetching related videos:', error);
-                fallbackRelatedVideos();
+                fetchPopularVideos();
             }
         }
 
-        async function fallbackRelatedVideos() {
-            try {
-                const trendingResponse = await fetchWithRetry(
-                    `https://www.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular®ionCode=US&maxResults=20&key=${API_KEYS[currentApiKeyIndex]}`
-                );
 
-                if (trendingResponse.items && trendingResponse.items.length > 0) {
-                    displayRelatedVideos(trendingResponse.items);
-                } else {
-                    relatedVideosContainer.innerHTML = '<p>Could not load videos at this time</p>';
-                }
-            } catch (error) {
-                console.error("Error fetching fallback videos:", error);
-                relatedVideosContainer.innerHTML = '<p>Could not load videos at this time</p>';
-            }
-        }
-
-        async function fetchWithRetry(url, retries = 3) {
-            try {
-                const response = await fetch(url);
-                if (!response.ok) throw new Error(`API request failed with status ${response.status}`);
-                return await response.json();
-            } catch (error) {
-                if (retries > 0) {
-                    currentApiKeyIndex = (currentApiKeyIndex + 1) % API_KEYS.length;
-                    console.log(`Retrying... (${retries} left)`);
-                    await new Promise(resolve => setTimeout(resolve, 1000));
-                    return fetchWithRetry(url, retries - 1);
-                }
-                throw error;
-            }
-        }
-
-        function displayRelatedVideos(videos) {
-    const modalGrid = document.getElementById('modalVideosGrid');
-    modalGrid.innerHTML = ''; // Clear existing content
-
-    const uniqueVideos = [...new Map(videos.map(item => [item.id.videoId, item])).values()];
-
-    uniqueVideos.slice(0, 10).forEach(video => {
-        const videoId = video.id.videoId || video.id;
-        const videoCard = document.createElement('div');
-        videoCard.className = 'video-card';
-        videoCard.onclick = () => {
-            window.location.href = `fallback-player.html?v=${videoId}`;
-        };
-        videoCard.innerHTML = `
-            <img src="${video.snippet.thumbnails.medium.url}" class="video-thumbnail" alt="${video.snippet.title}">
-            <div class="video-info">
-                <div class="video-title">${video.snippet.title}</div>
-                <div class="video-channel">${video.snippet.channelTitle}</div>
-            </div>
-        `;
-        modalGrid.appendChild(videoCard);
-    });
+function fallbackShare() {
+  // Show your custom modal instead of native share
+  const modal = document.getElementById("shareModal");
+  modal.style.display = "flex";
 }
 
-        
 
-        downloadModal.addEventListener('click', (e) => {
-            if (e.target === downloadModal) {
-                downloadModal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-        });
+document.addEventListener("DOMContentLoaded", () => {
+  const modal = document.getElementById("shareModal");
+  const closeBtn = document.getElementById("closeShareModal");
+  const copyBtn = document.getElementById("copyShareLink");
+  const input = document.getElementById("shareLinkInput");
 
-       
-    <!-- related videos-->
-    document.getElementById("openRelatedBtn").addEventListener("click", () => {
-    document.getElementById("relatedModal").style.display = "block";
+  // Set the current page URL into the input
+  const urlParams = new URLSearchParams(window.location.search);
+const videoId = urlParams.get("v");
+input.value = `https://tubetrailer.com/watch?v=${videoId}`;
+
+  // Close modal on background or X
+  closeBtn.onclick = () => modal.style.display = "none";
+  modal.onclick = (e) => {
+    if (e.target === modal) modal.style.display = "none";
+  };
+
+  // Copy the URL when button clicked
+  copyBtn.onclick = () => {
+    navigator.clipboard.writeText(input.value)
+      .then(() => {
+        showToast("Link copied to clipboard!");
+        modal.style.display = "none";
+      })
+      .catch(() => {
+        alert("Copy failed. Please copy manually.");
+      });
+  };
 });
- document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && downloadModal.style.display === 'flex') {
-                downloadModal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-        });
 
-        // Download ready modal
-        document.addEventListener('DOMContentLoaded', function() {
-            const readyModal = document.getElementById('downloadReadyModal');
-            if (readyModal) {
-                setTimeout(() => {
-                    readyModal.classList.add('show');
-                    setTimeout(() => {
-                        readyModal.classList.remove('show');
-                    }, 3000);
-                }, 1000);
+        // Fallback to popular videos
+        async function fetchPopularVideos() {
+            try {
+                const response = await fetchWithRotation(
+                    `https://www.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&maxResults=10&key=${API_KEYS[currentApiKeyIndex]}`
+                );
+                
+                if (response.items && response.items.length > 0) {
+                    displayRelatedVideos(response.items);
+                }
+            } catch (error) {
+                console.error('Error fetching popular videos:', error);
             }
-        });
-        
-        
-        
-  // Example: Call this when a video is played
-  function logWatchedVideo(title, thumbnail, url) {
-    const watched = JSON.parse(localStorage.getItem('watchedVideos') || '[]');
-    watched.unshift({ title, thumbnail, url }); // Add to front
-    localStorage.setItem('watchedVideos', JSON.stringify(watched.slice(0, 20))); // keep latest 20
+        }
+
+        // Display related videos
+        function displayRelatedVideos(videos) {
+            relatedVideosGrid.innerHTML = '';
+            
+            videos.forEach(video => {
+                const videoId = video.id.videoId || video.id;
+                const snippet = video.snippet;
+                
+                const videoCard = document.createElement('div');
+                videoCard.className = 'video-card';
+                videoCard.onclick = () => {
+                    window.location.href = `fallback-player.html?v=${videoId}`;
+                };
+                
+                videoCard.innerHTML = `
+                    <img src="${snippet.thumbnails.medium.url}" class="video-thumbnail" alt="${snippet.title}">
+                    <div class="video-details">
+                        <div class="video-card-title">${snippet.title}</div>
+                        <div class="video-card-channel">${snippet.channelTitle}</div>
+                    </div>
+                `;
+                
+                relatedVideosGrid.appendChild(videoCard);
+            });
+        }
+
+
+        // Save to watch history
+        function saveToWatchHistory(video) {
+            const watched = JSON.parse(localStorage.getItem('watchedVideos')) || [];
+            const existingIndex = watched.findIndex(v => v.id === video.id);
+            
+            if (existingIndex !== -1) {
+                watched.splice(existingIndex, 1);
+            }
+            
+            watched.unshift({
+                id: video.id,
+                title: video.snippet.title,
+                thumbnail: `https://img.youtube.com/vi/${video.id}/mqdefault.jpg`,
+                url: `fallback-player.html?v=${video.id}`
+            });
+            
+            localStorage.setItem('watchedVideos', JSON.stringify(watched.slice(0, 20)));
+        }
+
+        // API request with retry logic
+        async function fetchWithRotation(urlTemplate) {
+  const totalKeys = API_KEYS.length;
+  let attempts = 0;
+
+  for (let i = 0; i < totalKeys; i++) {
+    const key = API_KEYS[i];
+    const url = urlTemplate.replace('{API_KEY}', key);
+
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        console.warn(`Key ${i} failed: ${response.status}`);
+        continue;
+      }
+
+      const data = await response.json();
+      console.log(`✅ Success with key ${i}`);
+      currentApiKeyIndex = i; // Save last working key
+      return data;
+    } catch (err) {
+      console.warn(`Key ${i} network error: ${err.message}`);
+    }
+
+    await new Promise(resolve => setTimeout(resolve, 300)); // optional throttle
   }
 
-  // Call this when your video loads
-  const videoTitle = document.querySelector('.player-title')?.textContent || "Untitled";
-  const videoUrl = window.location.href;
-  const thumbnailUrl = 'https://img.youtube.com/vi/' + getYouTubeVideoID(videoUrl) + '/mqdefault.jpg'; // or your own
+  throw new Error('❌ All API keys failed.');
+}
 
+        // Theme management (from original)
+        (function() {
+            const savedTheme = localStorage.getItem('themePreference') || 'dark';
+            document.documentElement.className = savedTheme === 'light' ? 'light-mode' : 'dark-mode';
+        })();
+
+        // Button event listeners
+        document.getElementById('likeButton').addEventListener('click', toggleLike);
+document.getElementById('dislikeButton').addEventListener('click', toggleDislike);
+document.getElementById('shareButton').addEventListener('click', fallbackShare);
+
+
+// Subscribe button - always shows "Subscribed" and is non-interactive
+const subscribeBtn = document.querySelector('.subscribe-btn');
+subscribeBtn.textContent = 'Subscribed';
+subscribeBtn.style.backgroundColor = 'var(--button-bg)';
+subscribeBtn.style.color = 'var(--text-secondary)';
+subscribeBtn.style.cursor = 'default';
+subscribeBtn.onclick = (e) => {
+    e.preventDefault(); // Prevent any default behavior
+    return false; // Don't do anything when clicked
+};
+
+
+function updateLikeCount(change) {
+    const currentText = likeCount.textContent;
+    // Extract number (remove "K" or "M" if present)
+    const numText = currentText.replace(/[^0-9.]/g, '');
+    let currentValue = parseFloat(numText);
+    
+    // Handle K/M suffixes
+    if (currentText.includes('K')) currentValue *= 1000;
+    if (currentText.includes('M')) currentValue *= 1000000;
+    
+    // Update value
+    const newValue = currentValue + change;
+    likeCount.textContent = formatNumber(newValue);
+}
+
+ 
+ document.addEventListener("DOMContentLoaded", function () {
+    const adDropDown = document.getElementById("adDropDown");
+    const toggleIcon = document.getElementById("toggleIcon");
+
+    document.getElementById("toggleAd").addEventListener("click", function () {
+      const isVisible = adDropDown.style.display !== "none";
+
+      if (isVisible) {
+        adDropDown.style.display = "none";
+        toggleIcon.classList.remove("fa-chevron-up");
+        toggleIcon.classList.add("fa-chevron-down");
+      } else {
+        adDropDown.style.display = "block";
+        toggleIcon.classList.remove("fa-chevron-down");
+        toggleIcon.classList.add("fa-chevron-up");
+      }
+    });
+  });
   
-  function getYouTubeVideoID() {
-  const params = new URLSearchParams(window.location.search);
-  return params.get("v") || '';
-}
-
-  function logWatchedVideo() {
-  const title = document.querySelector('.player-title')?.textContent?.trim();
-  const videoId = getYouTubeVideoID();
-  const thumbnail = videoId ? `https://img.youtube.com/vi/${videoId}/mqdefault.jpg` : '';
-
-  if (!title || !videoId) return;
-
-  const fallbackLink = `fallback-player.html?v=${videoId}`;
-  const newVideo = { title, url: fallbackLink, thumbnail };
-
-  const watched = JSON.parse(localStorage.getItem('watchedVideos') || '[]');
-  watched.unshift(newVideo);
-  localStorage.setItem('watchedVideos', JSON.stringify(watched.slice(0, 20)));
-}
+  
     </script>
+    <div id="toast" class="toast">Link copied to clipboard!</div>
     
-    
-    <div id="relatedModal" style="
+    <!-- Custom Share Modal -->
+<div id="shareModal" style="
   display: none;
   position: fixed;
   top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.9);
-  color: white;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.7);
   z-index: 9999;
-  overflow-y: auto;
-  padding: 20px;
+  align-items: center;
+  justify-content: center;
 ">
-  <div style="max-width: 900px; margin: auto;">
-    <h2 style="text-align:center;">🎬 Related Videos</h2>
-    <div id="modalVideosGrid" class="videos-grid"></div>
-    <button onclick="document.getElementById('relatedModal').style.display='none'" style="
-      margin: 20px auto;
-      display: block;
-      padding: 10px 20px;
-      background: #444;
-      color: white;
+  <div style="
+    background: #1e1e1e;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 350px;
+    text-align: center;
+    color: #fff;
+    position: relative;
+  ">
+    <span id="closeShareModal" style="
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 22px;
+      cursor: pointer;
+    ">&times;</span>
+
+    <p style="margin-bottom: 10px;">Copy this video link:</p>
+
+    <input id="shareLinkInput" type="text" readonly style="
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
       border: none;
-      border-radius: 5px;
-    ">
-      Close
-    </button>
+      background: #2a2a2a;
+      color: #fff;
+      font-size: 14px;
+      text-align: center;
+      margin-bottom: 15px;
+    " />
+
+    <button id="copyShareLink" style="
+      background: var(--primary, #d81b60);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-weight: 500;
+      cursor: pointer;
+      font-size: 14px;
+    ">Copy Link</button>
   </div>
 </div>
 
 
-<div id="copyToast" style="
-  display: none;
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #333;
-  color: white;
-  padding: 12px 20px;
-  border-radius: 6px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-  z-index: 9999;
-  font-size: 14px;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-">
-  ✅ Copied to clipboard! Now Paste it in the download section to download this video
-</div>
-
-
-
-    <!-- Statcounter -->
-    <script type="text/javascript">
-        var sc_project=13118904;
-        var sc_invisible=1;
-        var sc_security="0bf9b7d3";
-    </script>
-    <script type="text/javascript"
-        src="https://www.statcounter.com/counter/counter.js" async></script>
-    <noscript><div class="statcounter"><a title="Web Analytics Made Easy -
-        Statcounter" href="https://statcounter.com/" target="_blank"><img
-        class="statcounter" src="https://c.statcounter.com/13118904/0/0bf9b7d3/1/"
-        alt="Web Analytics Made Easy - Statcounter"
-        referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
-        
-</body>
+<!-- Default Statcounter code for TubeTrailer http://tubetrailer.vercel.app-->
+<script type="text/javascript">
+var sc_project=13118904;
+var sc_invisible=1;
+var sc_security="0bf9b7d3";
+</script>
+<script type="text/javascript"
+src="https://www.statcounter.com/counter/counter.js" async></script>
+<noscript><div class="statcounter"><a title="Web Analytics Made Easy -
+Statcounter" href="https://statcounter.com/" target="_blank"><img
+class="statcounter" src="https://c.statcounter.com/13118904/0/0bf9b7d3/1/"
+alt="Web Analytics Made Easy - Statcounter"
+referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
+<!-- End of Statcounter Code -->
+    </body>
 </html>
