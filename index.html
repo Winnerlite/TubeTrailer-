@@ -3,13 +3,13 @@
 <head>
      
 
-     <!-- 100% privacy-first analytics -->
+     <!-- 100% privacy-first analytics--> 
      
 <script data-collect-dnt="true" async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
 <noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif?collect-dnt=true" alt="" referrerpolicy="no-referrer-when-downgrade"/></noscript>
 
 
- <!-- clarity-->
+ <!-- clarity -->
      <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -2096,6 +2096,21 @@ body.light-mode .auth-cta p {
     border-radius: 10px;
   }
 }
+
+.native-banner-wrapper {
+  width: 80%;
+  max-width: 480px;         /* Adjust as needed */
+  height: var(--banner-height, 250px); /* Default height */
+  margin: 20px auto;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--primary);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
     </style>
 </head>
 <body>
@@ -2117,6 +2132,11 @@ body.light-mode .auth-cta p {
 
     <div id="explorePage" class="page active">
         <div id="exploreCarousel"></div>
+        <div class="native-banner-wrapper">
+  <div id="container-6b9fb067757d06d116dfd73f0fc35f6a"></div>
+</div>
+
+<script async="async" data-cfasync="false" src="//pubertytechnicallyknowhow.com/6b9fb067757d06d116dfd73f0fc35f6a/invoke.js"></script>
         <div class="content" id="exploreContent">
             <div id="forYouSection" style="display: none;">
                 <h2 class="section-title">For You</h2>
@@ -2456,8 +2476,8 @@ body.light-mode .auth-cta p {
         currentKeyIndex = (currentKeyIndex + 1) % apiKeys.length;
         console.log(`Switched to API key ${currentKeyIndex + 1}`);
         if (currentKeyIndex === 0) {
-            showError("All API keys exhausted. Please try again later.");
-            throw new Error("API key quota exhausted");
+            showError("Failed to Load. Please try again in a min.");
+            throw new Error("Try Again in 1 min");
         }
     }
 //Event Listener for short search
