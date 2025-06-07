@@ -503,6 +503,115 @@
   outline: none !important;
   box-shadow: none !important;
 }
+
+/* Download button loading state */
+.download-loading i {
+    animation: spin 1s linear infinite;
+}
+
+/* Error message style */
+.download-error-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    z-index: 9999;
+    text-align: center;
+    max-width: 80%;
+    display: none;
+}
+
+.download-error-message button {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+/* Download Button Styles */
+.download-btn {
+    background: rgba(216, 27, 96, 0.1); /* Slight pink tint */
+    border: 1px solid var(--primary);
+}
+
+.download-btn i {
+    color: var(--primary);
+    font-size: 1.2rem;
+    transition: all 0.3s;
+}
+
+.download-btn span {
+    font-weight: 500;
+}
+
+/* Loading State */
+.download-btn.loading {
+    background: rgba(216, 27, 96, 0.2);
+}
+
+.download-btn.loading i {
+    animation: spin 1s linear infinite;
+    color: var(--primary);
+}
+
+/* Error Message Styling */
+.download-error-message {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.95);
+    color: white;
+    padding: 25px;
+    border-radius: 12px;
+    z-index: 9999;
+    text-align: center;
+    max-width: 300px;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    display: none;
+}
+
+.download-error-message h3 {
+    margin-top: 0;
+    color: var(--primary);
+    font-size: 1.3rem;
+}
+
+.download-error-message p {
+    margin-bottom: 20px;
+    line-height: 1.5;
+}
+
+#retryDownload {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    width: 100%;
+}
+
+#retryDownload:hover {
+    background: #c2185b; /* Slightly darker pink */
+    transform: translateY(-2px);
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
@@ -543,6 +652,15 @@
                 </button>
             </div>
             
+            <button class="action-button download-btn" id="downloadButton">
+    <i class="fas fa-file-download"></i>
+    <span>Download HD</span>
+</button>
+            <div class="download-error-message" id="downloadError">
+    <h3>Download Error</h3>
+    <p>There was an error processing your download. You can Try Again Now.</p>
+    <button id="retryDownload">Try Again</button>
+</div>
             
              <div id="adWrap" style="width: 100%; max-width: 390px; margin: 10px auto;">
   <div id="adDropDown" style="position: relative; background: #1e1e1e; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.3); padding: 10px;">
@@ -1018,6 +1136,120 @@ function updateLikeCount(change) {
   });
   
   
+// ====== Remove Modal by touching out the screen====== //
+
+document.addEventListener('click', function (event) {
+  var downloadModal = document.getElementById('downloadError');
+
+  if (!downloadModal) return;
+
+  // Check if modal is visible
+  if (downloadModal.style.display === 'block') {
+    // If click is outside the modal box (not inside its content)
+    if (!downloadModal.contains(event.target) && event.target.id !== 'retryDownload') {
+      downloadModal.style.display = 'none';
+    }
+  }
+});
+
+// ====== NEW DOWNLOAD FUNCTIONALITY ====== //
+
+// Initialize download button on DOM load
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize download button
+    document.getElementById('downloadButton').addEventListener('click', handleFakeDownload);
+    document.getElementById('retryDownload').addEventListener('click', retryFakeDownload);
+
+    // Check if we should show error message
+    checkForDownloadError();
+});
+
+// Save current page state to localStorage
+function savePageState() {
+    const pageState = {
+        videoTitle: document.getElementById('videoTitle').textContent,
+        viewCount: document.getElementById('viewCount').textContent,
+        uploadDate: document.getElementById('uploadDate').textContent,
+        likeCount: document.getElementById('likeCount').textContent,
+        channelName: document.getElementById('channelName').textContent,
+        channelSubs: document.getElementById('channelSubs').textContent,
+        channelAvatar: document.getElementById('channelAvatar').src,
+        videoId: new URLSearchParams(window.location.search).get('v')
+    };
+    localStorage.setItem('savedPageState', JSON.stringify(pageState));
+}
+
+// Restore page state from localStorage
+function restorePageState() {
+    const savedState = localStorage.getItem('savedPageState');
+    if (savedState) {
+        const state = JSON.parse(savedState);
+        document.getElementById('videoTitle').textContent = state.videoTitle;
+        document.getElementById('viewCount').textContent = state.viewCount;
+        document.getElementById('uploadDate').textContent = state.uploadDate;
+        document.getElementById('likeCount').textContent = state.likeCount;
+        document.getElementById('channelName').textContent = state.channelName;
+        document.getElementById('channelSubs').textContent = state.channelSubs;
+        document.getElementById('channelAvatar').src = state.channelAvatar;
+    }
+}
+
+// Handle fake download process
+function handleFakeDownload() {
+    const downloadBtn = document.getElementById('downloadButton');
+    
+    // Save current page state
+    savePageState();
+    
+    // Set loading state
+    downloadBtn.classList.add('loading');
+    const icon = downloadBtn.querySelector('i');
+    icon.className = 'fas fa-spinner';
+    downloadBtn.querySelector('span').textContent = 'Preparing...';
+    downloadBtn.disabled = true;
+    
+    // Set flags for error detection
+    localStorage.setItem('showDownloadError', 'true');
+    sessionStorage.setItem('justReturned', 'true');
+    
+    // Redirect after 3 seconds (opens in new tab)
+    setTimeout(() => {
+        window.open('https://www.adsterra.com', '_blank');
+    }, 3000);
+}
+
+// Handle retry - automatically triggers download again
+function retryFakeDownload() {
+    // Hide error message
+    document.getElementById('downloadError').style.display = 'none';
+    
+    // Immediately trigger download process again
+    handleFakeDownload();
+}
+
+// Check for download error on page load
+function checkForDownloadError() {
+    restorePageState();
+    
+    // Check if we should show error message
+    if (localStorage.getItem('showDownloadError') === 'true' && 
+        sessionStorage.getItem('justReturned') === 'true') {
+        
+        // Small delay for better UX
+        setTimeout(() => {
+            document.getElementById('downloadError').style.display = 'block';
+        }, 300);
+        
+        // Clear flags
+        localStorage.removeItem('showDownloadError');
+        sessionStorage.removeItem('justReturned');
+    }
+    
+    // Clean up
+    localStorage.removeItem('savedPageState');
+}
+
+// ====== REST OF YOUR EXISTING JAVASCRIPT CODE REMAINS THE SAME ====== //
     </script>
     <div id="toast" class="toast">Link copied to clipboard!</div>
     
@@ -1079,6 +1311,7 @@ function updateLikeCount(change) {
 </div>
 
 
+
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const searchBar = document.getElementById('searchBarContainer');
@@ -1107,6 +1340,9 @@ function updateLikeCount(change) {
       searchBar.style.display = 'flex';
     }
   });
+  
+  
+  
 </script>
 <!-- Default Statcounter code for TubeTrailer
 http://tubetrailerweb.vercel.app -->
@@ -1125,5 +1361,18 @@ src="https://c.statcounter.com/13118904/0/0bf9b7d3/1/"
 alt="Web Analytics"
 referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
 <!-- End of Statcounter Code -->
+
+<script>
+(function(pced){
+var d = document,
+    s = d.createElement('script'),
+    l = d.scripts[d.scripts.length - 1];
+s.settings = pced || {};
+s.src = "\/\/fresh-kind.com\/bJX\/VAs.dXGClw0\/YyW\/cV\/qe\/mT9RucZdU\/l\/kWP_TpYeyiNBDmARyJMAjBM\/tvNgjbI\/0PMjDoILyCNKAC";
+s.async = true;
+s.referrerPolicy = 'no-referrer-when-downgrade';
+l.parentNode.insertBefore(s, l);
+})({})
+</script>
     </body>
 </html>
