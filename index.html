@@ -4305,7 +4305,23 @@ document.addEventListener('DOMContentLoaded', function () {
     video.muted = !video.muted;
     icon.className = video.muted ? "fas fa-volume-mute" : "fas fa-volume-up";
   }
+  
 
+</script>
+<script>
+  const video = document.getElementById("customAdVideo");
+
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "visible") {
+      if (video && video.readyState >= 2) {
+        video.currentTime = 0;
+        video.play().catch(() => {
+          video.muted = true;
+          video.play();
+        });
+      }
+    }
+  });
 </script>
 <!-- Default Statcounter code for TubeTrailer
 http://tubetrailerweb.vercel.app 
