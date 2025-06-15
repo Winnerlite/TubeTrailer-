@@ -3,13 +3,13 @@
 <head>
      
 
-     <!-- 100% privacy-first analytics 
+     <!-- 100% privacy-first analytics--> 
      
 <script data-collect-dnt="true" async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
 <noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif?collect-dnt=true" alt="" referrerpolicy="no-referrer-when-downgrade"/></noscript>
--->
 
- <!-- clarity 
+
+ <!-- clarity -->
      <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -17,7 +17,7 @@
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "r4ikpxyih2");
 </script>
--->
+
   
     <!-- Parent Ad for banner container -->
     <script async data-cfasync="false" src="//pubertytechnicallyknowhow.com/89f1e40e0e6d7dcb91eb378512134e8a/invoke.js"></script>
@@ -2216,6 +2216,71 @@ body.light-mode .auth-cta p {
     right: 8px;
   }
 }
+
+/* This seems to reset all responsive screens size to fit I wonder how long ot last 
+*/
+  @media (max-width: 450px) {
+    .results-container {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      padding: 0 8px;
+      box-sizing: border-box;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 100%;
+      border-radius: 10px;
+      overflow: hidden;
+      background: var(--card-bg);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .thumbnail {
+      width: 100%;
+      height: 140px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-content {
+      padding: 10px;
+    }
+
+    .video-title {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+
+    .channel {
+      font-size: 12px;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-stats {
+      font-size: 11px;
+      margin-top: 6px;
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+
+  /* Global overflow safety */
+  html, body {
+    overflow-x: hidden;
+    width: 100%;
+  }
+  
     </style>
 </head>
 <body>
@@ -2236,10 +2301,10 @@ body.light-mode .auth-cta p {
         <div id="exploreCarousel"></div>
       <div class="native-banner-wrapper video-ad-wrapper">
   <!-- 👇 force-open in Chrome (or any external browser) -->
-  <a href="intent://www.bike.com/#Intent;scheme=https;package=com.android.chrome;end"
+  <a href="intent://https://pubertytechnicallyknowhow.com/kw2uetiz?key=797d2b2b24f8878787846103f1a02e7d/#Intent;scheme=https;package=com.android.chrome;end"
      class="video-link" id="externalVideoLink">
     <video id="customAdVideo" autoplay muted loop playsinline>
-      <source src="bikeman.mp4" type="video/mp4">
+      <source src="hulkvsup.mp4" type="video/mp4">
       Your browser does not support the video tag.
     </video>
   </a>
@@ -4231,7 +4296,7 @@ document.querySelectorAll('.nav-item').forEach(item => {
 
 
 
-<!-- Default Statcounter code for TubeTrailer http://tubetrailer.vercel.app
+<!-- Default Statcounter code for TubeTrailer http://tubetrailer.vercel.app-->
 <script type="text/javascript">
 var sc_project=13118904;
 var sc_invisible=1;
@@ -4297,7 +4362,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
   
-  
+  <!-- mute toggle for ad video-->
   function toggleMute() {
     const video = document.getElementById("customAdVideo");
     const icon = document.getElementById("muteIcon");
@@ -4308,6 +4373,7 @@ document.addEventListener('DOMContentLoaded', function () {
   
 
 </script>
+<!-- makes the mute toggle-->
 <script>
   const video = document.getElementById("customAdVideo");
 
@@ -4324,7 +4390,7 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 </script>
 <!-- Default Statcounter code for TubeTrailer
-http://tubetrailerweb.vercel.app 
+http://tubetrailerweb.vercel.app -->
 <script type="text/javascript">
 var sc_project=13118904; 
 var sc_invisible=1; 
