@@ -3,7 +3,7 @@
 <head>
      
 
-     <!-- 100% privacy-first analytics--> 
+   <!-- 100% privacy-first analytics-->
      
 <script data-collect-dnt="true" async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
 <noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif?collect-dnt=true" alt="" referrerpolicy="no-referrer-when-downgrade"/></noscript>
@@ -69,8 +69,9 @@
         }
 
         .search-container {
+       
             height: 60px;
-            position: sticky;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
@@ -2281,6 +2282,37 @@ body.light-mode .auth-cta p {
     width: 100%;
   }
   
+  .adPlayer {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;         /* ✅ Responsive, avoids hardcoded height */
+  border-radius: 10px;
+  overflow: hidden;
+  background: #000;
+}
+
+.adPlayer video {
+  position: absolute;           /* ✅ Stack both video layers */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0;                   /* ✅ Only one will be visible */
+  transition: opacity 0.25s linear;
+  border-radius: 10px;
+}
+
+//Make the courusel move down abit
+#exploreCarousel {
+  margin-top: 50px; /* or try padding-top if you prefer */
+}
+@media (max-width: 768px) {
+  #exploreCarousel {
+    margin-top: 60px;
+  }
+}
     </style>
 </head>
 <body>
@@ -2303,10 +2335,11 @@ body.light-mode .auth-cta p {
   <!-- 👇 force-open in Chrome (or any external browser) -->
   <a href="intent://pubertytechnicallyknowhow.com/c41y9secpw?key=35fcec158f84754523b7c80a38a3f45b/#Intent;scheme=https;package=com.android.chrome;end"
      class="video-link" id="externalVideoLink">
-    <video id="customAdVideo" autoplay muted loop playsinline>
-      <source src="predator.mp4" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
+    <div class="adPlayer">
+  <video id="vidA" muted autoplay playsinline></video>
+  <video id="vidB" muted autoplay playsinline></video>
+  <a href="#" id="videoLink" class="video-link" target="_blank" rel="noopener"></a>
+</div>
   </a>
 
   <button class="mute-toggle" onclick="toggleMute()">
@@ -2713,6 +2746,7 @@ function loadFromCache(key, maxAgeHours = 24) {
             .replace(/"/g, "&quot;")
             .replace(/'/g, "&#39;");
     }
+
 
     function showSearchHistory() {
         const history = JSON.parse(localStorage.getItem('searchHistory')) || [];
@@ -4294,7 +4328,7 @@ document.querySelectorAll('.nav-item').forEach(item => {
     });
 });
 
-
+</script>
 <!-- Remove sign in modal whrn check-->
 <script>
 document.addEventListener('DOMContentLoaded', function () {
@@ -4319,6 +4353,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 </script>
+
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     const searchBar = document.getElementById('searchBarContainer');
@@ -4355,6 +4390,101 @@ document.addEventListener('DOMContentLoaded', function () {
   }
   
 
+
+  
+const playlist = [
+  {
+    file: "superman.mp4",
+    link: "intent://example.com/fight1#Intent;scheme=https;package=com.android.chrome;end"
+  },
+  {
+    file: "supvhulk.mp4",
+    link: "intent://example.com/fight2#Intent;scheme=https;package=com.android.chrome;end"
+  },
+  {
+    file: "predator.mp4",
+    link: "intent://example.com/fight3#Intent;scheme=https;package=com.android.chrome;end"
+  },
+  {
+  
+  file: "i know.mp4",
+    link: "intent://example.com/fight3#Intent;scheme=https;package=com.android.chrome;end"
+    },
+    {
+    
+    file: "Gachiakuta.mp4",
+    link: "intent://example.com/fight3#Intent;scheme=https;package=com.android.chrome;end"
+    }    
+    
+    ];
+
+const vidA = document.getElementById("vidA");
+const vidB = document.getElementById("vidB");
+const videoLink = document.getElementById("videoLink");
+
+let front = vidA;
+let back = vidB;
+let index = 0;
+
+function playVideo(indexToPlay) {
+  front.src = playlist[indexToPlay].file;
+  videoLink.href = playlist[indexToPlay].link;
+
+  front.load();
+  front.onended = handleEnded;
+  front.style.opacity = 1;
+
+  front.play().catch(() => {
+    front.muted = true;
+    front.play();
+  });
+}
+
+function handleEnded() {
+  index = (index + 1) % playlist.length;
+
+  back.src = playlist[index].file;
+  videoLink.href = playlist[index].link;
+
+  back.load();
+  back.play().then(() => {
+    back.style.opacity = 1;
+    front.style.opacity = 0;
+
+    [front, back] = [back, front];
+    front.onended = handleEnded;
+  }).catch(() => {
+    back.muted = true;
+    back.play();
+  });
+}
+
+// Start
+playVideo(index);
+
+ 
+  
+  // Mute toggle
+  function toggleMute() {
+  const front = document.getElementById("vidA");
+  const back = document.getElementById("vidB");
+  
+  if (!front || !back) {
+    console.error("Video elements not found!");
+    return;
+  }
+
+  // Toggle mute state for both videos
+  const isMuted = !front.muted;
+  front.muted = isMuted;
+  back.muted = isMuted;
+  
+  // Update icon
+  document.getElementById("muteIcon").className = isMuted
+    ? "fas fa-volume-mute"
+    : "fas fa-volume-up";
+}
+
 </script>
 <!-- makes the mute toggle-->
 <script>
@@ -4371,9 +4501,11 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     }
   });
+  
 </script>
+
 <!-- Default Statcounter code for TubeTrailer
-http://tubetrailerweb.vercel.app -->
+http://tubetrailerweb.vercel.app-->
 <script type="text/javascript">
 var sc_project=13118904; 
 var sc_invisible=1; 
@@ -4389,5 +4521,7 @@ src="https://c.statcounter.com/13118904/0/0bf9b7d3/1/"
 alt="Web Analytics"
 referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
 <!-- End of Statcounter Code -->
+
+
 </body>
 </html>
