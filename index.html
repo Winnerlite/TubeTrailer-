@@ -9,6 +9,7 @@
 <noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif?collect-dnt=true" alt="" referrerpolicy="no-referrer-when-downgrade"/></noscript>
 
 
+
  <!-- clarity -->
      <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
@@ -2686,7 +2687,7 @@ body.light-mode .auth-cta p {
         currentKeyIndex = (currentKeyIndex + 1) % apiKeys.length;
         console.log(`Switched to API key ${currentKeyIndex + 1}`);
         if (currentKeyIndex === 0) {
-            showError("Failed to Load. Please try again in a min.");
+            showError("Failed to Load. Please try again in a min. Apologies User we are working on it");
             throw new Error("Try Again in 1 min");
         }
     }
@@ -3067,7 +3068,7 @@ function showToast(message) {
         createExploreCarousel();
         fetchForYouContent();
     } catch (error) {
-        showError(`Failed to load content: ${error.message}`);
+        showError(`Failed to load content. Apologies User, we are working on it. hold on a bit: ${error.message}`);
     } finally {
         showLoading(false);
     }
