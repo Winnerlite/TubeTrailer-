@@ -4417,46 +4417,6 @@ document.querySelectorAll('.nav-item').forEach(item => {
         }
     });
 });
-
-
-
-document.addEventListener("DOMContentLoaded", () => {
-    const searchInput = document.getElementById("search");
-    const searchResults = document.getElementById("searchResults");
-    const exploreSections = document.querySelectorAll("#exploreContent > div");
-
-    // When user searches
-    document.getElementById("searchBtn").addEventListener("click", () => {
-        const query = searchInput.value.trim();
-        if (query !== "") {
-            // Show search results
-            exploreSections.forEach(section => section.style.display = "none");
-            searchResults.style.display = "grid";
-
-            // Push state so back button can return
-            history.pushState({ page: "search" }, "", "#search");
-
-            // ⬇️ Your actual search logic should go here
-            // e.g., fetch results and populate #searchResults
-        }
-    });
-
-    // Handle browser or Android back button
-    window.addEventListener("popstate", (event) => {
-        if (!event.state || event.state.page !== "search") {
-            // Restore original explore content
-            searchResults.style.display = "none";
-            exploreSections.forEach(section => section.style.display = "block");
-        }
-    });
-
-    // Optional: trigger search on Enter key
-    searchInput.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
-            document.getElementById("searchBtn").click();
-        }
-    });
-});
 </script>
 
 
@@ -4629,5 +4589,44 @@ referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
 <!-- End of Statcounter Code -->
 
 
+<script>
+let inSearchMode = false;
+
+document.addEventListener("DOMContentLoaded", () => {
+    const searchBtn = document.getElementById("searchBtn");
+    const searchInput = document.getElementById("search");
+    const searchResults = document.getElementById("searchResults");
+    const exploreSections = document.querySelectorAll("#exploreContent > div");
+
+    searchBtn.addEventListener("click", () => {
+        const query = searchInput.value.trim();
+        if (query !== "") {
+            exploreSections.forEach(sec => sec.style.display = "none");
+            searchResults.style.display = "grid";
+
+            // Now we're in search mode
+            inSearchMode = true;
+        }
+    });
+
+    searchInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+            searchBtn.click();
+        }
+    });
+
+    // For AppCreator24: override back button behavior
+    document.addEventListener("backbutton", function (e) {
+        if (inSearchMode) {
+            e.preventDefault(); // Stop app from closing
+            searchResults.style.display = "none";
+            exploreSections.forEach(sec => sec.style.display = "block");
+            inSearchMode = false;
+        } else {
+            navigator.app.exitApp(); // Default back behavior if not in search
+        }
+    }, false);
+});
+</script>
 </body>
 </html>
