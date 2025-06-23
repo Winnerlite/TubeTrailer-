@@ -19,6 +19,7 @@
     })(window, document, "clarity", "script", "r4ikpxyih2");
 </script>
 
+
   
     <!-- Parent Ad for banner container -->
     <script async data-cfasync="false" src="//pubertytechnicallyknowhow.com/89f1e40e0e6d7dcb91eb378512134e8a/invoke.js"></script>
@@ -2639,7 +2640,10 @@ body.light-mode .auth-cta p {
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    const apiKeys = ["AIzaSyDRA0Fzdwg5oIIxBBt2NowcrdbeucEa6cc",
+    const apiKeys =
+     [
+    "AIzaSyAMw0mfpXiqtfN7BbVzhh4YrItgCcZv9J8",
+    "AIzaSyAZe5WtOh-Tiuz8eqswJtoPs7oPVdyGquY", "AIzaSyDRA0Fzdwg5oIIxBBt2NowcrdbeucEa6cc",
     "AIzaSyC_syRSRRxQR1DbtHZzMw9glxcR7My8ly4",
 
 "AIzaSyABi7KdpAijF9gu09dSefpXJyhjIRY66Eg",
@@ -2678,10 +2682,19 @@ body.light-mode .auth-cta p {
     let animeResults = [];
 
     let isSignUpMode = true;
+    
+    // Add this with your other variable declarations
+let currentView = {
+  page: 'explorePage',
+  isSearchView: false
+};
 
     function getApiKey() {
         return apiKeys[currentKeyIndex];
     }
+
+//caching for you results 
+const cachedForYouResults = loadFromCache('cachedForYouResults') || [];
 
     function switchApiKey() {
         currentKeyIndex = (currentKeyIndex + 1) % apiKeys.length;
@@ -2715,26 +2728,54 @@ document.getElementById('refreshShorts').addEventListener('click', fetchShortsCo
     }
 
 function saveToCache(key, data) {
+  try {
     const cacheEntry = {
-        data,
-        timestamp: new Date().toISOString()
+      data,
+      timestamp: new Date().toISOString()
     };
     localStorage.setItem(key, JSON.stringify(cacheEntry));
+    console.log(`[💾 CACHE: SAVE] Key: ${key}`);
+    console.log(`[💾 CACHE: SAVE] Timestamp: ${cacheEntry.timestamp}`);
+    console.log(`[💾 CACHE: SAVE] Data Type: ${typeof data}`);
+    console.log(`[💾 CACHE: SAVE] Data Preview:`, Array.isArray(data) ? data.slice(0, 2) : data);
+    console.log(`[💾 CACHE: SAVE] Data Length:`, Array.isArray(data) ? data.length : 'N/A');
+  } catch (e) {
+    console.error(`[❌ CACHE: SAVE ERROR] Key: ${key}`, e);
+  }
 }
 
 function loadFromCache(key, maxAgeHours = 24) {
-    const cacheEntry = JSON.parse(localStorage.getItem(key));
-    if (!cacheEntry || !cacheEntry.timestamp || !cacheEntry.data) return null;
+  const raw = localStorage.getItem(key);
+  if (!raw) {
+    console.warn(`[📦 CACHE: LOAD] Key "${key}" not found in localStorage.`);
+    return null;
+  }
 
-    const cacheTime = new Date(cacheEntry.timestamp);
-    const now = new Date();
-    const hoursDiff = (now - cacheTime) / (1000 * 60 * 60);
-
-    if (hoursDiff > maxAgeHours) {
-        localStorage.removeItem(key); // Clear expired cache
-        return null;
+  try {
+    const cacheEntry = JSON.parse(raw);
+    if (!cacheEntry || !cacheEntry.timestamp || !cacheEntry.data) {
+      console.warn(`[⚠️ CACHE: FORMAT ERROR] Key: ${key} — Missing required fields.`);
+      return null;
     }
+
+    const ageMs = new Date() - new Date(cacheEntry.timestamp);
+    const ageHours = ageMs / (1000 * 60 * 60);
+
+    console.log(`[📦 CACHE: LOAD] Key: ${key}`);
+    console.log(`[📦 CACHE: LOAD] Age: ${ageHours.toFixed(2)} hours`);
+    console.log(`[📦 CACHE: LOAD] Max Age Allowed: ${maxAgeHours} hours`);
+
+    if (ageHours > maxAgeHours) {
+      console.warn(`[⏰ CACHE: EXPIRED] Key: ${key} is too old. Ignoring.`);
+      return null;
+    }
+
+    console.log(`[✅ CACHE: VALID] Returning data for key: ${key}`);
     return cacheEntry.data;
+  } catch (e) {
+    console.error(`[❌ CACHE: PARSE ERROR] Key: ${key}`, e);
+    return null;
+  }
 }
 
 
@@ -2800,7 +2841,9 @@ function checkAdLoading() {
 }
 
 
-    function showPage(pageId) {
+   
+
+function showPage(pageId) {
     document.querySelectorAll('.page').forEach(page => {
         page.classList.remove('active');
     });
@@ -2854,13 +2897,6 @@ function renderDownloads() {
   
 
 
-// Clear button event listener
-// Replace your current clear button event listener with this:
-document.getElementById('clearBtn').addEventListener('click', (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
-    e.stopPropagation(); // Stop event bubbling
-    clearModal.classList.add('active');
-});
 
 // Modal button events
 // Create modal (only once)
@@ -2921,7 +2957,6 @@ document.querySelector('.clear-modal-confirm')?.addEventListener('click', functi
         showToast('Error clearing downloads');
     }
 });
-
 
 // Toast notification function (if you don't have it already)
 function showToast(message) {
@@ -3073,6 +3108,7 @@ function showToast(message) {
         showLoading(false);
     }
 }
+
 
     function createExploreCarousel() {
         const carouselItems = [
@@ -3299,6 +3335,8 @@ function showToast(message) {
                 }
                 throw new Error(data.error.message);
             }
+
+saveToCache('cachedForYouResults', data.items);
 
             const forYouDiv = document.getElementById('forYouResults');
             forYouDiv.innerHTML = '';
@@ -3872,6 +3910,9 @@ function saveDownloadHistory(video) {
             console.log('User logged in:', userCredential.user);
             showToast('Logged in successfully!');
         }
+        
+        const dontShowAgain = document.getElementById('dontShowAuthCheckbox').checked;
+localStorage.setItem('skipAuthModal', dontShowAgain ? 'true' : 'false');
         closeAuthModal();
         updateUserStatus();
         fetchForYouContent();
@@ -3892,14 +3933,31 @@ function saveDownloadHistory(video) {
     }
 });
     onAuthStateChanged(auth, (user) => {
-        console.log('Auth state changed:', user ? user.email : 'No user');
-        updateUserStatus();
-        if (user) {
-            fetchForYouContent();
-        } else {
+    console.log('Auth state changed:', user ? user.email : 'No user');
+    updateUserStatus();
+
+    // Only show modal if the user is definitely not logged in
+    if (!user) {
+        // Check if "don't show again" was checked
+        const skipAuthModal = localStorage.getItem('skipAuthModal');
+        if (skipAuthModal !== 'true') {
             showAuthModal();
         }
-    });
+  } else {
+    const cachedForYouResults = loadFromCache('cachedForYouResults') || [];
+    if (cachedForYouResults.length > 0) {
+        const forYouDiv = document.getElementById('forYouResults');
+        forYouDiv.innerHTML = '';
+        cachedForYouResults.forEach((video, index) => {
+            forYouDiv.appendChild(generateVideoCard(video, index < 3));
+        });
+        document.getElementById('forYouSection').style.display = 'block';
+        console.log('[✅ CACHE] Loaded For You from cache');
+    } else {
+        fetchForYouContent();
+    }
+}
+});
 
    //Dom content document.addEventListener('DOMContentLoaded', () => {
     const savedTheme = localStorage.getItem('themePreference') || 'dark';
@@ -3952,8 +4010,28 @@ function saveDownloadHistory(video) {
 
     // Button event listeners
     document.getElementById('searchBtn').addEventListener('click', searchContent);
-    document.getElementById('reloadBtn').addEventListener('click', clearAllCache);
+    document.addEventListener('DOMContentLoaded', () => {
+  const reloadBtn = document.getElementById('reloadBtn');
+  if (reloadBtn) {
+    reloadBtn.addEventListener('click', () => {
+      Object.keys(localStorage).forEach(key => {
+        if (
+          key.startsWith('preload-') ||
+          key.includes('Trending') ||
+          key.includes('Results')
+        ) {
+          localStorage.removeItem(key);
+        }
+      });
 
+      location.hash = '#explorePage';
+      showPage('explorePage');
+      fetchExploreContent();
+    });
+  } else {
+    console.warn('⚠️ reloadBtn not found in DOM.');
+  }
+});
     // Navigation event listeners
     document.querySelectorAll('.nav-item').forEach(item => {
         item.addEventListener('click', (e) => {
@@ -4284,12 +4362,21 @@ function showToast(message) {
         link.classList.toggle('active', link.getAttribute('href') === hash);
     });
 
+   
+document.addEventListener("DOMContentLoaded", function () {
     // Load content for specific pages
+    const hash = location.hash;
+
     if (hash === '#explorePage') {
         const cachedTrailerResults = loadFromCache('cachedTrailerResults') || [];
         const cachedMovieResults = loadFromCache('cachedMovieResults') || [];
         const cachedAnimeResults = loadFromCache('cachedAnimeResults') || [];
-        if (cachedTrailerResults.length > 0 && cachedMovieResults.length > 0 && cachedAnimeResults.length > 0) {
+
+        if (
+            cachedTrailerResults.length > 0 &&
+            cachedMovieResults.length > 0 &&
+            cachedAnimeResults.length > 0
+        ) {
             trailerResults = cachedTrailerResults;
             movieResults = cachedMovieResults;
             animeResults = cachedAnimeResults;
@@ -4307,6 +4394,8 @@ function showToast(message) {
     } else {
         document.body.classList.remove('shorts-open');
     }
+});
+
 
     // Hide pagination on non-explore pages
     document.querySelectorAll('.pagination-container').forEach(p => {
@@ -4329,31 +4418,47 @@ document.querySelectorAll('.nav-item').forEach(item => {
     });
 });
 
-</script>
-<!-- Remove sign in modal whrn check-->
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const authModal = document.getElementById('authModal');
-    const cancelBtn = document.getElementById('cancelAuthBtn');
 
-    if (localStorage.getItem('dontShowAuth') === 'true') {
-        authModal.remove();
-        return;
-    }
 
-    authModal.style.display = 'flex';
+document.addEventListener("DOMContentLoaded", () => {
+    const searchInput = document.getElementById("search");
+    const searchResults = document.getElementById("searchResults");
+    const exploreSections = document.querySelectorAll("#exploreContent > div");
 
-    cancelBtn.addEventListener('click', function () {
-        const checkbox = document.getElementById('dontShowAuthCheckbox');
-        if (checkbox && checkbox.checked) {
-            localStorage.setItem('dontShowAuth', 'true');
+    // When user searches
+    document.getElementById("searchBtn").addEventListener("click", () => {
+        const query = searchInput.value.trim();
+        if (query !== "") {
+            // Show search results
+            exploreSections.forEach(section => section.style.display = "none");
+            searchResults.style.display = "grid";
+
+            // Push state so back button can return
+            history.pushState({ page: "search" }, "", "#search");
+
+            // ⬇️ Your actual search logic should go here
+            // e.g., fetch results and populate #searchResults
         }
-        authModal.remove();
+    });
+
+    // Handle browser or Android back button
+    window.addEventListener("popstate", (event) => {
+        if (!event.state || event.state.page !== "search") {
+            // Restore original explore content
+            searchResults.style.display = "none";
+            exploreSections.forEach(section => section.style.display = "block");
+        }
+    });
+
+    // Optional: trigger search on Enter key
+    searchInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+            document.getElementById("searchBtn").click();
+        }
     });
 });
-
-
 </script>
+
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
