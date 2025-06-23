@@ -4592,41 +4592,39 @@ referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
 <script>
 let inSearchMode = false;
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
     const searchBtn = document.getElementById("searchBtn");
     const searchInput = document.getElementById("search");
     const searchResults = document.getElementById("searchResults");
     const exploreSections = document.querySelectorAll("#exploreContent > div");
 
-    searchBtn.addEventListener("click", () => {
+    searchBtn.addEventListener("click", function () {
         const query = searchInput.value.trim();
-        if (query !== "") {
-            exploreSections.forEach(sec => sec.style.display = "none");
+        if (query) {
+            exploreSections.forEach(div => div.style.display = "none");
             searchResults.style.display = "grid";
-
-            // Now we're in search mode
             inSearchMode = true;
         }
     });
-
-    searchInput.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
-            searchBtn.click();
-        }
-    });
-
-    // For AppCreator24: override back button behavior
-    document.addEventListener("backbutton", function (e) {
-        if (inSearchMode) {
-            e.preventDefault(); // Stop app from closing
-            searchResults.style.display = "none";
-            exploreSections.forEach(sec => sec.style.display = "block");
-            inSearchMode = false;
-        } else {
-            navigator.app.exitApp(); // Default back behavior if not in search
-        }
-    }, false);
 });
+
+// ✅ This works in AppCreator24 as a back button override
+function onBackKeyDown() {
+    if (inSearchMode) {
+        const searchResults = document.getElementById("searchResults");
+        const exploreSections = document.querySelectorAll("#exploreContent > div");
+
+        // Show explore, hide search
+        searchResults.style.display = "none";
+        exploreSections.forEach(div => div.style.display = "block");
+
+        inSearchMode = false;
+
+        return false; // prevent app from exiting
+    }
+
+    return true; // allow app to exit
+}
 </script>
 </body>
 </html>
