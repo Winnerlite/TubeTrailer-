@@ -2321,16 +2321,21 @@ body.light-mode .auth-cta p {
      
    <div class="search-container" id="searchBarContainer" style="display: none;">
     <div class="search-wrapper">
-        <button id="reloadBtn" class="reload-btn">
+        <button id="reloadBtn" class="reload-btn" title="Reload">
             <i class="fas fa-sync-alt"></i>
         </button>
+
+        <!-- ✅ Add Home Button here -->
+        <button id="homeBtn" class="reload-btn" title="Go to Explore">
+            <i class="fas fa-clapperboard"></i>
+        </button>
+
         <input type="text" id="search" placeholder="Discover trailers, movies, anime...">
         <button id="searchBtn"><i class="fas fa-search"></i></button>
+
         <div class="search-history" id="searchHistoryList"></div>
     </div>
 </div>
-</div>
-
     <div id="explorePage" class="page active">
         <div id="exploreCarousel"></div>
       <div class="native-banner-wrapper video-ad-wrapper">
@@ -2367,7 +2372,19 @@ body.light-mode .auth-cta p {
                 <div class="results-container" id="animeResults"></div>
             </div>
         </div>
-        <div class="results-container" id="searchResults" style="display: none;"></div>
+        <div class="results-container" id="searchResults" style="display: none;">
+             <div id="pullToExplore" style="
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    cursor: pointer;
+">
+  ⬇ Pull down to return to Explore
+</div>
+        </div>
     </div>
 
    <div id="shortsPage" class="page">
@@ -4273,6 +4290,10 @@ function showToast(message) {
     }, 2000);
 }
 
+
+
+
+
 </script>
 
 <script>
@@ -4339,6 +4360,7 @@ function showToast(message) {
   }
 
   document.addEventListener("DOMContentLoaded", loadWatchedVideos);
+  
  
 </script>
 <script>
@@ -4588,43 +4610,28 @@ alt="Web Analytics"
 referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
 <!-- End of Statcounter Code -->
 
-
+<!-- Makes home button reload-->
 <script>
-let inSearchMode = false;
-
 document.addEventListener("DOMContentLoaded", function () {
-    const searchBtn = document.getElementById("searchBtn");
-    const searchInput = document.getElementById("search");
-    const searchResults = document.getElementById("searchResults");
-    const exploreSections = document.querySelectorAll("#exploreContent > div");
+  const homeBtn = document.getElementById("homeBtn");
+  const searchResults = document.getElementById("searchResults");
+  const exploreContent = document.getElementById("exploreContent");
+  const searchInput = document.getElementById("search");
 
-    searchBtn.addEventListener("click", function () {
-        const query = searchInput.value.trim();
-        if (query) {
-            exploreSections.forEach(div => div.style.display = "none");
-            searchResults.style.display = "grid";
-            inSearchMode = true;
-        }
-    });
+  homeBtn.addEventListener("click", function () {
+    // Hide search results
+    if (searchResults) searchResults.style.display = "none";
+
+    // Show full explore section (including trailers, movies, etc.)
+    if (exploreContent) exploreContent.style.display = "block";
+
+    // Clear the search input
+    if (searchInput) searchInput.value = "";
+
+    // Optional: scroll to top of explore
+    exploreContent.scrollIntoView({ behavior: "smooth" });
+  });
 });
-
-// ✅ This works in AppCreator24 as a back button override
-function onBackKeyDown() {
-    if (inSearchMode) {
-        const searchResults = document.getElementById("searchResults");
-        const exploreSections = document.querySelectorAll("#exploreContent > div");
-
-        // Show explore, hide search
-        searchResults.style.display = "none";
-        exploreSections.forEach(div => div.style.display = "block");
-
-        inSearchMode = false;
-
-        return false; // prevent app from exiting
-    }
-
-    return true; // allow app to exit
-}
 </script>
 </body>
 </html>
