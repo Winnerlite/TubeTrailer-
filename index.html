@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
      <script async="async" data-cfasync="false" src="//pubertytechnicallyknowhow.com/89f1e40e0e6d7dcb91eb378512134e8a/invoke.js"></script>
 <div id="container-89f1e40e0e6d7dcb91eb378512134e8a"></div>
 
-   <!-- 100% privacy-first analytics-->
+   <!-- 100% privacy-first analytics -->
      
 <script data-collect-dnt="true" async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
 <noscript><img src="https://queue.simpleanalyticscdn.com/noscript.gif?collect-dnt=true" alt="" referrerpolicy="no-referrer-when-downgrade"/></noscript>
 
 
 
- <!-- clarity -->
+ <!-- clarity --> 
      <script type="text/javascript">
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -2316,6 +2317,186 @@ body.light-mode .auth-cta p {
     margin-top: 60px;
   }
 }
+
+/* Blog button (bottom-left, round, light red) */
+.blog-btn {
+  position: fixed;
+  bottom: 100px;          /* closer to the bottom */
+  right: 20px;            /* anchor on the left */
+  width: 56px;           /* perfect circle */
+  height: 56px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: #ff006e; /* light red */
+  color: #fff;
+  font-size: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 3px 12px rgba(0,0,0,.3);
+  z-index: 1001;
+}
+
+/* Ensure the overlay is hidden until “show” class is added */
+/* full-screen overlay – stays hidden until .show is added */
+.blog-modal{
+  position: fixed;
+  inset: 0;                          /* top/right/bottom/left = 0 */
+  background: rgba(0,0,0,.55);       /* dark backdrop */
+  display: none;                     /* hide by default */
+  align-items: center;               /* centre the inner box */
+  justify-content: center;
+  z-index: 1000;
+}
+
+.blog-modal.show{ display: flex; }   /* JS adds this class on click */
+
+/* white (or dark) inner card */
+.blog-modal-content{
+  background: #101012;               /* change to #fff if you prefer */
+  color: #fff;
+  width: 90%;
+  max-width: 330px;
+  max-height: 70vh;
+  overflow-y: auto;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 6px 24px rgba(0,0,0,.4);
+}
+
+/*  Blog list card image */
+.blog-item   { margin-bottom: 16px; }
+.blog-thumb  {
+  width: 100%;           /* full-width inside the card */
+  max-height: 160px;     /* “medium” size */
+  object-fit: cover;     /* crop nicely */
+  border-radius: 6px;
+  margin-bottom: 6px;
+}
+.blog-item a { color: #4fc3f7; text-decoration: none; font-size: 15px; }
+.blog-item a:hover { text-decoration: underline; }
+
+/* Loading spinner */
+.loading-spinner {
+    text-align: center;
+    padding: 30px;
+    color: var(--primary);
+}
+
+.loading-spinner i {
+    font-size: 24px;
+}
+
+/* Blog post styling */
+.blog-post {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.blog-thumb-container {
+    margin-bottom: 12px;
+    border-radius: 8px;
+    overflow: hidden;
+    max-height: 200px;
+}
+
+.blog-thumb {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.blog-thumb:hover {
+    transform: scale(1.02);
+}
+
+.blog-content {
+    padding: 0 5px;
+}
+
+.blog-link {
+    color: var(--text);
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 5px;
+    transition: color 0.2s;
+}
+
+.blog-link:hover {
+    color: var(--primary);
+    text-decoration: underline;
+}
+
+.blog-date {
+    color: var(--text-secondary);
+    font-size: 12px;
+    margin: 0;
+}
+
+
+.retry-btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+
+.retry-btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+.retry-btn i {
+    margin-right: 5px;
+}
+
+/* Stream button design*/
+.stream-btn {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  background: linear-gradient(135deg, #01b4e4, #90cea1); /* TMDB blue to soft green */
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+  box-shadow: 0 4px 10px rgba(1, 180, 228, 0.2);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.stream-btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: rgba(255,255,255,0.2);
+  transform: skewX(-20deg);
+  transition: left 0.5s ease;
+}
+
+.stream-btn:hover::after {
+  left: 200%;
+}
+
+.stream-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(1, 180, 228, 0.3);
+}
     </style>
 </head>
 <body>
@@ -2661,7 +2842,8 @@ body.light-mode .auth-cta p {
     const apiKeys =
      [
     "AIzaSyAMw0mfpXiqtfN7BbVzhh4YrItgCcZv9J8",
-    "AIzaSyAZe5WtOh-Tiuz8eqswJtoPs7oPVdyGquY", "AIzaSyDRA0Fzdwg5oIIxBBt2NowcrdbeucEa6cc",
+    
+     "AIzaSyAZe5WtOh-Tiuz8eqswJtoPs7oPVdyGquY", "AIzaSyDRA0Fzdwg5oIIxBBt2NowcrdbeucEa6cc",
     "AIzaSyC_syRSRRxQR1DbtHZzMw9glxcR7My8ly4",
 
 "AIzaSyABi7KdpAijF9gu09dSefpXJyhjIRY66Eg",
@@ -2686,7 +2868,8 @@ body.light-mode .auth-cta p {
 
 "AIzaSyBS1tt0v9_lLc5HAIAFMkTYbRzVUL27yI0",
 
-"AIzaSyDRA0Fzdwg5oIIxBBt2NowcrdbeucEa6cc"];
+"AIzaSyDRA0Fzdwg5oIIxBBt2NowcrdbeucEa6cc"
+   ];
     let currentKeyIndex = 0;
 
     let exploreCurrentPage = 0;
@@ -2800,11 +2983,11 @@ function loadFromCache(key, maxAgeHours = 24) {
     function escapeHtml(unsafe) {
         if (!unsafe) return '';
         return unsafe
-            .replace(/&/g, "&amp;")
-            .replace(/</g, "&lt;")
-            .replace(/>/g, "&gt;")
-            .replace(/"/g, "&quot;")
-            .replace(/'/g, "&#39;");
+            .replace(/&/g, "&")
+            .replace(/</g, "<")
+            .replace(/>/g, ">")
+            
+            .replace(/'/g, "'");
     }
 
 
@@ -4209,6 +4392,7 @@ function generateShortsCard(video) {
 }
 
 
+
 </script>
 
 <script src="https://www.youtube.com/iframe_api "></script>
@@ -4579,10 +4763,12 @@ playVideo(index);
     }
   });
   
+  
+  
 </script>
 
-<!-- Default Statcounter code for TubeTrailer
-http://tubetrailerweb.vercel.app-->
+<!-- Default Statcounter code for TubeTrailer -->
+http://tubetrailerweb.vercel.app
 <script type="text/javascript">
 var sc_project=13118904; 
 var sc_invisible=1; 
@@ -4622,5 +4808,190 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 });
 </script>
+
+<!-- === Blog Button and Modal =================================== -->
+<button id="fabBlog" class="blog-btn">
+    <i class="fas fa-bolt"></i>
+</button>
+
+<div id="blogModal" class="blog-modal">
+    <div class="blog-modal-content">
+        <h3>Latest Movie Streams</h3>
+        <ul id="blogList"><!-- will fill on click --></ul>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+
+<script>
+    const fabBlog = document.getElementById('fabBlog');
+    const blogModal = document.getElementById('blogModal');
+    const blogList = document.getElementById('blogList');
+    
+    // Update the modal toggle function
+function toggleModal(show) {
+const blogModal = document.getElementById('blogModal');
+if (show) {
+blogModal.style.display = 'flex'; // Changed to flex for better centering
+} else {
+blogModal.style.display = 'none';
+}
+}
+
+
+// Close modal if user clicks outside modal content
+document.getElementById('blogModal').addEventListener('click', function (e) {
+  // Only close if the user clicks directly on the background
+  if (e.target.id === 'blogModal') {
+    toggleModal(false);
+  }
+});
+
+
+// Update the loadPosts function
+// Updated loadPosts function with multiple fallbacks
+async function loadPosts() {
+    const blogList = document.getElementById('blogList');
+    blogList.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i></div>';
+
+    try {
+        // Try direct fetch first (might work with CORS)
+        let data = await tryDirectFetch();
+        
+        // If direct fetch failed, try proxy
+        if (!data) {
+            data = await tryProxyFetch();
+        }
+        
+        // If we have data, render it
+        if (data && data.feed && data.feed.entry) {
+            renderPosts(data.feed.entry.slice(0, 7));
+        } else {
+            showErrorMessage("No posts found in the response");
+        }
+    } catch (err) {
+        console.error("Blog loading error:", err);
+        showErrorMessage("Failed to load posts. Please try again later.");
+    }
+}
+
+// Try direct fetch from Blogger
+async function tryDirectFetch() {
+    try {
+        const response = await fetch('https://level9movies.blogspot.com/feeds/posts/default?alt=json&max-results=7', {
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+        return await response.json();
+    } catch (error) {
+        console.log("Direct fetch failed, trying proxy...");
+        return null;
+    }
+}
+
+// Try proxy fetch as fallback
+async function tryProxyFetch() {
+    const proxies = [
+        'https://api.allorigins.win/raw?url=',
+        'https://cors-anywhere.herokuapp.com/',
+        'https://thingproxy.freeboard.io/fetch/'
+    ];
+    
+    for (const proxy of proxies) {
+        try {
+            const url = encodeURIComponent('https://level9movies.blogspot.com/feeds/posts/default?alt=json&max-results=7');
+            const response = await fetch(proxy + url, {
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+            return await response.json();
+        } catch (error) {
+            console.log(`Proxy ${proxy} failed, trying next...`);
+        }
+    }
+    throw new Error("All proxy attempts failed");
+}
+
+// Render posts to the modal
+// In your loadPosts function, modify the post rendering:
+function renderPosts(posts) {
+  const blogList = document.getElementById('blogList');
+  blogList.innerHTML = '';
+
+  // 🎯 Your custom links in order
+  const watchLinks = [
+   
+    "https://9streams.netlify.app/movie.html?id=1287536",
+    "https://9streams.netlify.app/movie.html?id=803796",
+    "https://9streams.netlify.app/movie.html?id=574475",
+    
+    "https://9streams.netlify.app/movie.html?id=846422",
+    
+    "https://9streams.netlify.app/movie.html?id=541671",
+    "https://9streams.netlify.app/movie.html?id=749170",
+    "https://9streams.netlify.app/movie.html?id=986056"
+  ];
+
+  posts.slice(0, 7).forEach((post, i) => {
+    const title = post.title.$t;
+    const watchUrl = watchLinks[i] || "#";
+
+    // 🔗 Chrome Intent for Android
+    const chromeIntent = `intent://${watchUrl.replace(/^https?:\/\//, '')}#Intent;scheme=https;package=com.android.chrome;end`;
+
+    // 📸 Image
+    let imageUrl = '';
+    if (post.media$thumbnail) {
+      imageUrl = post.media$thumbnail.url.replace(/\/s[0-9]+-c/, '/s400-c');
+    } else if (post.content && post.content.$t) {
+      const imgMatch = post.content.$t.match(/<img[^>]+src="([^\">]+)"/);
+      if (imgMatch) imageUrl = imgMatch[1];
+    }
+
+    // 🧱 Create blog post card
+    const postEl = document.createElement('div');
+    postEl.className = 'blog-post';
+    postEl.innerHTML = `
+      ${imageUrl ? `
+        <div class="blog-thumb-container">
+          <img src="${imageUrl}" class="blog-thumb" alt="${title}" 
+               onerror="this.parentElement.style.display='none'">
+        </div>
+      ` : ''}
+
+      <div class="blog-content">
+        <p class="blog-title">${title}</p>
+        <a href="${chromeIntent}" class="stream-btn">▶ Stream Now</a>
+        <p class="blog-date">${new Date(post.published.$t).toLocaleDateString()}</p>
+      </div>
+    `;
+
+    blogList.appendChild(postEl);
+  });
+}
+function showErrorMessage(message) {
+    const blogList = document.getElementById('blogList');
+    blogList.innerHTML = `
+        <div class="error-message">
+            <i class="fas fa-exclamation-triangle"></i>
+            <p>${message}</p>
+            <button class="retry-btn" onclick="loadPosts()">
+                <i class="fas fa-sync-alt"></i> Try Again
+            </button>
+        </div>
+    `;
+}
+
+// Initialize with retry button
+document.getElementById('fabBlog').addEventListener('click', function() {
+    toggleModal(true);
+    loadPosts();
+});
+
+
+</script>
+
 </body>
 </html>
