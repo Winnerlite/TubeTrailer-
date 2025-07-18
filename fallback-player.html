@@ -613,7 +613,7 @@
     100% { transform: rotate(360deg); }
 }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -638,22 +638,36 @@
             </div>
             
             <div class="video-actions">
-                <button class="action-button like" id="likeButton">
-                    <i class="fas fa-thumbs-up"></i>
-                    <span id="likeCount">...</span>
-                </button>
-                <button class="action-button" id="dislikeButton">
-                    <i class="fas fa-thumbs-down"></i>
-                    <span>Dislike</span>
-                </button>
-                <button class="action-button" id="shareButton">
-                    <i class="fas fa-share"></i>
-                    <span>Share</span>
-                </button>
-            </div>
-            
-            <button class="action-button download-btn" id="downloadButton">
-    <i class="fas fa-file-download"></i>
+    <!-- Like Button -->
+    <button class="action-button like" id="likeButton">
+        <svg class="action-icon" viewBox="0 0 24 24" width="24" height="24">
+            <path fill="currentColor" d="M23 10a2 2 0 0 0-2-2h-6.32l.96-4.57c.02-.1.03-.21.03-.32a1 1 0 0 0-1.7-.72l-6.58 6.59c-.37.37-.58.88-.58 1.41V19a2 2 0 0 0 2 2h9c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73V10zM1 21h4V9H1v12z"/>
+        </svg>
+        <span id="likeCount">...</span>
+    </button>
+
+    <!-- Dislike Button -->
+    <button class="action-button" id="dislikeButton">
+        <svg class="action-icon" viewBox="0 0 24 24" width="24" height="24">
+            <path fill="currentColor" d="M1 12c0-1.1.9-2 2-2h6.32l-.97 4.57c-.02.1-.03.21-.03.32 0 .42.17.79.44 1.06L9.83 23l6.59-6.59c.36-.36.58-.86.58-1.41V5a2 2 0 0 0-2-2H5c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2.16l.01.01L1 12zm22 0h-4V4h4v8z"/>
+        </svg>
+        <span>Dislike</span>
+    </button>
+
+    <!-- Share Button -->
+    <button class="action-button" id="shareButton">
+        <svg class="action-icon" viewBox="0 0 24 24" width="24" height="24">
+            <path fill="currentColor" d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
+        </svg>
+        <span>Share</span>
+    </button>
+</div>
+
+<!-- Download Button -->
+<button class="action-button download-btn" id="downloadButton">
+    <svg class="action-icon" viewBox="0 0 24 24" width="24" height="24">
+        <path fill="currentColor" d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+    </svg>
     <span>Download HD</span>
 </button>
             <div class="download-error-message" id="downloadError">
@@ -705,24 +719,35 @@
 
 
     <!-- Navigation Bar (Kept from original) -->
-    <div class="bottom-nav">
-        <a href="index.html#shortsPage" class="nav-item">
-            <i class="fas fa-bolt"></i>
-            <span>Shorts</span>
-        </a>
-        <a href="index.html#explorePage" class="nav-item">
-            <i class="fas fa-compass"></i>
-            <span>Explore</span>
-        </a>
-        <a href="index.html#downloadsPage" class="nav-item">
-            <i class="fas fa-download"></i>
-            <span>Download</span>
-        </a>
-        <a href="index.html#mePage" class="nav-item">
-            <i class="fas fa-user"></i>
-            <span>Me</span>
-        </a>
-    </div>
+   <div class="bottom-nav">
+    <a href="index.html#shortsPage" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" width="24" height="24">
+            <path fill="currentColor" d="M10 14.65v-5.3L15 12l-5 2.65zm7.77-4.33c-.77-.32-1.2-.5-1.2-.5L18 9.06c1.84-.96 2.53-3.23 1.56-5.06s-3.24-2.53-5.07-1.56L6 6.94c-1.29.68-2.07 2.04-2 3.49.07 1.42.93 2.67 2.22 3.25.03.01 1.2.5 1.2.5L6 14.93c-1.83.97-2.53 3.24-1.56 5.07.97 1.83 3.24 2.53 5.07 1.56l8.5-4.5c1.29-.68 2.06-2.04 1.99-3.49-.07-1.42-.94-2.68-2.23-3.25zm-.23 5.86l-8.5 4.5c-1.34.71-3.01.2-3.72-1.14-.71-1.34-.2-3.01 1.14-3.72l2.04-1.08v-1.21l-.69-.28-1.11-.46c-.99-.41-1.65-1.35-1.7-2.41-.05-1.06.52-2.06 1.46-2.56l8.5-4.5c1.34-.71 3.01-.2 3.72 1.14.71 1.34.2 3.01-1.14 3.72L15.5 9.26v1.21l1.8.74c.99.41 1.65 1.35 1.7 2.41.05 1.06-.52 2.06-1.46 2.56z"/>
+        </svg>
+        <span>Shorts</span>
+    </a>
+    
+    <a href="index.html#explorePage" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" width="24" height="24">
+            <path fill="currentColor" d="M12 10.9c-.61 0-1.1.49-1.1 1.1s.49 1.1 1.1 1.1c.61 0 1.1-.49 1.1-1.1s-.49-1.1-1.1-1.1zM12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm2.19 12.19L6 18l3.81-8.19L18 6l-3.81 8.19z"/>
+        </svg>
+        <span>Explore</span>
+    </a>
+    
+    <a href="index.html#downloadsPage" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" width="24" height="24">
+            <path fill="currentColor" d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+        </svg>
+        <span>Download</span>
+    </a>
+    
+    <a href="index.html#mePage" class="nav-item">
+        <svg class="nav-icon" viewBox="0 0 24 24" width="24" height="24">
+            <path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+        </svg>
+        <span>Me</span>
+    </a>
+</div>
 
     <script>
          
@@ -1197,16 +1222,18 @@ function restorePageState() {
 // Handle fake download process
 function handleFakeDownload() {
     const downloadBtn = document.getElementById('downloadButton');
+    const icon = downloadBtn.querySelector('svg'); // Changed from 'i' to 'svg'
     
     // Save current page state
     savePageState();
     
     // Set loading state
     downloadBtn.classList.add('loading');
-    const icon = downloadBtn.querySelector('i');
-    icon.className = 'fas fa-spinner';
-    downloadBtn.querySelector('span').textContent = 'Preparing...';
     downloadBtn.disabled = true;
+    
+    // Create spinner effect (no need to change class names)
+    icon.style.animation = 'spin 1s linear infinite';
+    downloadBtn.querySelector('span').textContent = 'Preparing...';
     
     // Set flags for error detection
     localStorage.setItem('showDownloadError', 'true');
@@ -1215,9 +1242,14 @@ function handleFakeDownload() {
     // Redirect after 3 seconds (opens in new tab)
     setTimeout(() => {
         window.open('https://pubertytechnicallyknowhow.com/tmi7yv3z3t?key=10d1f1faf8d88f843112f5d3158b918a', '_blank');
+        
+        // Reset button state after redirect
+        downloadBtn.classList.remove('loading');
+        downloadBtn.disabled = false;
+        icon.style.animation = '';
+        downloadBtn.querySelector('span').textContent = 'Download HD';
     }, 3000);
 }
-
 // Handle retry - automatically triggers download again
 function retryFakeDownload() {
     // Hide error message
@@ -1344,7 +1376,7 @@ function checkForDownloadError() {
   
   
 </script>
-<!-- Default Statcounter code for TubeTrailer
+<!-- Default Statcounter code for TubeTrailer 
 http://tubetrailerweb.vercel.app -->
 <script type="text/javascript">
 var sc_project=13118904; 
