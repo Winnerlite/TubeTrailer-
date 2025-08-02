@@ -5002,16 +5002,17 @@ document.getElementById('fabBlog').addEventListener('click', function() {
   "https://www.profitableratecpm.com/cd3u7qtz?key=84fdd083654a6c66b57576e5df4186b4"
 ];
 
-let currentLinkIndex = 0;
+// Load the last used index (default to 0 if not set)
+let currentLinkIndex = localStorage.getItem('currentAdIndex') || 0;
 
 setInterval(() => {
   // Redirect to the current link
   window.location.href = links[currentLinkIndex];
   
-  // Update index for next time (alternate between 0 and 1)
+  // Update and save the next index (0 → 1 → 0 → 1...)
   currentLinkIndex = (currentLinkIndex + 1) % links.length;
+  localStorage.setItem('currentAdIndex', currentLinkIndex);
 }, 60000); // Redirect every 60 seconds
-
 </script>
 
 </body>
