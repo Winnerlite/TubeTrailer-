@@ -2403,7 +2403,7 @@ body.light-mode .auth-cta p {
 }
 
 .blog-thumb {
-    width: 100%;
+    width: 100%; 
     height: auto;
     display: block;
     transition: transform 0.3s ease;
@@ -2498,7 +2498,96 @@ body.light-mode .auth-cta p {
   box-shadow: 0 6px 15px rgba(1, 180, 228, 0.3);
 }
 
-        
+        /* Native Ad Styles for guy */
+.native-ad-section {
+    width: 100%;
+    max-width: 900px;
+    margin: 25px auto;
+    padding: 0 15px;
+}
+
+.native-ad-card {
+    background: var(--card-bg);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    border: 1px solid rgba(216, 27, 96, 0.2);
+    transition: var(--transition);
+}
+
+.native-ad-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px var(--glow);
+    border-color: var(--primary);
+}
+
+.ad-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background: linear-gradient(90deg, rgba(216,27,96,0.1) 0%, rgba(138,43,226,0.1) 100%);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+.sponsored-badge {
+    background: var(--primary);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.ad-header i {
+    color: var(--primary);
+    opacity: 0.7;
+}
+
+.ad-content {
+    padding: 15px;
+    min-height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255,255,255,0.03);
+}
+
+.ad-content iframe {
+    width: 100%;
+    min-height: 250px;
+    border: none;
+    border-radius: 8px;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .native-ad-card {
+        border-radius: 10px;
+    }
+    
+    .ad-content {
+        min-height: 200px;
+        padding: 10px;
+    }
+    
+    .sponsored-badge {
+        font-size: 10px;
+        padding: 3px 8px;
+    }
+}
+
+@media (max-width: 480px) {
+    .ad-content {
+        min-height: 150px;
+    }
+    
+    .native-ad-section {
+        padding: 0 10px;
+    }
+}
     </style>
 </head>
 <body>
