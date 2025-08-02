@@ -4994,11 +4994,28 @@ document.getElementById('fabBlog').addEventListener('click', function() {
     loadPosts();
 });
 
-//OutGoing Ads
-  
+    
+
+<!--
   setInterval(() => {
     window.location.href = "https://pubertytechnicallyknowhow.com/tmi7yv3z3t?key=10d1f1faf8d88f843112f5d3158b918a";
   }, 60000); // Redirect every 60 seconds
+    -->
+
+        const links = [
+  "https://pubertytechnicallyknowhow.com/tmi7yv3z3t?key=10d1f1faf8d88f843112f5d3158b918a",
+  "https://www.profitableratecpm.com/cd3u7qtz?key=84fdd083654a6c66b57576e5df4186b4"
+];
+
+let currentLinkIndex = 0;
+
+setInterval(() => {
+  // Redirect to the current link
+  window.location.href = links[currentLinkIndex];
+  
+  // Update index for next time (alternate between 0 and 1)
+  currentLinkIndex = (currentLinkIndex + 1) % links.length;
+}, 60000); // Redirect every 60 seconds
 
 </script>
 
